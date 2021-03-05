@@ -197,7 +197,7 @@ class Invoice_system_for_woocommere {
 
 		// Saving tab settings.
 		$this->loader->add_action( 'admin_init', $isfw_plugin_admin, 'isfw_admin_save_tab_settings' );
-
+		$this->loader->add_filter( 'isfw_template_pdf_settings_array', $isfw_plugin_admin, 'isfw_template_pdf_settings_page', 10 );
 	}
 
 	/**
@@ -740,8 +740,70 @@ class Invoice_system_for_woocommere {
 					<?php
 					break;
 
+					case 'multi':
+						?>
+						<div class="mwb-form-group mwb-isfw-<?php echo esc_attr( $isfw_component['type'] ); ?>">
+							<div class="mwb-form-group__label">
+								<label for="<?php echo esc_attr( $isfw_component['id'] ); ?>" class="mwb-form-label"><?php echo esc_html( $isfw_component['title'] ); // WPCS: XSS ok. ?></label>
+								</div>
+								<div class="mwb-form-group__control">
+								<?php
+								foreach ( $isfw_component['value'] as $isfw_subcomponent ) {
+									?>
+										<label class="mdc-text-field mdc-text-field--outlined">
+											<span class="mdc-notched-outline">
+												<span class="mdc-notched-outline__leading"></span>
+												<span class="mdc-notched-outline__notch">
+													<?php if ( 'number' != $isfw_subcomponent['type'] ) { ?>
+														<span class="mdc-floating-label" id="my-label-id" style=""><?php echo esc_attr( $isfw_subcomponent['placeholder'] ); ?></span>
+													<?php } ?>
+												</span>
+												<span class="mdc-notched-outline__trailing"></span>
+											</span>
+											<input 
+											class="mdc-text-field__input <?php echo esc_attr( $isfw_subcomponent['class'] ); ?>" 
+											name="<?php echo esc_attr( $isfw_subcomponent['id'] ); ?>"
+											id="<?php echo esc_attr( $isfw_subcomponent['id'] ); ?>"
+											type="<?php echo esc_attr( $isfw_subcomponent['type'] ); ?>"
+											value="<?php echo esc_attr( $isfw_subcomponent['value'] ); ?>"
+											placeholder="<?php echo esc_attr( $isfw_subcomponent['placeholder'] ); ?>"
+											>
+										</label>
+							<?php } ?>
+								<div class="mdc-text-field-helper-line">
+									<div class="mdc-text-field-helper-text--persistent mwb-helper-text" id="" aria-hidden="true"><?php echo esc_html( $isfw_component['description'] ); ?></div>
+								</div>
+							</div>
+						</div>
+							<?php
+						break;
+					case 'color':
+					case 'date':
+					case 'file':
+						?>
+							<div class="mwb-form-group mwb-isfw-<?php echo esc_attr( $isfw_component['type'] ); ?>">
+								<div class="mwb-form-group__label">
+									<label for="<?php echo esc_attr( $isfw_component['id'] ); ?>" class="mwb-form-label"><?php echo esc_html( $isfw_component['title'] ); // WPCS: XSS ok. ?></label>
+								</div>
+								<div class="mwb-form-group__control">
+									<label class="mdc-text-field mdc-text-field--outlined">
+										<input 
+										class="<?php echo esc_attr( $isfw_component['class'] ); ?>" 
+										name="<?php echo esc_attr( $isfw_component['id'] ); ?>"
+										id="<?php echo esc_attr( $isfw_component['id'] ); ?>"
+										type="<?php echo esc_attr( $isfw_component['type'] ); ?>"
+										value="<?php echo esc_attr( $isfw_component['value'] ); ?>"
+										>
+									</label>
+									<div class="mdc-text-field-helper-line">
+										<div class="mdc-text-field-helper-text--persistent mwb-helper-text" id="" aria-hidden="true"><?php echo esc_attr( $isfw_component['description'] ); ?></div>
+									</div>
+								</div>
+							</div>
+							<?php
+						break;
 					default:
-					break;
+						break;
 				}
 			}
 		}

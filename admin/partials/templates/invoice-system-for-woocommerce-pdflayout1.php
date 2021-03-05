@@ -15,7 +15,21 @@ if ( ! defined( 'ABSPATH' ) ) {
  *
  * @return string
  */
-function return_ob_value() {
+function return_ob_value( $order_id ) {
+	$order           = wc_get_order( $order_id );
+	$billing_details = array(
+		'billing_name'     => $order->get_billing_first_name() . $order->get_billing_last_name(),
+		'billing_company'  => $order->get_billing_company(),
+		'billing_address'  => $order->get_billing_address_1() . $order->get_billing_address_2(),
+		'billing_city'     => $order->get_billing_city(),
+		'billing_state'    => $order->get_billing_state(),
+		'billing_postcode' => $order->get_billing_postcode(),
+		'billing_country'  => $order->get_billing_country(),
+		'billing_phone'    => $order->get_billing_phone(),
+		'billing_email'    => $order->get_billing_email(),
+
+	);
+
 	$html = '<!DOCTYPE html>
 	<html lang="en">
 		<head>
@@ -140,34 +154,22 @@ function return_ob_value() {
 				</thead>
 				<tbody>
 					<tr>
-					<td>
-						[Name]
-					</td>
+						<td>' . $billing_details['billing_name'] . '</td>
 					</tr>
 					<tr>
-					<td>
-						[Company name]
-					</td>
+						<td>' . $billing_details['billing_company'] . '</td>
 					</tr>
 					<tr>
-					<td>
-						[Street address]
-					</td>
+						<td>' . $billing_details['billing_address'] . '</td>
 					</tr>
 					<tr>
-					<td>
-						[City, st, zip]
-					</td>
+						<td>' . $billing_details['billing_state'] . $billing_details['billing_city'] . $billing_details['billing_postcode'] . '</td>
 					</tr>
 					<tr>
-					<td>
-						[Phone]
-					</td>
+						<td>' . $billing_details['billing_phone'] . '</td>
 					</tr>
 					<tr>
-					<td>
-						[Email address]
-					</td>
+						<td>' . $billing_details['billing_email'] . '</td>
 					</tr>
 				</tbody>
 				</table>

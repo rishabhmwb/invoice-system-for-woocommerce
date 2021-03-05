@@ -108,6 +108,7 @@ class Invoice_system_for_woocommere_Admin {
 
 			wp_enqueue_script( $this->plugin_name . 'admin-js' );
 		}
+		wp_enqueue_script( 'mwb-isfw-pdf-general-settings', INVOICE_SYSTEM_FOR_WOOCOMMERE_DIR_URL . 'admin/src/js/invoice-system-for-woocommerce-admin-pdfsettings.js', array( 'jquery' ), $this->version, true );
 	}
 
 	/**
@@ -326,7 +327,6 @@ class Invoice_system_for_woocommere_Admin {
 					'no' => __( 'NO', 'invoice-system-for-woocommere' ),
 				),
 			),
-
 			array(
 				'type'  => 'button',
 				'id'    => 'isfw_button_demo',
@@ -402,5 +402,89 @@ class Invoice_system_for_woocommere_Admin {
 				}
 			}
 		}
+	}
+	/**
+	 * General setting page for pdf.
+	 *
+	 * @param array $isfw_template_pdf_settings array containing the html for the fields.
+	 * @return array
+	 */
+	public function isfw_template_pdf_settings_page( $isfw_template_pdf_settings ) {
+		$isfw_template_pdf_settings = array(
+			array(
+				'title'       => __( 'Invoice Number', 'invoice-system-for-woocommere' ),
+				'type'        => 'multi',
+				'id'          => 'isfw_invoice_number',
+				'description' => __( 'This combination will be used as the invoice number', 'invoice-system-for-woocommere' ),
+				'value'       => array(
+					array(
+						'title'       => 'Prefix',
+						'type'        => 'text',
+						'id'          => 'isfw_invoice_number_prefix',
+						'class'       => 'isfw_invoice_number_prefix',
+						'value'       => '',
+						'name'        => 'isfw_invoice_number_prefix',
+						'placeholder' => 'Prefix',
+					),
+					array(
+						'title'       => 'Digit',
+						'type'        => 'number',
+						'id'          => 'isfw_invoice_number_digit',
+						'class'       => 'isfw_invoice_number_digit',
+						'value'       => '',
+						'name'        => 'isfw_invoice_number_digit',
+						'placeholder' => 'digit',
+					),
+					array(
+						'title'       => 'Suffix',
+						'type'        => 'text',
+						'id'          => 'isfw_invoice_number_suffix',
+						'class'       => 'isfw_invoice_number_suffix',
+						'value'       => '',
+						'name'        => 'isfw_invoice_number_suffix',
+						'placeholder' => 'suffix',
+					),
+				),
+			),
+			array(
+				'title'       => __( 'Logo for Invoice', 'invoice-system-for-woocommere' ),
+				'type'        => 'file',
+				'class'       => 'isfw_invoice_logo',
+				'id'          => 'isfw_invoice_logo',
+				'description' => __( 'Choose an image to set it as the logo', 'invoice-system-for-woocommere' ),
+			),
+			array(
+				'title'       => __( 'Invoice Number Renew date', 'invoice-system-for-woocommere' ),
+				'type'        => 'date',
+				'description' => __( 'Please choose the invoice number renew date', 'invoice-system-for-woocommere' ),
+				'id'          => 'isfw_invoice_renew_date',
+				'class'       => 'isfw_invoice_renew_date',
+				'value'       => date( 'Y-m-d' ),
+			),
+			array(
+				'title'       => __( 'Disclaimer', 'invoice-system-for-woocommere' ),
+				'type'        => 'textarea',
+				'description' => __( 'Please enter desclaimer of you choice', 'invoice-system-for-woocommere' ),
+				'id'          => 'isfw_invoice_disclaimer',
+				'class'       => 'isfw_invoice_disclaimer',
+				'value'       => '',
+
+			),
+			array(
+				'title'       => __( 'Color', 'invoice-system-for-woocommere' ),
+				'type'        => 'color',
+				'class'       => 'isfw_invoice_color',
+				'id'          => 'isfw_invoice_color',
+				'description' => __( 'Choose color of your choice', 'invoice-system-for-woocommere' ),
+				'value'       => '#000000',
+			),
+			array(
+				'type'        => 'button',
+				'id'          => 'isfw_invoice_general_setting_save',
+				'button_text' => __( 'Save settings', 'invoice-system-for-woocommere' ),
+				'class'       => 'isfw_invoice_general_setting_save',
+			),
+		);
+		return $isfw_template_pdf_settings;
 	}
 }
