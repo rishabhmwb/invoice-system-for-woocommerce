@@ -197,7 +197,24 @@ class Invoice_system_for_woocommere {
 
 		// Saving tab settings.
 		$this->loader->add_action( 'admin_init', $isfw_plugin_admin, 'isfw_admin_save_tab_settings' );
+		// generating custom setting page for pdf settings.
 		$this->loader->add_filter( 'isfw_template_pdf_settings_array', $isfw_plugin_admin, 'isfw_template_pdf_settings_page', 10 );
+		// handling ajax requests for saving settings of isfw pdf.
+		$this->loader->add_action( 'wp_ajax_isfw_save_general_pdf_settings', $isfw_plugin_admin, 'isfw_save_general_pdf_settings' );
+		// adding shortcodes to fetch all order detials [isfw_fetch_order].
+		$this->loader->add_action( 'init', $isfw_plugin_admin, 'isfw_fetch_order_details_shortcode' );
+		// adding column on order listing page to generate pdf.
+		$this->loader->add_filter( 'manage_edit-shop_order_columns', $isfw_plugin_admin, 'isfw_generate_pdf_order_listing_column' );
+		$this->loader->add_action( 'manage_shop_order_posts_custom_column', $isfw_plugin_admin, 'isfw_populating_field_for_custom_tab', 15 );
+		$this->loader->add_action( 'init', $isfw_plugin_admin, 'isfw_create_pdf' );
+		// adding attachment to the email.
+		$this->loader->add_filter( 'woocommerce_email_attachments', $isfw_plugin_admin, 'isfw_send_attachment_with_email', 10, 4 );
+		// adding bulk action to order listing page for bulk pdf download.
+		$this->loader->add_filter( 'bulk_actions-edit-shop_order', $isfw_plugin_admin, 'isfw_bulk_pdf_download_order_listing_page', 15, 1 );
+		// handling bulk action for generating invoice and packing slip pdf.
+		$this->loader->add_filter( 'handle_bulk_actions-edit-shop_order', $isfw_plugin_admin, 'isfw_handling_bulk_action_for_pdf_generation', 10, 3 );
+		// showing notification for the processed downloads.
+		$this->loader->add_action( 'admin_notices', $isfw_plugin_admin, 'isfw_pdf_downloads_bulk_action_admin_notice' );
 	}
 
 	/**
@@ -486,8 +503,6 @@ class Invoice_system_for_woocommere {
 		if ( is_array( $isfw_components ) && ! empty( $isfw_components ) ) {
 			foreach ( $isfw_components as $isfw_component ) {
 				switch ( $isfw_component['type'] ) {
-
-					case 'hidden':
 					case 'number':
 					case 'email':
 					case 'text':
@@ -800,6 +815,38 @@ class Invoice_system_for_woocommere {
 									</div>
 								</div>
 							</div>
+							<?php
+						break;
+					case 'upload-button':
+						?>
+						<div class="mwb-form-group">
+						<div class="mwb-form-group__label">
+							<label for="<?php echo esc_attr( $isfw_component['id'] ); ?>" class="mwb-form-label"><?php echo esc_html( $isfw_component['title'] ); ?></label>
+						</div>
+						<div class="mwb-form-group__control">
+							<button style="height:50px;" class="mdc-button mdc-button--raised" name="<?php echo esc_attr( $isfw_component['id'] ); ?>"
+								id="<?php echo esc_attr( $isfw_component['id'] ); ?>"> <span class="mdc-button__ripple"></span>
+								<span class="mdc-button__label"><?php echo esc_attr( $isfw_component['button_text'] ); ?></span>
+							</button>
+							<img
+								src="<?php echo esc_attr( $isfw_component['img-tag']["img-src"] ); ?>"
+								class="<?php echo esc_attr( $isfw_component['img-tag']['img-class'] ); ?>"
+								id="<?php echo esc_attr( $isfw_component['img-tag']['img-id'] ); ?>"
+								style="<?php echo esc_attr( $isfw_component['img-tag']['img-style'] ); ?>"
+							>
+						</div>
+					</div>
+						<?php
+						break;
+					case 'hidden':
+						?>
+						<input
+						type="<?php echo esc_attr( $isfw_component['type'] ); ?>"
+						class="<?php echo esc_attr( $isfw_component['class'] ); ?>"
+						id="<?php echo esc_attr( $isfw_component['id'] ); ?>"
+						value="<?php echo esc_attr( $isfw_component['value'] ); ?>"
+						name="<?php echo esc_attr( $isfw_component['name'] ); ?>"
+						>
 							<?php
 						break;
 					default:
