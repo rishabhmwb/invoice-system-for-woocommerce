@@ -56,61 +56,70 @@ function return_ob_value( $order_id, $type ) {
 								<html>
 								<head>
 									<title> INVOICE SYSTEM FOR WOOCOMMERCE </title>
-								<style>
-									#isfw-invoice-title-right{
-										margin-left: 500px;
-										position: relative;
-										top: -120px;
-									}
-									table#isfw-prod-listing-table{
-										margin-top: 20px;
-										width: 100%;
-										position: relative;
-										top: -120px;
-									}
-									table#isfw-prod-listing-table tr th {
-										text-align: left;
-										padding: 5px;
-									}
-									#isfw-prod-listing-table-title {
-										background-color: ' . $color . ';
-										color: white;
-									}
-									#isfw-invoice-title-to{
-										position: relative;
-										top: -120px;
-									}
-									#isfw-prod-listing-table-bottom{
-										border-bottom: 2px solid black;
-										position: relative;
-										top: -100px;
-									}
-									#isfw-prod-total-calc{
-										margin-left: 540px;
-										position: relative;
-										top: -90px;
-									}
-									#isfw-table-items{
-										width: 400px !important;
-									}
-									#isfw-pdf-prod-body tr{
-										padding-bottom: 50px !important;
-									}
-									#isfw-invoice-text{
-										color: gray;
-									}
-									#isfw-pdf{
-										font-family: "Times New Roman", Times, serif;
-									}
-								</style>
+									<style>
+										#isfw-pdf-header {
+											margin-bottom: -80px;
+										}
+										#isfw-invoice-title-right {
+											margin-top: -20px;
+										}
+								
+										.isfw-invoice-inline {
+											display: inline-block;
+											width: 50%;
+										}
+										table#isfw-prod-listing-table{
+											margin-top: 40px;
+											width: 100%;
+										}
+										table#isfw-prod-listing-table tr th {
+											text-align: center;
+											padding: 5px;
+										}
+										table#isfw-prod-listing-table tr #isfw-table-items {
+											text-align: left;
+										}
+								
+										#isfw-pdf-prod-body tr td {
+											text-align: center;
+											padding: 15px 0;
+										}
+										#isfw-pdf-prod-body tr .isfw-product-name {
+											text-align: left;
+										}
+										#isfw-prod-listing-table-title {
+											background-color: gray;
+											color: white;
+										}
+										#isfw-prod-listing-table-bottom {
+											border-bottom: 2px solid black;
+											margin-top: 20px;
+											position: relative;
+										}
+										
+										#isfw-invoice-text{
+											color: gray;
+											margin-bottom: 30px;
+										}
+								
+										#isfw-prod-total-calc table {
+											text-align: right;
+											table-layout: fixed;
+											width: 96%;
+											margin-top: 30px;
+										}
+										.isfw-invoice-greetings {
+											margin-top: 40px;
+										}
+									</style>
 								</head>
 								<body>
 									<div id="isfw-pdf">
+										<h2 id="isfw-invoice-text">
+										INVOICE
+										</h2>
 										<div id="isfw-pdf-header">
-											<div id="isfw-invoice-title-left">
-												<h2 id="isfw-invoice-text">
-													INVOICE
-												</h2>
+											<div id="isfw-invoice-title-left" class="isfw-invoice-inline">
 												<div>
 													<b>Invoice Number</b><br/>
 													' . $invoice_id . '
@@ -120,7 +129,7 @@ function return_ob_value( $order_id, $type ) {
 													' . date( 'd/m/y' ) . '
 												</div>
 											</div>
-											<div id="isfw-invoice-title-right">
+											<div id="isfw-invoice-title-right" class="isfw-invoice-inline">
 												<h3>
 													Company Details
 												</h3>
@@ -134,7 +143,7 @@ function return_ob_value( $order_id, $type ) {
 										</div>';
 	if ( $type == 'invoice' ) {
 		$html .= '<div id="isfw-invoice-title-to" >
-					<h3>Invoice to</h3>
+					<b>Invoice to</b><br/>
 					<div>
 						' . $order_billing_arr["billing_full_name"] . '<br/>
 						' . $order_billing_arr["billing_address_1"] . ' ' . $order_billing_arr["billing_address_2"] . '<br/>
@@ -144,7 +153,7 @@ function return_ob_value( $order_id, $type ) {
 				</div>';
 	} else {
 		$html .= '<div id="isfw-invoice-title-to" >
-					<h3>SHIP TO</h3>
+					<b>SHIP TO</b><br/>
 					<div>
 						' . $order_shipping_arr["shipping_full_name"] . '<br/>
 						' . $order_shipping_arr["shipping_address_1"] . ' ' . $order_shipping_arr["shipping_address_2"] . '<br/>
@@ -154,7 +163,7 @@ function return_ob_value( $order_id, $type ) {
 				</div>';
 	}
 	$html .= '<div>
-				<table id="isfw-prod-listing-table">
+				<table border = "0" cellpadding = "0" cellspacing = "0" id="isfw-prod-listing-table">
 					<thead>
 						<tr id="isfw-prod-listing-table-title">
 							<th id="isfw-table-items">Items</th>
@@ -167,7 +176,7 @@ function return_ob_value( $order_id, $type ) {
 					<tbody id="isfw-pdf-prod-body">';
 	foreach ( $order_item_arr as $product ) {
 		$html .= '<tr>
-					<td>' . $product["prod_name"] . '</td>
+					<td class="isfw-product-name">' . $product["prod_name"] . '</td>
 					<td>' . $product["quantity"] . '</td>
 					<td>' . $product["sub_total"] . '</td>
 					<td>' . array_shift( array_shift( $product["percent_tax"] ) ) . '</td>
@@ -178,7 +187,7 @@ function return_ob_value( $order_id, $type ) {
 				</table>
 				<div id="isfw-prod-listing-table-bottom"></div>
 				<div id="isfw-prod-total-calc">
-					<table>
+					<table border = "0" cellpadding = "0" cellspacing = "0">
 						<tr>
 							<td>subtotal : </td>
 							<td>' . $order_payment_arr["order_currency"] . ' ' . $order_payment_arr["sub_total"] . '</td>
@@ -197,7 +206,9 @@ function return_ob_value( $order_id, $type ) {
 						</tr>
 					</table>
 				</div>
-				<div>' . $disclaimer . '</div>
+				<div class="isfw-invoice-greetings">
+					<b>' . $disclaimer . '</b>
+				</div>
 			</div>
 		</div>
 	</body>

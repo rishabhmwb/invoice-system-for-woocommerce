@@ -77,5 +77,33 @@ class Invoice_system_for_woocommere_Public {
 		wp_enqueue_script( $this->plugin_name );
 
 	}
+	/**
+	 * Adding page to show on the tab download invoice.
+	 *
+	 * @param array $items items in the nav manu.
+	 *
+	 * @return array
+	 */
+	public function isfw_add_content_to_orders_listing_page( $items ) {
+		$items['isfw_invoice_download'] = __( 'Invoice', 'invoice-system-for-woocommerce' );
+		return $items;
+	}
+	/**
+	 * Adding link to product download in the custom column at customer dashboard orders.
+	 *
+	 * @param object $order order object.
+	 *
+	 * @return void
+	 */
+	public function isfw_add_data_to_custom_column( $order ) {
+		$upload_dir     = wp_upload_dir();
+		$upload_baseurl = $upload_dir['baseurl'] . '/invoices/';
+		$file_pdf_url   = $upload_baseurl . 'invoice_' . $order->get_id() . '.pdf';
+		$upload_basedir = $upload_dir['basedir'] . '/invoices/';
+		$file_pdf_path  = $upload_basedir . 'invoice_' . $order->get_id() . '.pdf';
+		if ( file_exists( $file_pdf_path ) ) {
+			echo '<a href="' . esc_attr( $file_pdf_url ) . '" download>' . __( "Download", "invoice-system-for-woocommerce" ) . '</a>';
+		}
+	}
 
 }

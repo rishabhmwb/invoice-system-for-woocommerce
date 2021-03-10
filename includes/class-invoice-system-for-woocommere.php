@@ -203,8 +203,7 @@ class Invoice_system_for_woocommere {
 		$this->loader->add_action( 'wp_ajax_isfw_save_general_pdf_settings', $isfw_plugin_admin, 'isfw_save_general_pdf_settings' );
 		// adding shortcodes to fetch all order detials [isfw_fetch_order].
 		$this->loader->add_action( 'init', $isfw_plugin_admin, 'isfw_fetch_order_details_shortcode' );
-		// adding column on order listing page to generate pdf.
-		$this->loader->add_filter( 'manage_edit-shop_order_columns', $isfw_plugin_admin, 'isfw_generate_pdf_order_listing_column' );
+		// adding custom link to the order listing page.
 		$this->loader->add_action( 'manage_shop_order_posts_custom_column', $isfw_plugin_admin, 'isfw_populating_field_for_custom_tab', 15 );
 		$this->loader->add_action( 'init', $isfw_plugin_admin, 'isfw_create_pdf' );
 		// adding attachment to the email.
@@ -216,7 +215,6 @@ class Invoice_system_for_woocommere {
 		// showing notification for the processed downloads.
 		$this->loader->add_action( 'admin_notices', $isfw_plugin_admin, 'isfw_pdf_downloads_bulk_action_admin_notice' );
 	}
-
 	/**
 	 * Register all of the hooks related to the public-facing functionality
 	 * of the plugin.
@@ -225,11 +223,11 @@ class Invoice_system_for_woocommere {
 	 * @access   private
 	 */
 	private function invoice_system_for_woocommere_public_hooks() {
-
 		$isfw_plugin_public = new Invoice_system_for_woocommere_Public( $this->isfw_get_plugin_name(), $this->isfw_get_version() );
-
 		$this->loader->add_action( 'wp_enqueue_scripts', $isfw_plugin_public, 'isfw_public_enqueue_styles' );
 		$this->loader->add_action( 'wp_enqueue_scripts', $isfw_plugin_public, 'isfw_public_enqueue_scripts' );
+		$this->loader->add_filter( 'woocommerce_my_account_my_orders_columns', $isfw_plugin_public, 'isfw_add_content_to_orders_listing_page', 20, 1 );
+		$this->loader->add_action( 'woocommerce_my_account_my_orders_column_isfw_invoice_download', $isfw_plugin_public, 'isfw_add_data_to_custom_column', 10, 1 );
 
 	}
 
@@ -824,7 +822,7 @@ class Invoice_system_for_woocommere {
 							<label for="<?php echo esc_attr( $isfw_component['id'] ); ?>" class="mwb-form-label"><?php echo esc_html( $isfw_component['title'] ); ?></label>
 						</div>
 						<div class="mwb-form-group__control">
-							<button style="height:50px;" class="mdc-button mdc-button--raised" name="<?php echo esc_attr( $isfw_component['id'] ); ?>"
+							<button class="mdc-button--raised" name="<?php echo esc_attr( $isfw_component['id'] ); ?>"
 								id="<?php echo esc_attr( $isfw_component['id'] ); ?>"> <span class="mdc-button__ripple"></span>
 								<span class="mdc-button__label"><?php echo esc_attr( $isfw_component['button_text'] ); ?></span>
 							</button>

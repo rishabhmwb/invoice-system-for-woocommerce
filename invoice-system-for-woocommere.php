@@ -32,7 +32,42 @@
 if ( ! defined( 'ABSPATH' ) ) {
 	die;
 }
+/**
+ * Checking dependency for woocommerce plugin.
+ *
+ * @return void
+ */
+function isfw_dependency_checkup() {
+	if ( ! in_array( 'woocommerce/woocommerce.php', get_option( 'active_plugins' ), true ) ) {
+		add_action( 'admin_init', 'isfw_deactivate_child_plugin' );
+		add_action( 'admin_notices', 'isfw_show_admin_notices' );
+	}
+}
+add_action( 'plugins_loaded', 'isfw_dependency_checkup' );
+/**
+ * Deactivating child plugin.
+ *
+ * @return void
+ */
+function isfw_deactivate_child_plugin() {
+	deactivate_plugins( plugin_basename( __FILE__ ) );
+}
+/**
+ * Showing admin notices.
+ *
+ * @return void
+ */
+function isfw_show_admin_notices() {
+	$isfw_child_plugin  = __( 'Invoice system for woocommerce', 'invoice-system-for-woocommerce' );
+	$isfw_parent_plugin = __( 'Woocommerce', 'invoice-system-for-woocommerce' );
+	echo '<div class="error"><p>'
+		. sprintf( __( '%1$s requires %2$s to function correctly. Please activate %2$s before activating %1$s. For now, the plugin has been deactivated.', 'invoice-system-for-woocommerce' ), '<strong>' . esc_html( $isfw_child_plugin ) . '</strong>', '<strong>' . esc_html( $isfw_parent_plugin ) . '</strong>' )
+		. '</p></div>';
 
+	if ( isset( $_GET['activate'] ) ) {
+		unset( $_GET['activate'] );
+	}
+}
 /**
  * Define plugin constants.
  *

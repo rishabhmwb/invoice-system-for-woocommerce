@@ -129,7 +129,7 @@ class Invoice_system_for_woocommere_Admin {
 	public function isfw_options_page() {
 		global $submenu;
 		if ( empty( $GLOBALS['admin_page_hooks']['mwb-plugins'] ) ) {
-			add_menu_page( __( 'MakeWebBetter', 'invoice-system-for-woocommere' ), __( 'MakeWebBetter', 'invoice-system-for-woocommere' ), 'manage_options', 'mwb-plugins', array( $this, 'mwb_plugins_listing_page' ), INVOICE_SYSTEM_FOR_WOOCOMMERE_DIR_URL . 'admin/src/images/mwb-logo.png', 15 );
+			add_menu_page( 'MakeWebBetter', 'MakeWebBetter', 'manage_options', 'mwb-plugins', array( $this, 'mwb_plugins_listing_page' ), INVOICE_SYSTEM_FOR_WOOCOMMERE_DIR_URL . 'admin/src/images/mwb-logo.png', 15 );
 			$isfw_menus = apply_filters( 'mwb_add_plugins_menus_array', array() );
 			if ( is_array( $isfw_menus ) && ! empty( $isfw_menus ) ) {
 				foreach ( $isfw_menus as $isfw_key => $isfw_value ) {
@@ -405,7 +405,7 @@ class Invoice_system_for_woocommere_Admin {
 				if ( $mwb_isfw_gen_flag ) {
 					$mwb_isfw_error_text = esc_html__( 'Id of some field is missing', 'invoice-system-for-woocommere' );
 					$isfw_mwb_isfw_obj->mwb_isfw_plug_admin_notice( $mwb_isfw_error_text, 'error' );
-				}else{
+				} else {
 					$mwb_isfw_error_text = esc_html__( 'Settings saved !', 'invoice-system-for-woocommere' );
 					$isfw_mwb_isfw_obj->mwb_isfw_plug_admin_notice( $mwb_isfw_error_text, 'success' );
 				}
@@ -448,7 +448,7 @@ class Invoice_system_for_woocommere_Admin {
 				'description' => __( 'This combination will be used as the invoice number', 'invoice-system-for-woocommere' ),
 				'value'       => array(
 					array(
-						'title'       => 'Prefix',
+						'title'       => __( 'Prefix', 'invoice-system-for-woocommerce' ),
 						'type'        => 'text',
 						'id'          => 'isfw_invoice_number_prefix',
 						'class'       => 'isfw_invoice_number_prefix',
@@ -457,7 +457,7 @@ class Invoice_system_for_woocommere_Admin {
 						'placeholder' => 'Prefix',
 					),
 					array(
-						'title'       => 'Digit',
+						'title'       => __( 'Digit', 'invoice-system-for-woocommerce' ),
 						'type'        => 'number',
 						'id'          => 'isfw_invoice_number_digit',
 						'class'       => 'isfw_invoice_number_digit',
@@ -466,7 +466,7 @@ class Invoice_system_for_woocommere_Admin {
 						'placeholder' => 'digit',
 					),
 					array(
-						'title'       => 'Suffix',
+						'title'       => __( 'Suffix', 'invoice-system-for-woocommerce' ),
 						'type'        => 'text',
 						'id'          => 'isfw_invoice_number_suffix',
 						'class'       => 'isfw_invoice_number_suffix',
@@ -504,7 +504,7 @@ class Invoice_system_for_woocommere_Admin {
 			array(
 				'title'       => __( 'Choose logo', 'invoice-system-for-woocommere' ),
 				'type'        => 'upload-button',
-				'button_text' => 'Upload Image',
+				'button_text' => __( 'Upload Image', 'invoice-system-for-woocommere' ),
 				'class'       => 'isfw-logo-upload_image',
 				'id'          => 'isfw-logo-upload_image',
 				'img-tag'     => array(
@@ -523,11 +523,11 @@ class Invoice_system_for_woocommere_Admin {
 			),
 			array(
 				'title'       => __( 'Send invoice for', 'invoice-system-for-woocommere' ),
-				'type'        => 'multiselect',
+				'type'        => 'select',
 				'description' => __( 'Please choose the status of orders to send invoice for.', 'invoice-system-for-woocommere' ),
 				'id'          => 'isfw_send_invoice_for',
 				'value'       => $order_status,
-				'class'       => 'isfw-multiselect-class mwb-defaut-multiselect',
+				'class'       => 'isfw-select-class',
 				'placeholder' => '',
 				'options'     => $order_statuses,
 			),
@@ -636,22 +636,6 @@ class Invoice_system_for_woocommere_Admin {
 		return 'not found';
 	}
 	/**
-	 * Creating column on orders listing page for pdf generation.
-	 *
-	 * @param array $columns array of columns.
-	 * @return array
-	 */
-	public function isfw_generate_pdf_order_listing_column( $columns ) {
-		$new_columns = array();
-		foreach ( $columns as $column_name => $column_info ) {
-			$new_columns[ $column_name ] = $column_info;
-			if ( 'order_status' === $column_name ) {
-				$new_columns['isfw_generate_pdf_order_listing_page_tab'] = __( 'Invoice', 'invoice-system-for-woocommerce' );
-			}
-		}
-		return $new_columns;
-	}
-	/**
 	 * Populating field for custom column on order listing page.
 	 *
 	 * @param string $column columns.
@@ -708,8 +692,13 @@ class Invoice_system_for_woocommere_Admin {
 			$dompdf->stream( $type . '_' . $order_id . '.pdf', array( 'Attachment' => 0 ) );
 		}
 		if ( 'download_on_server' === $action ) {
-			$output = $dompdf->output();
-			$path   = INVOICE_SYSTEM_FOR_WOOCOMMERE_DIR_PATH . 'invoices/' . $type . '_' . $order_id . '.pdf';
+			$output         = $dompdf->output();
+			$upload_dir     = wp_upload_dir();
+			$upload_basedir = $upload_dir['basedir'] . '/invoices/';
+			if ( ! file_exists( $upload_basedir ) ) {
+				wp_mkdir_p( $upload_basedir );
+			}
+			$path = $upload_basedir . $type . '_' . $order_id . '.pdf';
 			if ( ! file_exists( $path ) ) {
 				file_put_contents( $path, $output );
 			}
@@ -727,16 +716,17 @@ class Invoice_system_for_woocommere_Admin {
 	public function isfw_send_attachment_with_email( $attachments, $email_id, $order, $email ) {
 		$isfw_pdf_settings = get_option( 'mwb_isfw_pdf_general_settings' );
 		if ( $isfw_pdf_settings ) {
-			$order_status   = array_key_exists( 'order_status', $isfw_pdf_settings ) ? $isfw_pdf_settings['order_status'] : '';
-			$order_statuses = array();
-			foreach ( $order_status as $status ) {
-				$order_statuses[] = preg_replace( '/wc-/', 'customer_', $status ) . '_order';
-			}
-			if ( in_array( $email_id, $order_statuses, true ) ) {
-				$this->isfw_generating_pdf( $order->get_id(), 'invoice', 'download_on_server' );
-				$file = INVOICE_SYSTEM_FOR_WOOCOMMERE_DIR_PATH . 'invoices/invoice_' . $order->get_id() . '.pdf';
-				if ( file_exists( $file ) ) {
-					$attachments[] = $file;
+			$order_status = array_key_exists( 'order_status', $isfw_pdf_settings ) ? $isfw_pdf_settings['order_status'] : '';
+			if ( $order_status ) {
+				$order_statuses = preg_replace( '/wc-/', 'customer_', $order_status ) . '_order';
+				if ( $email_id === $order_statuses ) {
+					$this->isfw_generating_pdf( $order->get_id(), 'invoice', 'download_on_server' );
+					$upload_dir     = wp_upload_dir();
+					$upload_basedir = $upload_dir['basedir'] . '/invoices/';
+					$file           = $upload_basedir . 'invoice_' . $order->get_id() . '.pdf';
+					if ( file_exists( $file ) ) {
+						$attachments[] = $file;
+					}
 				}
 			}
 		}
@@ -763,17 +753,31 @@ class Invoice_system_for_woocommere_Admin {
 	 * @return url
 	 */
 	public function isfw_handling_bulk_action_for_pdf_generation( $redirect_to, $action, $post_ids ) {
-		$processed_ids = array();
+		$processed_ids  = array();
+		$zip            = new ZipArchive();
+		$upload_dir     = wp_upload_dir();
+		$upload_basedir = $upload_dir['basedir'] . '/invoices/';
+		$zip_path       = $upload_basedir . 'document.zip';
+		if ( file_exists( $zip_path ) ) {
+			@unlink( $zip_path );
+		}
+		$zip->open( $zip_path, ZipArchive::CREATE );
 		if ( 'isfw_download_invoice' === $action ) {
 			foreach ( $post_ids as $order_id ) {
 				$processed_ids[] = $order_id;
-				$this->isfw_generating_pdf( $order_id, 'invoice', 'download_on_server_and_zip' );
+				$upload_dir      = wp_upload_dir();
+				$upload_basedir  = $upload_dir['basedir'] . '/invoices/';
+				$file_pdf_path   = $upload_basedir . 'invoice_' . $order_id . '.pdf';
+				if ( ! file_exists( $file_pdf_path ) ) {
+					$this->isfw_generating_pdf( $order_id, 'invoice', 'download_on_server' );
+				}
+				$zip->addFile( $file_pdf_path );
 			}
+			$zip->close();
 			return $redirect_to = add_query_arg(
 				array(
 					'write_downloads' => '1',
 					'processed_count' => count( $processed_ids ),
-					'processed_ids'   => implode( ',', $processed_ids ),
 				),
 				$redirect_to
 			);
@@ -781,13 +785,19 @@ class Invoice_system_for_woocommere_Admin {
 		if ( 'isfw_download_packing_slip' === $action ) {
 			foreach ( $post_ids as $order_id ) {
 				$processed_ids[] = $order_id;
-				$this->isfw_generating_pdf( $order_id, 'packing_slip', 'download_on_server' );
+				$upload_dir      = wp_upload_dir();
+				$upload_basedir  = $upload_dir['basedir'] . '/invoices/';
+				$file_pdf_path   = $upload_basedir . 'packing_slip_' . $order_id . '.pdf';
+				if ( ! file_exists( $file_pdf_path ) ) {
+					$this->isfw_generating_pdf( $order_id, 'packing_slip', 'download_on_server' );
+				}
+				$zip->addFile( $file_pdf_path );
 			}
+			$zip->close();
 			return $redirect_to = add_query_arg(
 				array(
 					'write_downloads' => '1',
 					'processed_count' => count( $processed_ids ),
-					'processed_ids'   => implode( ',', $processed_ids ),
 				),
 				$redirect_to
 			);
@@ -801,16 +811,43 @@ class Invoice_system_for_woocommere_Admin {
 	 */
 	public function isfw_pdf_downloads_bulk_action_admin_notice() {
 		if ( empty( $_REQUEST['write_downloads'] ) ) return; // Exit.
-		$count = intval( $_REQUEST['processed_count'] );
-		printf(
-			'<div id="message" class="updated fade"><p>' .
-			_n(
-				'Processed %s Order for downloads.',
-				'Processed %s Orders for downloads.',
-				$count,
-				'write_downloads'
-			) . '</p></div>',
-			$count,
-		);
+		$processed_count = $_REQUEST['processed_count'];
+		add_thickbox();
+		?>
+		<div class="updated">
+		<div><?php esc_html_e( 'Files has been processed and are ready to donload in zip.', 'invoice-system-for-woocommerce' ); ?></div>
+		<a href="#TB_inline?width=100&height=100&inlineId=modal-window-id" class="thickbox"><?php esc_html_e( 'Click here to open panel to download', 'invoice-system-for-woocommerce' ); ?></a>
+			<div id="modal-window-id" style="display:none;">
+			<?php
+				$upload_dir     = wp_upload_dir();
+				$upload_baseurl = $upload_dir['baseurl'] . '/invoices/';
+				$file_url       = $upload_baseurl . 'document.zip';
+			?>
+				<div>
+					<?php printf( _n( '%s file has been processed', '%s files has been procesed', $processed_count, 'invoice-system-for-woocommerce' ), $processed_count ); ?>
+					<a href='<?php echo esc_attr( $file_url ); ?>'><?php esc_html_e( 'Download zip', 'invoice-system-for-woocommerce' ); ?></a>
+				</div>
+			</div>
+		</div>
+		<script type='text/javascript'>
+			jQuery(document).ready(function($){
+				setTimeout(function(){
+					$(document).find('a.thickbox').trigger('click');
+				}, 2000);
+			});
+		</script>
+		<?php
+		// $file_url = INVOICE_SYSTEM_FOR_WOOCOMMERE_DIR_URL .'invoices/document.zip';
+		// header( 'Content-Description: File Transfer' );
+		// header('Content-Type: application/octet-stream' );
+		// header( 'Content-Disposition: attachment; filename='.basename( $file_url ) );
+		// header( 'Content-Transfer-Encoding: binary' );
+		// header( 'Expires: 0');
+		// header( 'Cache-Control: must-revalidate, post-check=0, pre-check=0' );
+		// header( 'Pragma: public' );
+		// header( 'Content-Length: ' . filesize( $file_url ));
+		// ob_clean();
+		// flush();
+		// readfile( $file_url );
 	}
 }
