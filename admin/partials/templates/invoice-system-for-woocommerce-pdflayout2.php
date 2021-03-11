@@ -18,29 +18,42 @@ if ( ! defined( 'ABSPATH' ) ) {
  * @return string
  */
 function return_ob_value( $order_id, $type ) {
-	$order_details      = do_shortcode( '[isw_fetch_order order_id ="' . $order_id . '"]' );
-	$order_details      = json_decode( $order_details, true );
-	$order_item_arr     = $order_details['order_items'];
-	$order_shipping_arr = $order_details['order_shipping'];
-	$order_billing_arr  = $order_details['order_billing'];
-	$order_payment_arr  = $order_details['order_payment'];
-	$isfw_pdf_settings  = get_option( 'mwb_isfw_pdf_general_settings' );
+	$order_details         = do_shortcode( '[isw_fetch_order order_id ="' . $order_id . '"]' );
+	$order_details         = json_decode( $order_details, true );
+	$shipping_details      = $order_details['shipping_details'];
+	$billing_details       = $order_details['billing_details'];
+	$order_product_details = $order_details['product_details'];
+	$isfw_pdf_settings     = get_option( 'mwb_isfw_pdf_general_settings' );
 	if ( $isfw_pdf_settings ) {
-		$prefix     = array_key_exists( 'prefix', $isfw_pdf_settings ) ? $isfw_pdf_settings['prefix'] : '';
-		$suffix     = array_key_exists( 'suffix', $isfw_pdf_settings ) ? $isfw_pdf_settings['suffix'] : '';
-		$digit      = array_key_exists( 'digit', $isfw_pdf_settings ) ? $isfw_pdf_settings['digit'] : 3;
-		$logo       = array_key_exists( 'logo', $isfw_pdf_settings ) ? $isfw_pdf_settings['logo'] : '';
-		$date       = array_key_exists( 'date', $isfw_pdf_settings ) ? $isfw_pdf_settings['date'] : '';
-		$disclaimer = array_key_exists( 'disclaimer', $isfw_pdf_settings ) ? $isfw_pdf_settings['disclaimer'] : 'Thank you for shopping with us.';
-		$color      = array_key_exists( 'color', $isfw_pdf_settings ) ? $isfw_pdf_settings['color'] : '#000000';
+		$prefix          = array_key_exists( 'prefix', $isfw_pdf_settings ) ? $isfw_pdf_settings['prefix'] : '';
+		$suffix          = array_key_exists( 'suffix', $isfw_pdf_settings ) ? $isfw_pdf_settings['suffix'] : '';
+		$digit           = array_key_exists( 'digit', $isfw_pdf_settings ) ? $isfw_pdf_settings['digit'] : 3;
+		$logo            = array_key_exists( 'logo', $isfw_pdf_settings ) ? $isfw_pdf_settings['logo'] : '';
+		$date            = array_key_exists( 'date', $isfw_pdf_settings ) ? $isfw_pdf_settings['date'] : '';
+		$disclaimer      = array_key_exists( 'disclaimer', $isfw_pdf_settings ) ? $isfw_pdf_settings['disclaimer'] : 'Thank you for shopping with us.';
+		$color           = array_key_exists( 'color', $isfw_pdf_settings ) ? $isfw_pdf_settings['color'] : '#000000';
+		$company_name    = array_key_exists( 'company_name', $isfw_pdf_settings ) ? $isfw_pdf_settings['company_name'] : '';
+		$company_city    = array_key_exists( 'company_city', $isfw_pdf_settings ) ? $isfw_pdf_settings['company_city'] : '';
+		$company_state   = array_key_exists( 'company_state', $isfw_pdf_settings ) ? $isfw_pdf_settings['company_state'] : '';
+		$company_pin     = array_key_exists( 'company_pin', $isfw_pdf_settings ) ? $isfw_pdf_settings['company_pin'] : '';
+		$company_phone   = array_key_exists( 'company_phone', $isfw_pdf_settings ) ? $isfw_pdf_settings['company_phone'] : '';
+		$company_email   = array_key_exists( 'company_email', $isfw_pdf_settings ) ? $isfw_pdf_settings['company_email'] : '';
+		$company_address = array_key_exists( 'company_address', $isfw_pdf_settings ) ? $isfw_pdf_settings['company_address'] : '';
 	} else {
-		$prefix     = '';
-		$suffix     = '';
-		$digit      = 3;
-		$logo       = '';
-		$date       = '';
-		$disclaimer = 'Thank you for shopping with us.';
-		$color      = '#000000';
+		$prefix          = '';
+		$suffix          = '';
+		$digit           = 3;
+		$logo            = '';
+		$date            = '';
+		$disclaimer      = 'Thank you for shopping with us.';
+		$color           = '#000000';
+		$company_name    = '';
+		$company_city    = '';
+		$company_state   = '';
+		$company_pin     = '';
+		$company_phone   = '';
+		$company_email   = '';
+		$company_address = '';
 	}
 	$prev_invoice_id = get_option( 'isfw_current_invoice_id', true );
 	if ( $prev_invoice_id ) {
@@ -88,7 +101,7 @@ function return_ob_value( $order_id, $type ) {
 											text-align: left;
 										}
 										#isfw-prod-listing-table-title {
-											background-color: gray;
+											background-color: ' . $color . ';
 											color: white;
 										}
 										#isfw-prod-listing-table-bottom {
@@ -98,7 +111,7 @@ function return_ob_value( $order_id, $type ) {
 										}
 										
 										#isfw-invoice-text{
-											color: gray;
+											color: ' . $color . ';
 											margin-bottom: 30px;
 										}
 								
@@ -110,6 +123,10 @@ function return_ob_value( $order_id, $type ) {
 										}
 										.isfw-invoice-greetings {
 											margin-top: 40px;
+										}
+										#isfw-invoice-title-right {
+											margin-top: -20px;
+											text-align: right;
 										}
 									</style>
 								</head>
@@ -126,17 +143,16 @@ function return_ob_value( $order_id, $type ) {
 												</div>
 												<div>
 													<b>Date</b><br/>
-													' . date( 'd/m/y' ) . '
+													' . $billing_details["order_created_date"] . '
 												</div>
 											</div>
 											<div id="isfw-invoice-title-right" class="isfw-invoice-inline">
-												<h3>
-													Company Details
-												</h3>
 												<div>
+													<b>Company Details</b><br/>
+													Lucknow ,Uttar Pradesh<br/>
 													<b>Address</b><br/>
-													Lucknow ,<br/> India
-													9163758888
+													Lucknow ,<br/> India<br/>
+													9163758888<br/>
 													abc@xyz.com
 												</div>
 											</div>
@@ -145,20 +161,26 @@ function return_ob_value( $order_id, $type ) {
 		$html .= '<div id="isfw-invoice-title-to" >
 					<b>Invoice to</b><br/>
 					<div>
-						' . $order_billing_arr["billing_full_name"] . '<br/>
-						' . $order_billing_arr["billing_address_1"] . ' ' . $order_billing_arr["billing_address_2"] . '<br/>
-						' . $order_billing_arr["billing_phone"] . '<br/>
-						' . $order_billing_arr["billing_email"] . '<br/>
+						' . $billing_details["billing_first_name"] . $billing_details["billing_last_name"] . '<br/>
+						' . $billing_details["billing_address_1"] . ' ' . $billing_details["billing_address_2"] . '<br/>
+						' . $billing_details["billing_city"] . '<br/>
+						' . $billing_details["billing_state"] . '<br/>
+						' . $billing_details["billing_postcode"] . '<br/>
+						' . $billing_details["billing_phone"] . '<br/>
+						' . $billing_details["billing_email"] . '<br/>
 					</div>
 				</div>';
 	} else {
 		$html .= '<div id="isfw-invoice-title-to" >
 					<b>SHIP TO</b><br/>
 					<div>
-						' . $order_shipping_arr["shipping_full_name"] . '<br/>
-						' . $order_shipping_arr["shipping_address_1"] . ' ' . $order_shipping_arr["shipping_address_2"] . '<br/>
-						' . $order_billing_arr["billing_phone"] . '<br/>
-						' . $order_billing_arr["billing_email"] . '<br/>
+						' . $shipping_details["shipping_first_name"] . $shipping_details["shipping_last_name"] . '<br/>
+						' . $shipping_details["shipping_address_1"] . ' ' . $shipping_details["shipping_address_2"] . '<br/>
+						' . $shipping_details["shipping_city"] . '<br/>
+						' . $shipping_details["shipping_state"] . '<br/>
+						' . $shipping_details["shipping_postcode"] . '<br/>
+						' . $billing_details["billing_phone"] . '<br/>
+						' . $billing_details["billing_email"] . '<br/>
 					</div>
 				</div>';
 	}
@@ -168,19 +190,19 @@ function return_ob_value( $order_id, $type ) {
 						<tr id="isfw-prod-listing-table-title">
 							<th id="isfw-table-items">Items</th>
 							<th>Quantity</th>
-							<th>Price(' . $order_payment_arr["order_currency"] . ')</th>
+							<th>Price(' . $billing_details["order_currency"] . ')</th>
 							<th>Tax (%)</th>
-							<th>Amount(' . $order_payment_arr["order_currency"] . ')</th>
+							<th>Amount(' . $billing_details["order_currency"] . ')</th>
 						</tr>
 					</thead>
 					<tbody id="isfw-pdf-prod-body">';
-	foreach ( $order_item_arr as $product ) {
+	foreach ( $order_product_details as $product ) {
 		$html .= '<tr>
-					<td class="isfw-product-name">' . $product["prod_name"] . '</td>
-					<td>' . $product["quantity"] . '</td>
-					<td>' . $product["sub_total"] . '</td>
-					<td>' . array_shift( array_shift( $product["percent_tax"] ) ) . '</td>
-					<td>' . $product["total"] . '</td>
+					<td class="isfw-product-name">' . $product["product_name"] . '</td>
+					<td>' . $product["product_quantity"] . '</td>
+					<td>' . $product["product_price"] . '</td>
+					<td>' . $product["tax_percent"] . '</td>
+					<td>' . $product["product_total"] . '</td>
 				</tr>';
 	}
 		$html .= '</tbody>
@@ -189,20 +211,16 @@ function return_ob_value( $order_id, $type ) {
 				<div id="isfw-prod-total-calc">
 					<table border = "0" cellpadding = "0" cellspacing = "0">
 						<tr>
-							<td>subtotal : </td>
-							<td>' . $order_payment_arr["order_currency"] . ' ' . $order_payment_arr["sub_total"] . '</td>
+							<td>Subtotal(' . $billing_details["order_currency"] . '): ' . $billing_details["order_subtotal"] . '</td>
 						</tr>
 						<tr>
-							<td>shipping : </td>
-							<td>' . $order_payment_arr["order_currency"] . ' ' . $order_shipping_arr["shipping_total"] . '</td>
+							<td>Shipping(' . $billing_details["order_currency"] . '): ' . $shipping_details["shipping_total"] . '</td>
 						</tr>
 						<tr>
-							<td>tax total : </td>
-							<td> ' . $order_payment_arr["order_currency"] . ' ' . array_shift( array_shift( $order_payment_arr["tax_total"] ) ) . '</td>
+							<td>Total tax(' . $billing_details["order_currency"] . '): ' . $billing_details["tax_totals"] . '</td>
 						</tr>
 						<tr>
-							<td>Total : </td>
-							<td> ' . $order_payment_arr["order_currency"] . ' ' . $order_payment_arr["order_total"] . '</td>
+							<td>Total(' . $billing_details["order_currency"] . '): ' . $billing_details["cart_total"] . '</td>
 						</tr>
 					</table>
 				</div>

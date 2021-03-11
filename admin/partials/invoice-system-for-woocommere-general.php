@@ -20,7 +20,6 @@ $isfw_template_pdf_settings = apply_filters( 'isfw_template_pdf_settings_array',
 <!--  template file for admin settings. -->
 <div class="isfw-section-wrap">
 	<?php
-		$isfw_template_html = $isfw_mwb_isfw_obj->mwb_isfw_plug_generate_html( $isfw_template_pdf_settings );
-		echo esc_html( $isfw_template_html );
+		$isfw_mwb_isfw_obj->mwb_isfw_plug_generate_html( $isfw_template_pdf_settings );
 	?>
 </div>

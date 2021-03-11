@@ -780,6 +780,7 @@ class Invoice_system_for_woocommere {
 											type="<?php echo esc_attr( $isfw_subcomponent['type'] ); ?>"
 											value="<?php echo esc_attr( $isfw_subcomponent['value'] ); ?>"
 											placeholder="<?php echo esc_attr( $isfw_subcomponent['placeholder'] ); ?>"
+											<?php echo esc_attr( ( 'number' === $isfw_subcomponent['type'] ) ? 'max=10 min=0' : '' ); ?>
 											>
 										</label>
 							<?php } ?>
@@ -806,6 +807,7 @@ class Invoice_system_for_woocommere {
 										id="<?php echo esc_attr( $isfw_component['id'] ); ?>"
 										type="<?php echo esc_attr( $isfw_component['type'] ); ?>"
 										value="<?php echo esc_attr( $isfw_component['value'] ); ?>"
+										<?php echo esc_html( ( 'date' === $isfw_component['type'] ) ? 'max='. date( 'Y-m-d', strtotime( date( "Y-m-d", mktime() ) . " + 365 day" ) ) .' ' . 'min=' . date( "Y-m-d" ) . '' : '' ); ?>
 										>
 									</label>
 									<div class="mdc-text-field-helper-line">

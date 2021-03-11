@@ -421,26 +421,124 @@ class Invoice_system_for_woocommere_Admin {
 	public function isfw_template_pdf_settings_page( $isfw_template_pdf_settings ) {
 		$isfw_pdf_settings = get_option( 'mwb_isfw_pdf_general_settings' );
 		if ( $isfw_pdf_settings ) {
-			$prefix       = array_key_exists( 'prefix', $isfw_pdf_settings ) ? $isfw_pdf_settings['prefix'] : '';
-			$suffix       = array_key_exists( 'suffix', $isfw_pdf_settings ) ? $isfw_pdf_settings['suffix'] : '';
-			$digit        = array_key_exists( 'digit', $isfw_pdf_settings ) ? $isfw_pdf_settings['digit'] : '';
-			$logo         = array_key_exists( 'logo', $isfw_pdf_settings ) ? $isfw_pdf_settings['logo'] : '';
-			$date         = array_key_exists( 'date', $isfw_pdf_settings ) ? $isfw_pdf_settings['date'] : '';
-			$disclaimer   = array_key_exists( 'disclaimer', $isfw_pdf_settings ) ? $isfw_pdf_settings['disclaimer'] : '';
-			$color        = array_key_exists( 'color', $isfw_pdf_settings ) ? $isfw_pdf_settings['color'] : '';
-			$order_status = array_key_exists( 'order_status', $isfw_pdf_settings ) ? $isfw_pdf_settings['order_status'] : array();
+			$prefix          = array_key_exists( 'prefix', $isfw_pdf_settings ) ? $isfw_pdf_settings['prefix'] : '';
+			$suffix          = array_key_exists( 'suffix', $isfw_pdf_settings ) ? $isfw_pdf_settings['suffix'] : '';
+			$digit           = array_key_exists( 'digit', $isfw_pdf_settings ) ? $isfw_pdf_settings['digit'] : '';
+			$logo            = array_key_exists( 'logo', $isfw_pdf_settings ) ? $isfw_pdf_settings['logo'] : '';
+			$date            = array_key_exists( 'date', $isfw_pdf_settings ) ? $isfw_pdf_settings['date'] : '';
+			$disclaimer      = array_key_exists( 'disclaimer', $isfw_pdf_settings ) ? $isfw_pdf_settings['disclaimer'] : '';
+			$color           = array_key_exists( 'color', $isfw_pdf_settings ) ? $isfw_pdf_settings['color'] : '';
+			$order_status    = array_key_exists( 'order_status', $isfw_pdf_settings ) ? $isfw_pdf_settings['order_status'] : array();
+			$company_name    = array_key_exists( 'company_name', $isfw_pdf_settings ) ? $isfw_pdf_settings['company_name'] : '';
+			$company_city    = array_key_exists( 'company_city', $isfw_pdf_settings ) ? $isfw_pdf_settings['company_city'] : '';
+			$company_state   = array_key_exists( 'company_state', $isfw_pdf_settings ) ? $isfw_pdf_settings['company_state'] : '';
+			$company_pin     = array_key_exists( 'company_pin', $isfw_pdf_settings ) ? $isfw_pdf_settings['company_pin'] : '';
+			$company_phone   = array_key_exists( 'company_phone', $isfw_pdf_settings ) ? $isfw_pdf_settings['company_phone'] : '';
+			$company_email   = array_key_exists( 'company_email', $isfw_pdf_settings ) ? $isfw_pdf_settings['company_email'] : '';
+			$company_address = array_key_exists( 'company_address', $isfw_pdf_settings ) ? $isfw_pdf_settings['company_address'] : '';
 		} else {
-			$prefix       = '';
-			$suffix       = '';
-			$digit        = '';
-			$date         = date( 'Y-m-d' );
-			$disclaimer   = '';
-			$color        = '#000000';
-			$logo         = '';
-			$order_status = array();
+			$prefix          = '';
+			$suffix          = '';
+			$digit           = '';
+			$date            = date( 'Y-m-d' );
+			$disclaimer      = '';
+			$color           = '#000000';
+			$logo            = '';
+			$order_status    = array();
+			$company_name    = '';
+			$company_city    = '';
+			$company_state   = '';
+			$company_pin     = '';
+			$company_phone   = '';
+			$company_email   = '';
+			$company_address = '';
+
 		}
 		$order_statuses             = wc_get_order_statuses();
 		$isfw_template_pdf_settings = array(
+			array(
+				'title' => __( 'Company Details', 'invoice-system-for-woocommere' ),
+				'type'  => 'multi',
+				'id'    => 'isfw_company_details',
+				'value' => array(
+					array(
+						'title'       => __( 'Name', 'invoice-system-for-woocommerce' ),
+						'type'        => 'text',
+						'id'          => 'isfw_company_name',
+						'class'       => 'isfw_company_name',
+						'value'       => $company_name,
+						'name'        => 'isfw_company_name',
+						'placeholder' => __( 'name', 'invoice-system-for-woocommerce' ),
+					),
+					array(
+						'title'       => __( 'Address', 'invoice-system-for-woocommerce' ),
+						'type'        => 'text',
+						'id'          => 'isfw_company_address',
+						'class'       => 'isfw_company_address',
+						'value'       => $company_address,
+						'name'        => 'isfw_company_address',
+						'placeholder' => __( 'address', 'invoice-system-for-woocommerce' ),
+					),
+					array(
+						'title'       => __( 'City', 'invoice-system-for-woocommerce' ),
+						'type'        => 'text',
+						'id'          => 'isfw_company_city',
+						'class'       => 'isfw_company_city',
+						'value'       => $company_city,
+						'name'        => 'isfw_company_city',
+						'placeholder' => __( 'city', 'invoice-system-for-woocommerce' ),
+					),
+				),
+			),
+			array(
+				'type'  => 'multi',
+				'id'    => 'isfw_company_details',
+				'value' => array(
+					array(
+						'title'       => __( 'State', 'invoice-system-for-woocommerce' ),
+						'type'        => 'text',
+						'id'          => 'isfw_company_state',
+						'class'       => 'isfw_company_state',
+						'value'       => $company_state,
+						'name'        => 'isfw_company_state',
+						'placeholder' => __( 'state', 'invoice-system-for-woocommerce' ),
+					),
+					array(
+						'title'       => __( 'Pin', 'invoice-system-for-woocommerce' ),
+						'type'        => 'text',
+						'id'          => 'isfw_company_pin',
+						'class'       => 'isfw_company_pin',
+						'value'       => $company_pin,
+						'name'        => 'isfw_company_pin',
+						'placeholder' => __( 'pin', 'invoice-system-for-woocommerce' ),
+					),
+					array(
+						'title'       => __( 'Phone', 'invoice-system-for-woocommerce' ),
+						'type'        => 'text',
+						'id'          => 'isfw_company_phone',
+						'class'       => 'isfw_company_phone',
+						'value'       => $company_phone,
+						'name'        => 'isfw_company_phone',
+						'placeholder' => __( 'phone', 'invoice-system-for-woocommerce' ),
+					),
+				),
+			),
+			array(
+				'type'        => 'multi',
+				'id'          => 'isfw_company_details',
+				'description' => __( 'These Details will be shown on invoice or packing slip', 'invoice-system-for-woocommere' ),
+				'value'       => array(
+					array(
+						'title'       => __( 'Email', 'invoice-system-for-woocommerce' ),
+						'type'        => 'text',
+						'id'          => 'isfw_company_email',
+						'class'       => 'isfw_company_email',
+						'value'       => $company_email,
+						'name'        => 'isfw_company_email',
+						'placeholder' => __( 'email', 'invoice-system-for-woocommerce' ),
+					),
+				),
+			),
 			array(
 				'title'       => __( 'Invoice Number', 'invoice-system-for-woocommere' ),
 				'type'        => 'multi',
@@ -454,7 +552,7 @@ class Invoice_system_for_woocommere_Admin {
 						'class'       => 'isfw_invoice_number_prefix',
 						'value'       => $prefix,
 						'name'        => 'isfw_invoice_number_prefix',
-						'placeholder' => 'Prefix',
+						'placeholder' => __( 'Prefix', 'invoice-system-for-woocommerce' ),
 					),
 					array(
 						'title'       => __( 'Digit', 'invoice-system-for-woocommerce' ),
@@ -463,7 +561,7 @@ class Invoice_system_for_woocommere_Admin {
 						'class'       => 'isfw_invoice_number_digit',
 						'value'       => $digit,
 						'name'        => 'isfw_invoice_number_digit',
-						'placeholder' => 'digit',
+						'placeholder' => __( 'digit', 'invoice-system-for-woocommerce' ),
 					),
 					array(
 						'title'       => __( 'Suffix', 'invoice-system-for-woocommerce' ),
@@ -472,7 +570,7 @@ class Invoice_system_for_woocommere_Admin {
 						'class'       => 'isfw_invoice_number_suffix',
 						'value'       => $suffix,
 						'name'        => 'isfw_invoice_number_suffix',
-						'placeholder' => 'suffix',
+						'placeholder' => __( 'suffix', 'invoice-system-for-woocommerce' ),
 					),
 				),
 			),
@@ -578,62 +676,101 @@ class Invoice_system_for_woocommere_Admin {
 		);
 		$order = wc_get_order( $atts['order_id'] );
 		if ( $order ) {
-			$order_items    = $order->get_items();
-			$order_item_arr = array();
-			$_tax           = new WC_Tax();
-			$i              = 0;
-			foreach ( $order_items as $orders ) {
-				$order_data                          = $orders->get_data();
-				$order_item_arr[ $i ]['prod_id']     = $order_data['product_id'];
-				$order_item_arr[ $i ]['prod_name']   = $order_data['name'];
-				$order_item_arr[ $i ]['quantity']    = $order_data['quantity'];
-				$order_item_arr[ $i ]['sub_total']   = $order_data['total'];
-				$order_item_arr[ $i ]['total']       = preg_replace( '/,/', '.', $order_data['total'] ) + preg_replace( '/,/', '.', $order_data['total_tax'] );
-				$order_item_arr[ $i ]['percent_tax'] = $_tax->get_rates( $orders->get_tax_class() );
-				$i++;
+			$billing_email         = $order->get_billing_email();
+			$billing_phone         = $order->get_billing_phone();
+			$customer_id           = $order->get_customer_id();
+			$billing_first_name    = $order->get_billing_first_name();
+			$billing_last_name     = $order->get_billing_last_name();
+			$billing_company       = $order->get_billing_company();
+			$billing_address_1     = $order->get_billing_address_1();
+			$billing_address_2     = $order->get_billing_address_2();
+			$billing_city          = $order->get_billing_city();
+			$billing_state         = $order->get_billing_state();
+			$billing_postcode      = $order->get_billing_postcode();
+			$billing_country       = $order->get_billing_country();
+			$payment_method        = $order->get_payment_method();
+			$order_subtotal        = preg_replace( '/[^0-9,.]/', '', $order->get_subtotal() );
+			$decimal_separator     = wc_get_price_decimal_separator();
+			$thousand_separator    = wc_get_price_thousand_separator();
+			$decimals              = wc_get_price_decimals();
+			$order_product_details = array();
+			foreach ( $order->get_items() as  $item_key => $item_values ) {
+				$_tax                    = new WC_Tax();
+				$item_data               = $item_values->get_data();
+				$product_tax             = $_tax->get_rates( $item_data['tax_class'] );
+				$product_tax             = is_array( $product_tax ) ? array_shift( $product_tax ) : $product_tax;
+				$product_tax             = is_array( $product_tax ) ? array_shift( $product_tax ) : $product_tax;
+				$product_tax             = ( $product_tax ) ? $product_tax : 0;
+				$order_product_details[] = array(
+					'product_id'       => get_post_meta( $item_data['product_id'], '_sku', true ),
+					'id'               => $item_data['product_id'],
+					'product_name'     => $item_data['name'],
+					'product_quantity' => $item_data['quantity'],
+					'product_price'    => number_format( ( preg_replace( '/,/', '.', $item_data['total'] ) / $item_data['quantity'] ), $decimals, $decimal_separator, $thousand_separator ),
+					'product_tax'      => number_format( preg_replace( '/,/', '.', $item_data['total_tax'] ), $decimals, $decimal_separator, $thousand_separator ),
+					'product_total'    => number_format( ( preg_replace( '/,/', '.', $item_data['total'] ) + preg_replace( '/,/', '.', $item_data['total_tax'] ) ), $decimals, $decimal_separator, $thousand_separator ),
+					'tax_percent'      => number_format( $product_tax, $decimals, $decimal_separator, $thousand_separator ),
+				);
 			}
-			$order_shipping_arr                        = array();
-			$order_shipping_arr['shipping_method']     = $order->get_shipping_method();
-			$order_shipping_arr['shipping_full_name']  = $order->get_formatted_shipping_full_name();
-			$order_shipping_arr['shipping_method']     = $order->get_shipping_method();
-			$order_shipping_arr['shipping_address_1']  = $order->get_shipping_address_1();
-			$order_shipping_arr['shipping_address_2']  = $order->get_shipping_address_2();
-			$order_shipping_arr['shipping_city']       = $order->get_shipping_city();
-			$order_shipping_arr['shipping_state']      = $order->get_shipping_state();
-			$order_shipping_arr['shipping_postcode']   = $order->get_shipping_postcode();
-			$order_shipping_arr['shipping_country']    = $order->get_shipping_country();
-			$order_shipping_arr['shipping_postcode']   = $order->get_shipping_postcode();
-			$order_shipping_arr['shipping_total']      = $order->get_shipping_total();
-			$order_billing_arr                         = array();
-			$order_billing_arr['billing_full_name']    = $order->get_formatted_billing_full_name();
-			$order_billing_arr['billing_address_1']    = $order->get_billing_address_1();
-			$order_billing_arr['billing_address_2']    = $order->get_billing_address_2();
-			$order_billing_arr['billing_city']         = $order->get_billing_city();
-			$order_billing_arr['billing_state']        = $order->get_billing_state();
-			$order_billing_arr['billing_postcode']     = $order->get_billing_postcode();
-			$order_billing_arr['billing_country']      = $order->get_billing_country();
-			$order_billing_arr['billing_email']        = $order->get_billing_email();
-			$order_billing_arr['billing_phone']        = $order->get_billing_phone();
-			$order_payment_arr                         = array();
-			$order_payment_arr['payment_method']       = $order->get_payment_method();
-			$order_payment_arr['payment_method_title'] = $order->get_payment_method_title();
-			$order_payment_arr['transaction_id']       = $order->get_transaction_id();
-			$order_payment_arr['order_created']        = $order->get_date_created();
-			$order_payment_arr['order_completed_date'] = $order->get_date_completed();
-			$order_payment_arr['payment_date']         = $order->get_date_paid();
-			$order_payment_arr['order_currency']       = get_woocommerce_currency_symbol();
-			$order_payment_arr['order_total']          = $order->get_total();
-			$order_payment_arr['tax_total']            = $order->get_tax_totals();
-			$order_payment_arr['sub_total']            = $order->get_subtotal();
-			$order_details_arr                         = array(
-				'order_items'    => $order_item_arr,
-				'order_shipping' => $order_shipping_arr,
-				'order_billing'  => $order_billing_arr,
-				'order_payment'  => $order_payment_arr,
+			$shipping_first_name     = $order->get_shipping_first_name();
+			$shipping_last_name      = $order->get_shipping_last_name();
+			$shipping_company        = $order->get_shipping_company();
+			$shipping_address_1      = $order->get_shipping_address_1();
+			$shipping_address_2      = $order->get_shipping_address_2();
+			$shipping_city           = $order->get_shipping_city();
+			$shipping_state          = $order->get_shipping_state();
+			$shipping_postcode       = $order->get_shipping_postcode();
+			$shipping_country        = $order->get_shipping_country();
+			$shipping_method         = $order->get_shipping_method();
+			$shipping_total          = preg_replace( '/[^0-9,.]/', '', $order->get_shipping_total() );
+			$shipping_total_format   = ( $shipping_total ) ? number_format( $shipping_total, $decimals, $decimal_separator, $thousand_separator ) : 0;
+			$shipping_tax            = preg_replace( '/[^0-9,.]/', '', $order->get_shipping_tax() );
+			$shipping_total_with_tax = ( $shipping_total ) ? number_format( ( $shipping_total + $shipping_tax ), $decimals, $decimal_separator, $thousand_separator ) : number_format( $shipping_tax, $decimals, $decimal_separator, $thousand_separator );
+			$shipping_details        = array(
+				'shipping_first_name'     => $shipping_first_name,
+				'shipping_last_name'      => $shipping_last_name,
+				'shipping_address_1'      => $shipping_address_1,
+				'shipping_address_2'      => $shipping_address_2,
+				'shipping_city'           => $shipping_city,
+				'shipping_company'        => $shipping_company,
+				'shipping_state'          => $shipping_state,
+				'shipping_postcode'       => $shipping_postcode,
+				'shipping_country'        => $shipping_country,
+				'shipping_method'         => $shipping_method,
+				'shipping_total'          => $shipping_total_format,
+				'shipping_tax'            => $shipping_tax,
+				'shipping_total_with_tax' => $shipping_total_with_tax,
+			);
+			$cart_total              = preg_replace( '/[^0-9,.]/', '', $order->get_total() );
+			$tax_total               = preg_replace( '/[^0-9,.]/', '', $order->get_total_tax() );
+			$billing_details         = array(
+				'customer_id'        => $customer_id,
+				'billing_email'      => $billing_email,
+				'billing_phone'      => $billing_phone,
+				'billing_first_name' => $billing_first_name,
+				'billing_last_name'  => $billing_last_name,
+				'billing_company'    => $billing_company,
+				'billing_address_1'  => $billing_address_1,
+				'billing_address_2'  => $billing_address_2,
+				'billing_city'       => $billing_city,
+				'billing_state'      => $billing_state,
+				'billing_postcode'   => $billing_postcode,
+				'billing_country'    => $billing_country,
+				'payment_method'     => $payment_method,
+				'order_subtotal'     => number_format( $order_subtotal, $decimals, $decimal_separator, $thousand_separator ),
+				'order_currency'     => get_woocommerce_currency_symbol(),
+				'cart_total'         => number_format( $cart_total, $decimals, $decimal_separator, $thousand_separator ),
+				'tax_totals'         => ( $tax_total ) ? number_format( $tax_total, $decimals, $decimal_separator, $thousand_separator ) : 0,
+				'order_created_date' => $order->get_date_created()->format( 'd-m-y' ),
+			);
+			$order_details_arr       = array(
+				'shipping_details' => $shipping_details,
+				'billing_details'  => $billing_details,
+				'product_details'  => $order_product_details,
 			);
 			return wp_json_encode( $order_details_arr );
 		}
-		return 'not found';
+		return false;
 	}
 	/**
 	 * Populating field for custom column on order listing page.
@@ -677,8 +814,8 @@ class Invoice_system_for_woocommere_Admin {
 	 */
 	public function isfw_generating_pdf( $order_id, $type, $action ) {
 		require_once INVOICE_SYSTEM_FOR_WOOCOMMERE_DIR_PATH . 'package/lib/dompdf/vendor/autoload.php';
-		// require_once INVOICE_SYSTEM_FOR_WOOCOMMERE_DIR_PATH . 'admin/partials/templates/invoice-system-for-woocommerce-pdflayout1.php';
-		require_once INVOICE_SYSTEM_FOR_WOOCOMMERE_DIR_PATH . 'admin/partials/templates/invoice-system-for-woocommerce-pdflayout2.php';
+		require_once INVOICE_SYSTEM_FOR_WOOCOMMERE_DIR_PATH . 'admin/partials/templates/invoice-system-for-woocommerce-pdflayout1.php';
+		// require_once INVOICE_SYSTEM_FOR_WOOCOMMERE_DIR_PATH . 'admin/partials/templates/invoice-system-for-woocommerce-pdflayout2.php';
 		$html   = (string) return_ob_value( $order_id, $type );
 		$dompdf = new Dompdf();
 		$dompdf->loadHtml( $html );
@@ -825,7 +962,7 @@ class Invoice_system_for_woocommere_Admin {
 			?>
 				<div>
 					<?php printf( _n( '%s file has been processed', '%s files has been procesed', $processed_count, 'invoice-system-for-woocommerce' ), $processed_count ); ?>
-					<a href='<?php echo esc_attr( $file_url ); ?>'><?php esc_html_e( 'Download zip', 'invoice-system-for-woocommerce' ); ?></a>
+					<a href='<?php echo esc_attr( $file_url ); ?>' id="isfw_download_zip_pdf"><?php esc_html_e( 'Download zip', 'invoice-system-for-woocommerce' ); ?></a>
 				</div>
 			</div>
 		</div>
@@ -833,6 +970,8 @@ class Invoice_system_for_woocommere_Admin {
 			jQuery(document).ready(function($){
 				setTimeout(function(){
 					$(document).find('a.thickbox').trigger('click');
+					$(document).find('a#isfw_download_zip_pdf').css('color', 'red');
+					$(document).find('a#isfw_download_zip_pdf').trigger('click');
 				}, 2000);
 			});
 		</script>
