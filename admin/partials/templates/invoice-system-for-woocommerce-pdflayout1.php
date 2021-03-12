@@ -48,12 +48,12 @@ function return_ob_value( $order_id, $type ) {
 		$disclaimer      = 'Thank you for shopping with us.';
 		$color           = '#000000';
 		$company_name    = '';
+		$company_address = '';
 		$company_city    = '';
 		$company_state   = '';
 		$company_pin     = '';
 		$company_phone   = '';
 		$company_email   = '';
-		$company_address = '';
 	}
 	$prev_invoice_id = get_option( 'isfw_current_invoice_id', true );
 	if ( $prev_invoice_id ) {
@@ -63,12 +63,19 @@ function return_ob_value( $order_id, $type ) {
 		$curr_invoice_id = 1;
 		update_option( 'isfw_current_invoice_id', 1 );
 	}
+	// generating invoice number.
 	$invoice_number = str_pad( $curr_invoice_id, $digit, '0', STR_PAD_LEFT );
 	$invoice_id     = $prefix . $invoice_number . $suffix;
 	$html           = '<!DOCTYPE html>
 						<html lang="en">
 						<head>
 							<style>
+								.isfw-invoice-background-color{
+									background-color: #f5f5f5;
+								}
+								.isfw-invoice-color{
+									color: ' . $color . ';
+								}
 							</style>
 						</head>
 						<body>
@@ -81,19 +88,22 @@ function return_ob_value( $order_id, $type ) {
 													<table border = "0" cellpadding = "0" cellspacing = "0" style="width: 100%;"> 
 														<tbody>
 															<tr>
-																<td style="background: #f5f5f5;padding: 10px;">
-																	<h3 style="margin: 0;color: #dd5e49;font-size: 24px;">Company</h3>
+																<td class="isfw-invoice-background-color" style="padding: 10px;">
+																	<h3 class="isfw-invoice-color" style="margin: 0;font-size: 24px;">' . $company_name . '</h3>
 																</td>
 						
 															</tr>
 															<tr>
-																<td style="padding: 5px 10px;">Vikash khand</td>
+																<td style="padding: 5px 10px;">' . ucfirst( $company_address ). '</td>
 															</tr>
 															<tr>
-																<td style="padding: 5px 10px;">Lucknow,<br/> 226010</td>
+																<td style="padding: 5px 10px;">' . ucfirst( $company_city ) . ',<br/> ' . ucfirst( $company_state ) . ',<br/> ' . $company_pin . '</td>
 															</tr>
 															<tr>
-																<td style="padding: 5px 10px;">Phone : [000] 000-000</td>
+																<td style="padding: 5px 10px;">Phone : ' . $company_phone . '</td>
+															</tr>
+															<tr>
+																<td style="padding: 5px 10px;">Email : ' . $company_email . '</td>
 															</tr>
 														</tbody>
 													</table>
@@ -102,8 +112,8 @@ function return_ob_value( $order_id, $type ) {
 													<table border = "0" cellpadding = "0" cellspacing = "0" class="" style="width: 100%;table-layout: auto;">
 														<thead>
 															<tr>
-																<th colspan="2" style="background: #f5f5f5;padding: 10px;">
-																	<h3 style="margin: 0; text-align: right;color: #dd5e49;font-size: 24px;">
+																<th colspan="2" class="isfw-invoice-background-color" style="padding: 10px;">
+																	<h3 class="isfw-invoice-color" style="margin: 0;text-align:right;font-size:24px;">
 																		Invoice
 																	</h3>
 																</th>
@@ -131,17 +141,17 @@ function return_ob_value( $order_id, $type ) {
 																	Customer ID
 																</th>
 																<th class="" style="width: 30%;text-align: right;padding: 10px;">
-																	Terms
+																	Status
 																</th>
 															</tr>
 														</thead>
 														<tbody>
 															<tr>
 																<td class="" style="width: 70%;text-align: right;padding: 0 10px;">
-																	564
+																	' . $billing_details["customer_id"] . '
 																</td>
 																<td class="" style="width: 30%;text-align: right;padding: 0 10px;">
-																	Paid
+																	' . $shipping_details["order_status"] . '
 																</td>
 															</tr>
 														</tbody>
@@ -154,20 +164,20 @@ function return_ob_value( $order_id, $type ) {
 					<table border = "0" cellpadding="0" cellpadding="0" style="width: 100%;margin-top: 20px;">
 						<thead>
 							<tr>
-								<th style="text-align: left;background: #f5f5f5;padding: 10px;color: #dd5e49;font-size: 20px;">
+								<th class="isfw-invoice-background-color isfw-invoice-color" style="text-align:left;padding:10px;font-size: 20px;">
 									BILL TO
 								</th>
 							</tr>
 						</thead>
 						<tbody>
 							<tr>
-								<td style="padding: 2px 10px;font-weight: bold;font-size: 18px;">' . $billing_details["billing_first_name"] . $billing_details["billing_last_name"] . '</td>
+								<td style="padding: 2px 10px;font-weight: bold;font-size: 18px;">' . ucfirst( $billing_details["billing_first_name"] ) . ' ' . ucfirst( $billing_details["billing_last_name"] ) . '</td>
 							</tr>
 							<tr>
-								<td style="padding: 2px 10px;font-size: 16px;">' . $billing_details["billing_address_1"] . ' ' . $billing_details["billing_address_2"] . '</td>
+								<td style="padding: 2px 10px;font-size: 16px;">' . ucfirst( $billing_details["billing_address_1"] ) . ' ' . ucfirst( $billing_details["billing_address_2"] ) . '</td>
 							</tr>
 							<tr>
-								<td style="padding: 2px 10px;font-size: 16px;">' . $billing_details["billing_city"] . ', ' . $billing_details["billing_state"] . ', ' . $billing_details["billing_postcode"] . '</td>
+								<td style="padding: 2px 10px;font-size: 16px;">' . ucfirst( $billing_details["billing_city"] ) . ', ' . ucfirst( $billing_details["billing_state"] ) . ', ' . $billing_details["billing_postcode"] . '</td>
 							</tr>
 							<tr>
 								<td style="padding: 2px 10px;font-size: 16px;">' . $billing_details["billing_phone"] . '</td>
@@ -187,20 +197,20 @@ function return_ob_value( $order_id, $type ) {
 					<table border = "0" cellpadding="0" cellpadding="0" style="width: 100%;margin-top: 20px;">
 						<thead>
 							<tr>
-								<th style="text-align: left;background: #f5f5f5;padding: 10px;color: #dd5e49;font-size: 20px;">
+								<th class="isfw-invoice-background-color isfw-invoice-color" style="text-align:left;padding:10px;font-size:20px;">
 									SHIP TO
 								</th>
 							</tr>
 						</thead>
 						<tbody>
 							<tr>
-								<td style="padding: 2px 10px;font-weight: bold;font-size: 18px;">' . $shipping_details["shipping_first_name"] . $shipping_details["shipping_last_name"] . '</td>
+								<td style="padding: 2px 10px;font-weight: bold;font-size: 18px;">' . ucfirst( $shipping_details["shipping_first_name"] ) . ' ' . ucfirst( $shipping_details["shipping_last_name"] ) . '</td>
 							</tr>
 							<tr>
-								<td style="padding: 2px 10px;font-size: 16px;">' . $shipping_details["shipping_address_1"] . ' ' . $shipping_details["shipping_address_2"] . '</td>
+								<td style="padding: 2px 10px;font-size: 16px;">' . ucfirst( $shipping_details["shipping_address_1"] ) . ' ' . ucfirst( $shipping_details["shipping_address_2"] ) . '</td>
 							</tr>
 							<tr>
-								<td style="padding: 2px 10px;font-size: 16px;">' . $shipping_details["shipping_city"] . ', ' . $shipping_details["shipping_state"] . ', ' . $shipping_details["shipping_postcode"] . '</td>
+								<td style="padding: 2px 10px;font-size: 16px;">' . ucfirst( $shipping_details["shipping_city"] ) . ', ' . ucfirst( $shipping_details["shipping_state"] ) . ', ' . $shipping_details["shipping_postcode"] . '</td>
 							</tr>
 							<tr>
 								<td style="padding: 2px 10px;font-size: 16px;">' . $billing_details["billing_phone"] . '</td>
@@ -217,27 +227,27 @@ function return_ob_value( $order_id, $type ) {
 	}
 	$html .= '<table border = "0" cellpadding = "0" cellspacing = "0" style="width: 100%; vertical-align: top;text-align: left;" id="my-table-mwb-prod-listing">
 			<thead class="background-pdf-color-template">
-				<tr style="background: #f5f5f5;">
-					<th style="text-align: left;padding: 10px;color: #dd5e49;">
+				<tr class="isfw-invoice-background-color">
+					<th style="text-align: left;padding: 10px;" class="isfw-invoice-color">
 						Name
 					</th>
-					<th style="text-align: left;padding: 10px;color: #dd5e49;">
+					<th style="text-align: left;padding: 10px;" class="isfw-invoice-color">
 						Qty
 					</th>
-					<th style="text-align: left;padding: 10px;color: #dd5e49;">
-						Unit Price
+					<th style="text-align: left;padding: 10px;" class="isfw-invoice-color">
+						Unit Price ( ' . $billing_details["order_currency"] . ' )
 					</th>
-					<th style="text-align: left;padding: 10px;color: #dd5e49;">
-						Tax
+					<th style="text-align: left;padding: 10px;" class="isfw-invoice-color">
+						Tax ( % )
 					</th>
-					<th style="text-align: left;padding: 10px;color: #dd5e49;">
-						Total
+					<th style="text-align: left;padding: 10px;" class="isfw-invoice-color">
+						Total ( ' . $billing_details["order_currency"] . ' )
 					</th>
 				</tr>
 			</thead>
 			<tbody>';
 	foreach ( $order_product_details as $key => $product ) {
-		$style = ( $key % 2 != 0 ) ?  'style="background: #fff6ee";' : '';
+		$style = ( $key % 2 != 0 ) ?  'class="isfw-invoice-background-color"' : '';
 		$html .= '<tr ' . $style . '>
 						<td style="text-align: left;padding: 10px;">' . $product["product_name"] . '</td>
 						<td style="text-align: left;padding: 10px;">' . $product["product_quantity"] . '</td>
@@ -282,7 +292,7 @@ function return_ob_value( $order_id, $type ) {
 
 					</td>
 					<td style="padding: 2px 10px;font-weight: bold;">
-						Total
+						Total ( ' . $billing_details["order_currency"] . ' ) 
 					</td>
 					<td style="padding: 2px 10px;font-weight: bold;">
 						' . $billing_details["cart_total"] . '

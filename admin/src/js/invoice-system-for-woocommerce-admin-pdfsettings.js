@@ -20,7 +20,31 @@
 			this.window.open();
 			return false;
         });
+        $('#isfw_invoice_template1').change(function(){
+			if ( $(this).is(":checked") ) {
+                $(this).css('background-color','#dadaee');
+                $('#isfw_invoice_template2').css('background-color','');
+                $('#isfw_invoice_template2').prop('checked',false);
+			} else {
+				$(this).css('background-color','');
+			}
+		});
+        $('#isfw_invoice_template2').click(function(){
+            if ( $(this).is(":checked") ) {
+                $(this).css('background-color','#dadaee');
+                $('#isfw_invoice_template1').css('background-color','');
+                $('#isfw_invoice_template1').prop('checked',false);
+			} else {
+				$(this).css('background-color','');
+			}
+        });
         $('#isfw_invoice_general_setting_save').click(function(){
+            var template;
+            if ( $('#isfw_invoice_template1').is(":checked") ) {
+                template = 'one';
+            } else {
+                template = 'two';
+            }
             var company_name    = ( $('#isfw_company_name').val() ).trim();
             var company_city    = ( $('#isfw_company_city').val() ).trim();
             var company_state   = ( $('#isfw_company_state').val() ).trim();
@@ -60,7 +84,8 @@
                     'company_phone'   : company_phone,
                     'company_pin'     : company_pin,
                     'company_email'   : company_email,
-                    'company_address' : company_address
+                    'company_address' : company_address,
+                    'template'        : template
                 };
                 $.ajax({
                     url: isfw_general_settings.ajaxurl,

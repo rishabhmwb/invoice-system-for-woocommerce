@@ -148,12 +148,11 @@ function return_ob_value( $order_id, $type ) {
 											</div>
 											<div id="isfw-invoice-title-right" class="isfw-invoice-inline">
 												<div>
-													<b>Company Details</b><br/>
-													Lucknow ,Uttar Pradesh<br/>
-													<b>Address</b><br/>
-													Lucknow ,<br/> India<br/>
-													9163758888<br/>
-													abc@xyz.com
+													<b>' . ucfirst( $company_name ) . '</b><br/>
+													' . ucfirst( $company_address ) . ' ,' . ucfirst( $company_city ) . '<br/>
+													' . ucfirst( $company_state ) . ' ,<br/> ' . $company_pin . '<br/>
+													' . $company_phone . '<br/>
+													' . $company_email . '
 												</div>
 											</div>
 										</div>';
@@ -161,10 +160,10 @@ function return_ob_value( $order_id, $type ) {
 		$html .= '<div id="isfw-invoice-title-to" >
 					<b>Invoice to</b><br/>
 					<div>
-						' . $billing_details["billing_first_name"] . $billing_details["billing_last_name"] . '<br/>
-						' . $billing_details["billing_address_1"] . ' ' . $billing_details["billing_address_2"] . '<br/>
-						' . $billing_details["billing_city"] . '<br/>
-						' . $billing_details["billing_state"] . '<br/>
+						' . ucfirst( $billing_details["billing_first_name"] ) . ' ' .ucfirst( $billing_details["billing_last_name"] ) . '<br/>
+						' . ucfirst( $billing_details["billing_address_1"] ) . ' ' . ucfirst( $billing_details["billing_address_2"] ) . '<br/>
+						' . ucfirst( $billing_details["billing_city"] ) . '<br/>
+						' . ucfirst( $billing_details["billing_state"] ) . '<br/>
 						' . $billing_details["billing_postcode"] . '<br/>
 						' . $billing_details["billing_phone"] . '<br/>
 						' . $billing_details["billing_email"] . '<br/>
@@ -174,10 +173,10 @@ function return_ob_value( $order_id, $type ) {
 		$html .= '<div id="isfw-invoice-title-to" >
 					<b>SHIP TO</b><br/>
 					<div>
-						' . $shipping_details["shipping_first_name"] . $shipping_details["shipping_last_name"] . '<br/>
-						' . $shipping_details["shipping_address_1"] . ' ' . $shipping_details["shipping_address_2"] . '<br/>
-						' . $shipping_details["shipping_city"] . '<br/>
-						' . $shipping_details["shipping_state"] . '<br/>
+						' . ucfirst( $shipping_details["shipping_first_name"] ) . ' ' . ucfirst( $shipping_details["shipping_last_name"] ) . '<br/>
+						' . ucfirst( $shipping_details["shipping_address_1"] ) . ' ' . ucfirst( $shipping_details["shipping_address_2"] ) . '<br/>
+						' . ucfirst( $shipping_details["shipping_city"] ) . '<br/>
+						' . ucfirst( $shipping_details["shipping_state"] ) . '<br/>
 						' . $shipping_details["shipping_postcode"] . '<br/>
 						' . $billing_details["billing_phone"] . '<br/>
 						' . $billing_details["billing_email"] . '<br/>
