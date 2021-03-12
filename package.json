@@ -1,7 +1,7 @@
 {
-  "name": "invoice-system-for-woocommere",
+  "name": "invoice-system-for-woocommerce",
   "version": "1.0.0",
-  "description": "=== invoice-system-for-woocommere ===\r Contributors: makewebbetter\r Tags: comments, spam\r Requires at least: 4.6\r Tested up to: 4.9.5\r Stable tag: 1.0.0\r License: GNU General Public License v3.0\r License URI: http://www.gnu.org/licenses/gpl-3.0.html",
+  "description": "=== invoice-system-for-woocommerce ===\r Contributors: makewebbetter\r Tags: comments, spam\r Requires at least: 4.6\r Tested up to: 4.9.5\r Stable tag: 1.0.0\r License: GNU General Public License v3.0\r License URI: http://www.gnu.org/licenses/gpl-3.0.html",
   "main": "index.js",
   "directories": {
     "test": "tests"
