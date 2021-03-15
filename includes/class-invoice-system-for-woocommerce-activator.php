@@ -29,10 +29,10 @@ class Invoice_System_For_Woocommerce_Activator {
 	 * @since    1.0.0
 	 */
 	public static function invoice_system_for_woocommerce_activate() {
-		$blog_info      = get_bloginfo();
-		$blog_info      = is_array( $blog_info ) ? $blog_info : array();
-		$company_name   = array_key_exists( 'company_name', $blog_info ) ? $blog_info['company_name'] : '';
-		$admin_email    = array_key_exists( 'admin_email', $blog_info ) ? $blog_info['admin_email'] : '';
+		$company_name   = get_bloginfo( 'company_name' );
+		$admin_email    = get_bloginfo( 'admin_email' );
+		$company_name   = ( $company_name ) ? $company_name : '';
+		$admin_email    = ( $admin_email ) ? $admin_email : '';
 		$setting_fields = array(
 			'prefix'             => '',
 			'suffix'             => '',
@@ -50,9 +50,11 @@ class Invoice_System_For_Woocommerce_Activator {
 			'company_address'    => '',
 			'template'           => 'two',
 			'is_add_logo'        => 'no',
-			'isfw_enable_plugin' => 'on',
+			'isfw_enable_plugin' => 'off',
 		);
-		update_option( 'mwb_isfw_pdf_general_settings', $setting_fields );
+		if ( ! get_option( 'mwb_isfw_pdf_general_settings' ) ) {
+			update_option( 'mwb_isfw_pdf_general_settings', $setting_fields );
+		}
 	}
 
 }
