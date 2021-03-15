@@ -684,9 +684,7 @@ class Invoice_System_For_Woocommerce_Onboarding_Steps {
 				),
 			)
 		);
-	
 		$response = $this->mwb_isfw_hic_post( $url, $form_data, $headers );
-		update_option( 'mwb_response', json_encode( $response ) );
 		if ( 200 == $response['status_code'] ) {
 			$result = json_decode( $response['response'], true );
 			$result['success'] = true;

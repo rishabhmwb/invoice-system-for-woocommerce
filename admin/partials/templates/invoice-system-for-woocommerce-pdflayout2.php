@@ -39,6 +39,7 @@ function return_ob_value( $order_id, $type ) {
 		$company_phone   = array_key_exists( 'company_phone', $isfw_pdf_settings ) ? $isfw_pdf_settings['company_phone'] : '';
 		$company_email   = array_key_exists( 'company_email', $isfw_pdf_settings ) ? $isfw_pdf_settings['company_email'] : '';
 		$company_address = array_key_exists( 'company_address', $isfw_pdf_settings ) ? $isfw_pdf_settings['company_address'] : '';
+		$is_add_logo     = array_key_exists( 'is_add_logo', $isfw_pdf_settings ) ? $isfw_pdf_settings['is_add_logo'] : '';
 	} else {
 		$prefix          = '';
 		$suffix          = '';
@@ -54,6 +55,10 @@ function return_ob_value( $order_id, $type ) {
 		$company_phone   = '';
 		$company_email   = '';
 		$company_address = '';
+		$is_add_logo     = '';
+	}
+	if ( $date >= date( 'Y-m-d' ) ) {
+		update_option( 'isfw_current_invoice_id', 1 );
 	}
 	$in_id = get_post_meta( $order_id, 'isfw_order_invoice_id', true );
 	if ( $in_id ) {
@@ -153,8 +158,11 @@ function return_ob_value( $order_id, $type ) {
 												</div>
 											</div>
 											<div id="isfw-invoice-title-right" class="isfw-invoice-inline">
-												<div>
-													<b>' . ucfirst( $company_name ) . '</b><br/>
+												<div>';
+	if ( 'yes' === $is_add_logo && '' !== $logo ) {
+		$html .= '<img src="' . $logo . '" height="120" width="120"><br/>';
+	}
+					$html .= '<b>' . ucfirst( $company_name ) . '</b><br/>
 													' . ucfirst( $company_address ) . ' ,' . ucfirst( $company_city ) . '<br/>
 													' . ucfirst( $company_state ) . ' ,<br/> ' . $company_pin . '<br/>
 													' . $company_phone . '<br/>

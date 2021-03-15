@@ -12,11 +12,11 @@
  * @package           Invoice_system_for_woocommerce
  *
  * @wordpress-plugin
- * Plugin Name:       invoice-system-for-woocommerce
+ * Plugin Name:       Invoice System for WooCommerce
  * Plugin URI:        https://makewebbetter.com/product/invoice-system-for-woocommerce/
  * Description:       Plugin will create invoice and packing slip, you can send invoice with mail.make sure woocommerce plugin is activated before activating this.
  * Version:           1.0.0
- * Author:            makewebbetter
+ * Author:            MakeWebBetter
  * Author URI:        https://makewebbetter.com/
  * Text Domain:       invoice-system-for-woocommerce
  * Domain Path:       /languages
@@ -103,7 +103,7 @@ if ( $tmp ) {
 	 */
 	function activate_invoice_system_for_woocommerce() {
 		require_once plugin_dir_path( __FILE__ ) . 'includes/class-invoice-system-for-woocommerce-activator.php';
-		Invoice_system_for_woocommerce_Activator::invoice_system_for_woocommerce_activate();
+		Invoice_System_For_Woocommerce_Activator::invoice_system_for_woocommerce_activate();
 		$mwb_isfw_active_plugin = get_option( 'mwb_all_plugins_active', false );
 		if ( is_array( $mwb_isfw_active_plugin ) && ! empty( $mwb_isfw_active_plugin ) ) {
 			$mwb_isfw_active_plugin['invoice-system-for-woocommerce'] = array(
