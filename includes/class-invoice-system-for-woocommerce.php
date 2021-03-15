@@ -26,7 +26,7 @@
  * @subpackage Invoice_system_for_woocommerce/includes
  * @author     makewebbetter <webmaster@makewebbetter.com>
  */
-class Invoice_system_for_woocommerce {
+class Invoice_System_For_Woocommerce {
 
 	/**
 	 * The loader that's responsible for maintaining and registering all hooks that power
@@ -134,12 +134,12 @@ class Invoice_system_for_woocommerce {
 			require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/class-invoice-system-for-woocommerce-admin.php';
 
 			// The class responsible for on-boarding steps for plugin.
-			if ( is_dir(  plugin_dir_path( dirname( __FILE__ ) ) . '.onboarding' ) && ! class_exists( 'Invoice_system_for_woocommerce_Onboarding_Steps' ) ) {
+			if ( is_dir( plugin_dir_path( dirname( __FILE__ ) ) . 'onboarding' ) && ! class_exists( 'Invoice_System_For_Woocommerce_Onboarding_Steps' ) ) {
 				require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-invoice-system-for-woocommerce-onboarding-steps.php';
 			}
 
-			if ( class_exists( 'Invoice_system_for_woocommerce_Onboarding_Steps' ) ) {
-				$isfw_onboard_steps = new Invoice_system_for_woocommerce_Onboarding_Steps();
+			if ( class_exists( 'Invoice_System_For_Woocommerce_Onboarding_Steps' ) ) {
+				$isfw_onboard_steps = new Invoice_System_For_Woocommerce_Onboarding_Steps();
 			}
 		} else {
 
@@ -180,7 +180,7 @@ class Invoice_system_for_woocommerce {
 	 */
 	private function invoice_system_for_woocommerce_admin_hooks() {
 
-		$isfw_plugin_admin = new Invoice_system_for_woocommerce_Admin( $this->isfw_get_plugin_name(), $this->isfw_get_version() );
+		$isfw_plugin_admin = new Invoice_System_For_Woocommerce_Admin( $this->isfw_get_plugin_name(), $this->isfw_get_version() );
 
 		$this->loader->add_action( 'admin_enqueue_scripts', $isfw_plugin_admin, 'isfw_admin_enqueue_styles' );
 		$this->loader->add_action( 'admin_enqueue_scripts', $isfw_plugin_admin, 'isfw_admin_enqueue_scripts' );
@@ -191,7 +191,6 @@ class Invoice_system_for_woocommerce {
 
 		// All admin actions and filters after License Validation goes here.
 		$this->loader->add_filter( 'mwb_add_plugins_menus_array', $isfw_plugin_admin, 'isfw_admin_submenu_page', 15 );
-		$this->loader->add_filter( 'isfw_supprot_tab_settings_array', $isfw_plugin_admin, 'isfw_admin_support_settings_page', 10 );
 
 		// generating custom setting page for pdf settings.
 		$this->loader->add_filter( 'isfw_template_pdf_settings_array', $isfw_plugin_admin, 'isfw_template_pdf_settings_page', 10 );
@@ -221,7 +220,7 @@ class Invoice_system_for_woocommerce {
 	 */
 	private function invoice_system_for_woocommerce_public_hooks() {
 
-		$isfw_plugin_public = new Invoice_system_for_woocommerce_Public( $this->isfw_get_plugin_name(), $this->isfw_get_version() );
+		$isfw_plugin_public = new Invoice_System_For_Woocommerce_Public( $this->isfw_get_plugin_name(), $this->isfw_get_version() );
 
 		$this->loader->add_action( 'wp_enqueue_scripts', $isfw_plugin_public, 'isfw_public_enqueue_styles' );
 		$this->loader->add_action( 'wp_enqueue_scripts', $isfw_plugin_public, 'isfw_public_enqueue_scripts' );
@@ -499,8 +498,8 @@ class Invoice_system_for_woocommerce {
 					case 'number':
 					case 'email':
 					case 'text':
-					?>
-					<div class="mwb-form-group mwb-isfw-<?php echo esc_attr($isfw_component['type']); ?>">
+						?>
+					<div class="mwb-form-group mwb-isfw-<?php echo esc_attr( $isfw_component['type'] ); ?>">
 						<div class="mwb-form-group__label">
 							<label for="<?php echo esc_attr( $isfw_component['id'] ); ?>" class="mwb-form-label"><?php echo esc_html( $isfw_component['title'] ); // WPCS: XSS ok. ?></label>
 						</div>
@@ -529,11 +528,10 @@ class Invoice_system_for_woocommerce {
 							</div>
 						</div>
 					</div>
-					<?php
-					break;
-
+						<?php
+						break;
 					case 'password':
-					?>
+						?>
 					<div class="mwb-form-group">
 						<div class="mwb-form-group__label">
 							<label for="<?php echo esc_attr( $isfw_component['id'] ); ?>" class="mwb-form-label"><?php echo esc_html( $isfw_component['title'] ); // WPCS: XSS ok. ?></label>
@@ -561,11 +559,10 @@ class Invoice_system_for_woocommerce {
 							</div>
 						</div>
 					</div>
-					<?php
-					break;
-
+						<?php
+						break;
 					case 'textarea':
-					?>
+						?>
 					<div class="mwb-form-group">
 						<div class="mwb-form-group__label">
 							<label class="mwb-form-label" for="<?php echo esc_attr( $isfw_component['id'] ); ?>"><?php echo esc_attr( $isfw_component['title'] ); ?></label>
@@ -586,13 +583,11 @@ class Invoice_system_for_woocommerce {
 
 						</div>
 					</div>
-
-					<?php
-					break;
-
+						<?php
+						break;
 					case 'select':
 					case 'multiselect':
-					?>
+						?>
 					<div class="mwb-form-group">
 						<div class="mwb-form-group__label">
 							<label class="mwb-form-label" for="<?php echo esc_attr( $isfw_component['id'] ); ?>"><?php echo esc_html( $isfw_component['title'] ); ?></label>
@@ -622,12 +617,10 @@ class Invoice_system_for_woocommerce {
 							</div>
 						</div>
 					</div>
-
-					<?php
-					break;
-
+						<?php
+						break;
 					case 'checkbox':
-					?>
+						?>
 					<div class="mwb-form-group">
 						<div class="mwb-form-group__label">
 							<label for="<?php echo esc_attr( $isfw_component['id'] ); ?>" class="mwb-form-label"><?php echo esc_html( $isfw_component['title'] ); ?></label>
@@ -655,11 +648,10 @@ class Invoice_system_for_woocommerce {
 							</div>
 						</div>
 					</div>
-					<?php
-					break;
-
+						<?php
+						break;
 					case 'radio':
-					?>
+						?>
 					<div class="mwb-form-group">
 						<div class="mwb-form-group__label">
 							<label for="<?php echo esc_attr( $isfw_component['id'] ); ?>" class="mwb-form-label"><?php echo esc_html( $isfw_component['title'] ); ?></label>
@@ -692,12 +684,10 @@ class Invoice_system_for_woocommerce {
 							</div>
 						</div>
 					</div>
-					<?php
-					break;
-
+						<?php
+						break;
 					case 'radio-switch':
-					?>
-
+						?>
 					<div class="mwb-form-group">
 						<div class="mwb-form-group__label">
 							<label for="" class="mwb-form-label"><?php echo esc_html( $isfw_component['title'] ); ?></label>
@@ -716,11 +706,11 @@ class Invoice_system_for_woocommerce {
 							</div>
 						</div>
 					</div>
-					<?php
-					break;
+						<?php
+						break;
 
 					case 'button':
-					?>
+						?>
 					<div class="mwb-form-group">
 						<div class="mwb-form-group__label"></div>
 						<div class="mwb-form-group__control">
@@ -731,11 +721,11 @@ class Invoice_system_for_woocommerce {
 						</div>
 					</div>
 
-					<?php
-					break;
+						<?php
+						break;
 
 					case 'submit':
-					?>
+						?>
 					<tr valign="top">
 						<td scope="row">
 							<input type="submit" class="button button-primary" 
@@ -745,9 +735,8 @@ class Invoice_system_for_woocommerce {
 							/>
 						</td>
 					</tr>
-					<?php
-					break;
-
+						<?php
+						break;
 					case 'multi':
 						?>
 						<div class="mwb-form-group mwb-isfw-<?php echo esc_attr( $isfw_component['type'] ); ?>">
@@ -827,16 +816,16 @@ class Invoice_system_for_woocommerce {
 							<label for="<?php echo esc_attr( $isfw_component['id'] ); ?>" class="mwb-form-label"><?php echo esc_html( $isfw_component['title'] ); ?></label>
 						</div>
 						<div class="mwb-form-group__control">
-							<button class="mdc-button--raised" name="<?php echo esc_attr( $isfw_component['id'] ); ?>"
-								id="<?php echo esc_attr( $isfw_component['id'] ); ?>"> <span class="mdc-button__ripple"></span>
-								<span class="mdc-button__label"><?php echo esc_attr( $isfw_component['button_text'] ); ?></span>
-							</button>
 							<img
 								src="<?php echo esc_attr( $isfw_component['img-tag']["img-src"] ); ?>"
 								class="<?php echo esc_attr( $isfw_component['img-tag']['img-class'] ); ?>"
 								id="<?php echo esc_attr( $isfw_component['img-tag']['img-id'] ); ?>"
 								style="<?php echo esc_attr( $isfw_component['img-tag']['img-style'] ); ?>"
 							>
+							<button class="mdc-button--raised" name="<?php echo esc_attr( $isfw_component['id'] ); ?>"
+								id="<?php echo esc_attr( $isfw_component['id'] ); ?>"> <span class="mdc-button__ripple"></span>
+								<span class="mdc-button__label"><?php echo esc_attr( $isfw_component['button_text'] ); ?></span>
+							</button>
 						</div>
 					</div>
 						<?php

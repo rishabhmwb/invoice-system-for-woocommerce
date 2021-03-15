@@ -55,13 +55,19 @@ function return_ob_value( $order_id, $type ) {
 		$company_email   = '';
 		$company_address = '';
 	}
-	$prev_invoice_id = get_option( 'isfw_current_invoice_id', true );
-	if ( $prev_invoice_id ) {
-		$curr_invoice_id = $prev_invoice_id + 1;
-		update_option( 'isfw_current_invoice_id', $curr_invoice_id );
+	$in_id = get_post_meta( $order_id, 'isfw_order_invoice_id', true );
+	if ( $in_id ) {
+		$curr_invoice_id = $in_id;
 	} else {
-		$curr_invoice_id = 1;
-		update_option( 'isfw_current_invoice_id', 1 );
+		$prev_invoice_id = get_option( 'isfw_current_invoice_id', true );
+		if ( $prev_invoice_id ) {
+			$curr_invoice_id = $prev_invoice_id + 1;
+			update_option( 'isfw_current_invoice_id', $curr_invoice_id );
+		} else {
+			$curr_invoice_id = 1;
+			update_option( 'isfw_current_invoice_id', 1 );
+		}
+		update_post_meta( $order_id, 'isfw_order_invoice_id', $curr_invoice_id );
 	}
 	$invoice_number = str_pad( $curr_invoice_id, $digit, '0', STR_PAD_LEFT );
 	$invoice_id     = $prefix . $invoice_number . $suffix;

@@ -65,7 +65,7 @@ function isfw_deactivate_child_plugin() {
 function isfw_show_admin_notices() {
 	$isfw_child_plugin  = __( 'Invoice system for woocommerce', 'invoice-system-for-woocommerce' );
 	$isfw_parent_plugin = __( 'Woocommerce', 'invoice-system-for-woocommerce' );
-	echo '<div class="error"><p>'
+	echo '<div class="notice notice-error is-dismissible"><p>'
 		. sprintf( __( '%1$s requires %2$s to function correctly. Please activate %2$s before activating %1$s. For now, the plugin has been deactivated.', 'invoice-system-for-woocommerce' ), '<strong>' . esc_html( $isfw_child_plugin ) . '</strong>', '<strong>' . esc_html( $isfw_parent_plugin ) . '</strong>' )
 		. '</p></div>';
 	if ( isset( $_GET['activate'] ) ) {
@@ -154,7 +154,7 @@ if ( $tmp ) {
 	 */
 	function run_invoice_system_for_woocommerce() {
 		define_invoice_system_for_woocommerce_constants();
-		$isfw_plugin_standard = new Invoice_system_for_woocommerce();
+		$isfw_plugin_standard = new Invoice_System_For_Woocommerce();
 		$isfw_plugin_standard->isfw_run();
 		$GLOBALS['isfw_mwb_isfw_obj'] = $isfw_plugin_standard;
 	}

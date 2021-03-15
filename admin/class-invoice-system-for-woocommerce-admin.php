@@ -20,7 +20,7 @@ use Dompdf\Dompdf;
  * @subpackage Invoice_system_for_woocommerce/admin
  * @author     makewebbetter <webmaster@makewebbetter.com>
  */
-class Invoice_system_for_woocommerce_Admin {
+class Invoice_System_For_Woocommerce_Admin {
 
 	/**
 	 * The ID of this plugin.
@@ -192,30 +192,6 @@ class Invoice_system_for_woocommerce_Admin {
 	public function isfw_options_menu_html() {
 
 		include_once INVOICE_SYSTEM_FOR_WOOCOMMERCE_DIR_PATH . 'admin/partials/invoice-system-for-woocommerce-admin-dashboard.php';
-	}
-	/**
-	 * Invoice-system-for-woocommerce support page tabs.
-	 *
-	 * @since    1.0.0
-	 * @param    Array $mwb_isfw_support Settings fields.
-	 * @return   Array  $mwb_isfw_support
-	 */
-	public function isfw_admin_support_settings_page( $mwb_isfw_support ) {
-		$mwb_isfw_support = array(
-			array(
-				'title'       => __( 'User Guide', 'invoice-system-for-woocommerce' ),
-				'description' => __( 'View the detailed guides and documentation to set up your plugin.', 'invoice-system-for-woocommerce' ),
-				'link-text'   => __( 'VIEW', 'invoice-system-for-woocommerce' ),
-				'link'        => '',
-			),
-			array(
-				'title'       => __( 'Free Support', 'invoice-system-for-woocommerce' ),
-				'description' => __( 'Please submit a ticket , our team will respond within 24 hours.', 'invoice-system-for-woocommerce' ),
-				'link-text'   => __( 'SUBMIT', 'invoice-system-for-woocommerce' ),
-				'link'        => '',
-			),
-		);
-		return apply_filters( 'mwb_isfw_add_support_content', $mwb_isfw_support );
 	}
 	/**
 	 * General setting page for pdf.
@@ -630,14 +606,14 @@ class Invoice_system_for_woocommerce_Admin {
 	 */
 	public function isfw_create_pdf() {
 		global $pagenow;
-		if ( $pagenow == 'post.php' ) {
+		if ( 'post.php' === $pagenow ) {
 			if ( isset( $_GET['orderid'] ) && isset( $_GET['action'] ) ) {
-				if ( $_GET['action'] == 'generateinvoice' ) {
-					$order_id = $_GET['orderid'];
+				if ( 'generateinvoice' === $_GET['action'] ) {
+					$order_id = sanitize_text_field( wp_unslash( $_GET['orderid'] ) );
 					$this->isfw_generating_pdf( $order_id, 'invoice', 'download_locally' );
 				}
-				if ( $_GET['action'] == 'generateslip' ) {
-					$order_id = $_GET['orderid'];
+				if ( 'generateslip' === $_GET['action'] ) {
+					$order_id = sanitize_text_field( wp_unslash( $_GET['orderid'] ) );
 					$this->isfw_generating_pdf( $order_id, 'packing_slip', 'download_locally' );
 				}
 			}
@@ -671,6 +647,16 @@ class Invoice_system_for_woocommerce_Admin {
 		ob_end_clean();
 		$dompdf->render();
 		if ( 'download_locally' === $action ) {
+			$output         = $dompdf->output();
+			$upload_dir     = wp_upload_dir();
+			$upload_basedir = $upload_dir['basedir'] . '/invoices/';
+			if ( ! file_exists( $upload_basedir ) ) {
+				wp_mkdir_p( $upload_basedir );
+			}
+			$path = $upload_basedir . $type . '_' . $order_id . '.pdf';
+			if ( ! file_exists( $path ) ) {
+				file_put_contents( $path, $output );
+			}
 			$dompdf->stream( $type . '_' . $order_id . '.pdf', array( 'Attachment' => 1 ) );
 		}
 		if ( 'download_on_server' === $action ) {
@@ -706,9 +692,10 @@ class Invoice_system_for_woocommerce_Admin {
 					$upload_dir     = wp_upload_dir();
 					$upload_basedir = $upload_dir['basedir'] . '/invoices/';
 					$file           = $upload_basedir . 'invoice_' . $order->get_id() . '.pdf';
-					if ( file_exists( $file ) ) {
-						$attachments[] = $file;
+					if ( ! file_exists( $file ) ) {
+						$this->isfw_generating_pdf( $order->get_id(), 'invoice', 'download_on_server' );
 					}
+					$attachments[] = $file;
 				}
 			}
 		}
@@ -792,12 +779,14 @@ class Invoice_system_for_woocommerce_Admin {
 	 * @return void
 	 */
 	public function isfw_pdf_downloads_bulk_action_admin_notice() {
-		if ( empty( $_REQUEST['write_downloads'] ) ) return; // Exit.
-		$processed_count = $_REQUEST['processed_count'];
+		if ( empty( $_REQUEST['write_downloads'] ) ) {
+			return;  // Exit.
+		}
+		$processed_count = sanitize_text_field( wp_unslash( $_REQUEST['processed_count'] ) );
 		add_thickbox();
 		?>
 		<div class="updated">
-		<div><?php esc_html_e( 'Files has been processed and are ready to donload in zip.', 'invoice-system-for-woocommerce' ); ?></div>
+		<div><?php esc_html_e( 'Files has been processed and are ready to download in zip.', 'invoice-system-for-woocommerce' ); ?></div>
 		<a href="#TB_inline?width=100&height=100&inlineId=modal-window-id" class="thickbox"><?php esc_html_e( 'Click here to open panel to download', 'invoice-system-for-woocommerce' ); ?></a>
 			<div id="modal-window-id" style="display:none;">
 			<?php
@@ -821,19 +810,5 @@ class Invoice_system_for_woocommerce_Admin {
 			});
 		</script>
 		<?php
-		// $upload_dir     = wp_upload_dir();
-		// $upload_baseurl = $upload_dir['baseurl'] . '/invoices/';
-		// $file_url       = $upload_baseurl . 'document.zip';
-		// header( 'Content-Description: File Transfer' );
-		// header('Content-Type: application/octet-stream' );
-		// header( 'Content-Disposition: attachment; filename='.basename( $file_url ) );
-		// header( 'Content-Transfer-Encoding: binary' );
-		// header( 'Expires: 0');
-		// header( 'Cache-Control: must-revalidate, post-check=0, pre-check=0' );
-		// header( 'Pragma: public' );
-		// header( 'Content-Length: ' . filesize( $file_url ));
-		// ob_clean();
-		// flush();
-		// readfile( $file_url );
 	}
 }
