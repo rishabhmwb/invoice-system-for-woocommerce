@@ -19,13 +19,13 @@
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
-if ( class_exists( 'Invoice_system_for_woocommerce_Onboarding_Steps' ) ) {
+if ( class_exists( 'Invoice_System_For_Woocommerce_Onboarding_Steps' ) ) {
 	return;
 }
 /**
  * Define class and module for onboarding steps.
  */
-class Invoice_system_for_woocommerce_Onboarding_Steps {
+class Invoice_System_For_Woocommerce_Onboarding_Steps {
 
 	/**
 	 * The single instance of the class.
@@ -34,7 +34,6 @@ class Invoice_system_for_woocommerce_Onboarding_Steps {
 	 * @var $_instance object of onboarding.
 	 */
 	protected static $_instance = null;
-
 	/**
 	 * Base url of hubspot api for invoice-system-for-woocommerce.
 	 *
@@ -108,9 +107,9 @@ class Invoice_system_for_woocommerce_Onboarding_Steps {
 	 * @since    1.0.0
 	 */
 	public function __construct() {
-		self::$mwb_isfw_store_name = get_bloginfo( 'name' );
-		self::$mwb_isfw_store_url = home_url();
-		self::$mwb_isfw_plugin_name = 'invoice-system-for-woocommerce';
+		self::$mwb_isfw_store_name        = get_bloginfo( 'name' );
+		self::$mwb_isfw_store_url         = home_url();
+		self::$mwb_isfw_plugin_name       = 'invoice-system-for-woocommerce';
 		self::$mwb_isfw_plugin_name_label = 'MWB STANDARD PLUGIN';
 
 		add_action( 'admin_enqueue_scripts', array( $this, 'mwb_isfw_onboarding_enqueue_styles' ) );
@@ -170,7 +169,6 @@ class Invoice_system_for_woocommerce_Onboarding_Steps {
 		if ( $this->mwb_isfw_valid_page_screen_check() || $is_valid ) {
 			// comment the line of code Only when your plugin doesn't uses the Select2.
 			wp_enqueue_style( 'mwb-isfw-onboarding-select2-style', INVOICE_SYSTEM_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/select-2/invoice-system-for-woocommerce-select2.css', array(), time(), 'all' );
-			
 			wp_enqueue_style( 'mwb-isfw-meterial-css', INVOICE_SYSTEM_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/material-design/material-components-web.min.css', array(), time(), 'all' );
 			wp_enqueue_style( 'mwb-isfw-meterial-css2', INVOICE_SYSTEM_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/material-design/material-components-v5.0-web.min.css', array(), time(), 'all' );
 			wp_enqueue_style( 'mwb-isfw-meterial-lite', INVOICE_SYSTEM_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/material-design/material-lite.min.css', array(), time(), 'all' );
@@ -213,10 +211,10 @@ class Invoice_system_for_woocommerce_Onboarding_Steps {
 				'mwb-isfw-onboarding-scripts',
 				'mwb_isfw_onboarding',
 				array(
-					'ajaxurl'       => admin_url( 'admin-ajax.php' ),
-					'isfw_auth_nonce'    => wp_create_nonce( 'mwb_isfw_onboarding_nonce' ),
-					'isfw_current_screen'    => $pagenow,
-					'isfw_current_supported_slug'    => apply_filters( 'mwb_isfw_deactivation_supported_slug', array( $isfw_current_slug ) ),
+					'ajaxurl'                     => admin_url( 'admin-ajax.php' ),
+					'isfw_auth_nonce'             => wp_create_nonce( 'mwb_isfw_onboarding_nonce' ),
+					'isfw_current_screen'         => $pagenow,
+					'isfw_current_supported_slug' => apply_filters( 'mwb_isfw_deactivation_supported_slug', array( $isfw_current_slug ) ),
 				)
 			);
 		}
@@ -252,8 +250,7 @@ class Invoice_system_for_woocommerce_Onboarding_Steps {
 	 * @since    1.0.0
 	 */
 	public function mwb_isfw_skip_onboarding_popup() {
-
-	 $get_skipped_timstamp = update_option( 'mwb_isfw_onboarding_data_skipped', time() );
+		$get_skipped_timstamp = update_option( 'mwb_isfw_onboarding_data_skipped', time() );
 		echo json_encode( 'true' );
 		wp_die();
 	}
@@ -296,58 +293,58 @@ class Invoice_system_for_woocommerce_Onboarding_Steps {
 			 */
 
 			rand() => array(
-				'id' => 'mwb-isfw-monthly-revenue',
-				'title' => esc_html__( 'What is your monthly revenue?', 'invoice-system-for-woocommerce' ),
-				'type' => 'radio',
+				'id'          => 'mwb-isfw-monthly-revenue',
+				'title'       => esc_html__( 'What is your monthly revenue?', 'invoice-system-for-woocommerce' ),
+				'type'        => 'radio',
 				'description' => '',
-				'name' => 'monthly_revenue_',
-				'value' => '',
-				'multiple' => 'no',
+				'name'        => 'monthly_revenue_',
+				'value'       => '',
+				'multiple'    => 'no',
 				'placeholder' => '',
-				'required' => 'yes',
-				'class' => '',
-				'options' => array(
-					'0-500'         => $currency_symbol . '0-' . $currency_symbol . '500',
-					'501-5000'          => $currency_symbol . '501-' . $currency_symbol . '5000',
-					'5001-10000'        => $currency_symbol . '5001-' . $currency_symbol . '10000',
-					'10000+'        => $currency_symbol . '10000+',
+				'required'    => 'yes',
+				'class'       => '',
+				'options'     => array(
+					'0-500'      => $currency_symbol . '0-' . $currency_symbol . '500',
+					'501-5000'   => $currency_symbol . '501-' . $currency_symbol . '5000',
+					'5001-10000' => $currency_symbol . '5001-' . $currency_symbol . '10000',
+					'10000+'     => $currency_symbol . '10000+',
 				),
 			),
 
 			rand() => array(
-				'id' => 'mwb_isfw_industry_type',
-				'title' => esc_html__( 'What industry defines your business?', 'invoice-system-for-woocommerce' ),
-				'type' => 'select',
-				'name' => 'industry_type_',
-				'value' => '',
+				'id'          => 'mwb_isfw_industry_type',
+				'title'       => esc_html__( 'What industry defines your business?', 'invoice-system-for-woocommerce' ),
+				'type'        => 'select',
+				'name'        => 'industry_type_',
+				'value'       => '',
 				'description' => '',
-				'multiple' => 'yes',
+				'multiple'    => 'yes',
 				'placeholder' => esc_html__( 'Industry Type', 'invoice-system-for-woocommerce' ),
-				'required' => 'yes',
-				'class' => '',
-				'options' => array(
-					'agency'                => 'Agency',
-					'consumer-services'     => 'Consumer Services',
-					'ecommerce'             => 'Ecommerce',
-					'financial-services'    => 'Financial Services',
-					'healthcare'            => 'Healthcare',
-					'manufacturing'         => 'Manufacturing',
+				'required'    => 'yes',
+				'class'       => '',
+				'options'     => array(
+					'agency'                  => 'Agency',
+					'consumer-services'       => 'Consumer Services',
+					'ecommerce'               => 'Ecommerce',
+					'financial-services'      => 'Financial Services',
+					'healthcare'              => 'Healthcare',
+					'manufacturing'           => 'Manufacturing',
 					'nonprofit-and-education' => 'Nonprofit and Education',
-					'professional-services' => 'Professional Services',
-					'real-estate'           => 'Real Estate',
-					'software'              => 'Software',
-					'startups'              => 'Startups',
-					'restaurant'            => 'Restaurant',
-					'fitness'               => 'Fitness',
-					'jewelry'               => 'Jewelry',
-					'beauty'                => 'Beauty',
-					'celebrity'             => 'Celebrity',
-					'gaming'                => 'Gaming',
-					'government'            => 'Government',
-					'sports'                => 'Sports',
-					'retail-store'          => 'Retail Store',
-					'travel'                => 'Travel',
-					'political-campaign'    => 'Political Campaign',
+					'professional-services'   => 'Professional Services',
+					'real-estate'             => 'Real Estate',
+					'software'                => 'Software',
+					'startups'                => 'Startups',
+					'restaurant'              => 'Restaurant',
+					'fitness'                 => 'Fitness',
+					'jewelry'                 => 'Jewelry',
+					'beauty'                  => 'Beauty',
+					'celebrity'               => 'Celebrity',
+					'gaming'                  => 'Gaming',
+					'government'              => 'Government',
+					'sports'                  => 'Sports',
+					'retail-store'            => 'Retail Store',
+					'travel'                  => 'Travel',
+					'political-campaign'      => 'Political Campaign',
 				),
 			),
 
@@ -439,9 +436,6 @@ class Invoice_system_for_woocommerce_Onboarding_Steps {
 		if ( ! empty( $current_user ) ) {
 			$current_user_email = $current_user->user_email ? $current_user->user_email : '';
 		}
-
-		$store_name = get_bloginfo( 'name ' );
-		$store_url = get_home_url();
 
 		/**
 		 * Do not repeat id index.
@@ -617,7 +611,7 @@ class Invoice_system_for_woocommerce_Onboarding_Steps {
 
 				unset( $formatted_data['mwb-isfw-show-counter'] );
 
-				$this->mwb_isfw_handle_form_submission_for_hubspot( $formatted_data, $action_type );
+				$result = $this->mwb_isfw_handle_form_submission_for_hubspot( $formatted_data, $action_type );
 			}
 		} catch ( Exception $e ) {
 
@@ -626,14 +620,11 @@ class Invoice_system_for_woocommerce_Onboarding_Steps {
 		}
 
 		if ( ! empty( $action_type ) && 'onboarding' == $action_type ) {
-			 $get_skipped_timstamp = update_option( 'mwb_isfw_onboarding_data_sent', 'sent' );
+			$get_skipped_timstamp = update_option( 'mwb_isfw_onboarding_data_sent', 'sent' );
 		}
-
 		echo json_encode( $formatted_data );
 		wp_die();
 	}
-
-
 	/**
 	 * Handle invoice-system-for-woocommerce form submission.
 	 *
@@ -671,7 +662,6 @@ class Invoice_system_for_woocommerce_Onboarding_Steps {
 	 * @since       1.0.0
 	 */
 	protected function mwb_isfw_hubwoo_submit_form( $form_data = array(), $action_type = 'onboarding' ) {
-
 		if ( 'onboarding' == $action_type ) {
 			$form_id = self::$mwb_isfw_onboarding_form_id;
 		} else {
@@ -688,27 +678,22 @@ class Invoice_system_for_woocommerce_Onboarding_Steps {
 			array(
 				'fields' => $form_data,
 				'context'  => array(
-					'pageUri' => self::$store_url,
-					'pageName' => self::$store_name,
+					'pageUri' => self::$mwb_isfw_store_url,
+					'pageName' => self::$mwb_isfw_store_name,
 					'ipAddress' => $this->mwb_isfw_get_client_ip(),
 				),
 			)
 		);
-
 		$response = $this->mwb_isfw_hic_post( $url, $form_data, $headers );
-
 		if ( 200 == $response['status_code'] ) {
 			$result = json_decode( $response['response'], true );
 			$result['success'] = true;
 		} else {
-
 			$result = $response;
 		}
 
 		return $result;
 	}
-
-
 	/**
 	 * Handle Hubspot GET api calls.
 	 *
@@ -763,7 +748,6 @@ class Invoice_system_for_woocommerce_Onboarding_Steps {
 		$status_code = @curl_getinfo( $ch, CURLINFO_HTTP_CODE );
 		$curl_errors = curl_error( $ch );
 		@curl_close( $ch );
-
 		return array(
 			'status_code' => $status_code,
 			'response' => $response,

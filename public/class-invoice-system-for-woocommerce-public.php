@@ -20,7 +20,7 @@
  * @subpackage Invoice_system_for_woocommerce/public
  * @author     makewebbetter <webmaster@makewebbetter.com>
  */
-class Invoice_system_for_woocommerce_Public {
+class Invoice_System_For_Woocommerce_Public {
 
 	/**
 	 * The ID of this plugin.

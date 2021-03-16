@@ -39,6 +39,7 @@ function return_ob_value( $order_id, $type ) {
 		$company_phone   = array_key_exists( 'company_phone', $isfw_pdf_settings ) ? $isfw_pdf_settings['company_phone'] : '';
 		$company_email   = array_key_exists( 'company_email', $isfw_pdf_settings ) ? $isfw_pdf_settings['company_email'] : '';
 		$company_address = array_key_exists( 'company_address', $isfw_pdf_settings ) ? $isfw_pdf_settings['company_address'] : '';
+		$is_add_logo     = array_key_exists( 'is_add_logo', $isfw_pdf_settings ) ? $isfw_pdf_settings['is_add_logo'] : '';
 	} else {
 		$prefix          = '';
 		$suffix          = '';
@@ -54,6 +55,10 @@ function return_ob_value( $order_id, $type ) {
 		$company_pin     = '';
 		$company_phone   = '';
 		$company_email   = '';
+		$is_add_logo     = '';
+	}
+	if ( $date >= date( 'Y-m-d' ) ) {
+		update_option( 'isfw_current_invoice_id', 1 );
 	}
 	$prev_invoice_id = get_option( 'isfw_current_invoice_id', true );
 	if ( $prev_invoice_id ) {
@@ -62,6 +67,20 @@ function return_ob_value( $order_id, $type ) {
 	} else {
 		$curr_invoice_id = 1;
 		update_option( 'isfw_current_invoice_id', 1 );
+	}
+	$in_id = get_post_meta( $order_id, 'isfw_order_invoice_id', true );
+	if ( $in_id ) {
+		$curr_invoice_id = $in_id;
+	} else {
+		$prev_invoice_id = get_option( 'isfw_current_invoice_id', true );
+		if ( $prev_invoice_id ) {
+			$curr_invoice_id = $prev_invoice_id + 1;
+			update_option( 'isfw_current_invoice_id', $curr_invoice_id );
+		} else {
+			$curr_invoice_id = 1;
+			update_option( 'isfw_current_invoice_id', 1 );
+		}
+		update_post_meta( $order_id, 'isfw_order_invoice_id', $curr_invoice_id );
 	}
 	// generating invoice number.
 	$invoice_number = str_pad( $curr_invoice_id, $digit, '0', STR_PAD_LEFT );
@@ -80,8 +99,11 @@ function return_ob_value( $order_id, $type ) {
 						</head>
 						<body>
 							<div id="mwb-pdf-form">
-								<form action="" method="post">
-									<table border = "0" cellpadding = "0" cellspacing = "0" style="width: 100%; vertical-align: top; margin-bottom: 30px;">
+								<form action="" method="post">';
+								if ('yes' === $is_add_logo && '' !== $logo ) {
+									$html .= '<div style="text-align:center;"><img src="' . $logo . '" height="120" width="120"></div>';
+								}
+			$html .= '<table border = "0" cellpadding = "0" cellspacing = "0" style="width: 100%; vertical-align: top; margin-bottom: 30px;">
 										<tbody>
 											<tr>
 												<td valign="top">
@@ -91,7 +113,6 @@ function return_ob_value( $order_id, $type ) {
 																<td class="isfw-invoice-background-color" style="padding: 10px;">
 																	<h3 class="isfw-invoice-color" style="margin: 0;font-size: 24px;">' . $company_name . '</h3>
 																</td>
-						
 															</tr>
 															<tr>
 																<td style="padding: 5px 10px;">' . ucfirst( $company_address ). '</td>

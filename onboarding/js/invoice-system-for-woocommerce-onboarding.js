@@ -153,6 +153,5 @@ jQuery(document).ready(function($) {
             }
         });
     }
-
     // End of scripts.
 });
