@@ -12,7 +12,9 @@ jQuery(document).ready(function($) {
     const switchControl = [].map.call(document.querySelectorAll('.mdc-switch'), function(el) {
         return new MDCSwitch(el);
     });
-
+    // if ( jQuery(document).hasClass('mdc-dialog') ) {
+        const dialog = mdc.dialog.MDCDialog.attachTo(document.querySelector('.mdc-dialog'));
+    // }
     /*if device is mobile*/
     if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
         jQuery('body').addClass('mobile-device');
@@ -105,7 +107,6 @@ jQuery(document).ready(function($) {
 
     /* Open Popup */
     function mwb_isfw_show_onboard_popup() {
-        const dialog = mdc.dialog.MDCDialog.attachTo(document.querySelector('.mdc-dialog'));
         dialog.open();
         if (!jQuery('body').hasClass('mobile-device')) {
             jQuery('body').addClass('mwb-on-boarding-wrapper-control');

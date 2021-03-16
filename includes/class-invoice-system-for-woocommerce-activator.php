@@ -40,8 +40,8 @@ class Invoice_System_For_Woocommerce_Activator {
 			'logo'               => '',
 			'date'               => '',
 			'disclaimer'         => __( 'Thank you for shopping with us.', 'invoice-system-for-woocommerce' ),
-			'color'              => 'Thank you for shopping with us.',
-			'order_status'       => 'wc-never',
+			'color'              => '#D1317D',
+			'order_status'       => 'wc-completed',
 			'company_name'       => $company_name,
 			'company_city'       => '',
 			'company_state'      => '',
@@ -50,11 +50,10 @@ class Invoice_System_For_Woocommerce_Activator {
 			'company_address'    => '',
 			'template'           => 'two',
 			'is_add_logo'        => 'no',
-			'isfw_enable_plugin' => 'off',
+			'isfw_enable_plugin' => 'on',
 		);
 		if ( ! get_option( 'mwb_isfw_pdf_general_settings' ) ) {
 			update_option( 'mwb_isfw_pdf_general_settings', $setting_fields );
 		}
 	}
-
 }

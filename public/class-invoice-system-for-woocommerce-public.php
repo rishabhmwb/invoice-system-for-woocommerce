@@ -102,7 +102,7 @@ class Invoice_System_For_Woocommerce_Public {
 		$upload_basedir = $upload_dir['basedir'] . '/invoices/';
 		$file_pdf_path  = $upload_basedir . 'invoice_' . $order->get_id() . '.pdf';
 		if ( file_exists( $file_pdf_path ) ) {
-			echo '<a href="' . esc_attr( $file_pdf_url ) . '" download>' . __( "Download", "invoice-system-for-woocommerce" ) . '</a>';
+			echo '<a href="' . esc_attr( $file_pdf_url ) . '" download>' . __( "Download", "invoice-system-for-woocommerce" ) . '</a>'; // phpcs:ignore
 		}
 	}
 }
