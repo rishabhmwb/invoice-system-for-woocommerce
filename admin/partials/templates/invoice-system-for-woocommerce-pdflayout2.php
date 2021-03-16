@@ -18,7 +18,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  * @return string
  */
 function return_ob_value( $order_id, $type ) {
-	$order_details         = do_shortcode( '[isw_fetch_order order_id ="' . $order_id . '"]' );
+	$order_details         = do_shortcode( '[isfw_fetch_order order_id ="' . $order_id . '"]' );
 	$order_details         = json_decode( $order_details, true );
 	$shipping_details      = $order_details['shipping_details'];
 	$billing_details       = $order_details['billing_details'];
@@ -170,7 +170,7 @@ function return_ob_value( $order_id, $type ) {
 												</div>
 											</div>
 										</div>';
-	if ( $type == 'invoice' ) {
+	if ( $type === 'invoice' ) {
 		$html .= '<div id="isfw-invoice-title-to" >
 					<b>Invoice to</b><br/>
 					<div>
@@ -197,52 +197,54 @@ function return_ob_value( $order_id, $type ) {
 					</div>
 				</div>';
 	}
-	$html .= '<div>
-				<table border = "0" cellpadding = "0" cellspacing = "0" id="isfw-prod-listing-table">
-					<thead>
-						<tr id="isfw-prod-listing-table-title">
-							<th id="isfw-table-items">Items</th>
-							<th>Quantity</th>
-							<th>Price(' . $billing_details["order_currency"] . ')</th>
-							<th>Tax (%)</th>
-							<th>Amount(' . $billing_details["order_currency"] . ')</th>
-						</tr>
-					</thead>
-					<tbody id="isfw-pdf-prod-body">';
-	foreach ( $order_product_details as $product ) {
-		$html .= '<tr>
+	if ( $type === 'invoice' ) {
+		$html .= '<div>
+					<table border = "0" cellpadding = "0" cellspacing = "0" id="isfw-prod-listing-table">
+						<thead>
+							<tr id="isfw-prod-listing-table-title">
+								<th id="isfw-table-items">Items</th>
+								<th>Quantity</th>
+								<th>Price(' . $billing_details["order_currency"] . ')</th>
+								<th>Tax (%)</th>
+								<th>Amount(' . $billing_details["order_currency"] . ')</th>
+							</tr>
+						</thead>
+						<tbody id="isfw-pdf-prod-body">';
+		foreach ( $order_product_details as $product ) {
+			$html .= '<tr>
 					<td class="isfw-product-name">' . $product["product_name"] . '</td>
 					<td>' . $product["product_quantity"] . '</td>
 					<td>' . $product["product_price"] . '</td>
 					<td>' . $product["tax_percent"] . '</td>
 					<td>' . $product["product_total"] . '</td>
 				</tr>';
-	}
-		$html .= '</tbody>
-				</table>
-				<div id="isfw-prod-listing-table-bottom"></div>
-				<div id="isfw-prod-total-calc">
-					<table border = "0" cellpadding = "0" cellspacing = "0">
-						<tr>
-							<td>Subtotal(' . $billing_details["order_currency"] . '): ' . $billing_details["order_subtotal"] . '</td>
-						</tr>
-						<tr>
-							<td>Shipping(' . $billing_details["order_currency"] . '): ' . $shipping_details["shipping_total"] . '</td>
-						</tr>
-						<tr>
-							<td>Total tax(' . $billing_details["order_currency"] . '): ' . $billing_details["tax_totals"] . '</td>
-						</tr>
-						<tr>
-							<td>Total(' . $billing_details["order_currency"] . '): ' . $billing_details["cart_total"] . '</td>
-						</tr>
+		}
+			$html .= '</tbody>
 					</table>
-				</div>
-				<div class="isfw-invoice-greetings">
-					<b>' . $disclaimer . '</b>
-				</div>
-			</div>
-		</div>
-	</body>
+					<div id="isfw-prod-listing-table-bottom"></div>
+					<div id="isfw-prod-total-calc">
+						<table border = "0" cellpadding = "0" cellspacing = "0">
+							<tr>
+								<td>Subtotal(' . $billing_details["order_currency"] . '): ' . $billing_details["order_subtotal"] . '</td>
+							</tr>
+							<tr>
+								<td>Shipping(' . $billing_details["order_currency"] . '): ' . $shipping_details["shipping_total"] . '</td>
+							</tr>
+							<tr>
+								<td>Total tax(' . $billing_details["order_currency"] . '): ' . $billing_details["tax_totals"] . '</td>
+							</tr>
+							<tr>
+								<td>Total(' . $billing_details["order_currency"] . '): ' . $billing_details["cart_total"] . '</td>
+							</tr>
+						</table>
+					</div>
+					<div class="isfw-invoice-greetings">
+						<b>' . $disclaimer . '</b>
+					</div>
+					</div>';
+	}
+	$html .= '</div>
+		</body>
 	</html>';
 	return $html;
 }

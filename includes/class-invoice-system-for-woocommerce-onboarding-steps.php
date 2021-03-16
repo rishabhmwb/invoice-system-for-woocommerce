@@ -674,19 +674,19 @@ class Invoice_System_For_Woocommerce_Onboarding_Steps {
 			'Content-Type: application/json',
 		);
 
-		$form_data = json_encode(
+		$form_data = wp_json_encode(
 			array(
-				'fields' => $form_data,
-				'context'  => array(
-					'pageUri' => self::$mwb_isfw_store_url,
-					'pageName' => self::$mwb_isfw_store_name,
+				'fields'  => $form_data,
+				'context' => array(
+					'pageUri'   => self::$mwb_isfw_store_url,
+					'pageName'  => self::$mwb_isfw_store_name,
 					'ipAddress' => $this->mwb_isfw_get_client_ip(),
 				),
 			)
 		);
-		$response = $this->mwb_isfw_hic_post( $url, $form_data, $headers );
+		$response  = $this->mwb_isfw_hic_post( $url, $form_data, $headers );
 		if ( 200 == $response['status_code'] ) {
-			$result = json_decode( $response['response'], true );
+			$result            = json_decode( $response['response'], true );
 			$result['success'] = true;
 		} else {
 			$result = $response;
@@ -694,36 +694,6 @@ class Invoice_System_For_Woocommerce_Onboarding_Steps {
 
 		return $result;
 	}
-	/**
-	 * Handle Hubspot GET api calls.
-	 *
-	 * @since    1.0.0
-	 * @param   string $endpoint   Url where the form data posted.
-	 * @param   array  $headers    data that must be included in header for request.
-	 */
-	private function mwb_isfw_hic_get( $endpoint, $headers ) {
-
-		$url = $this->mwb_isfw_base_url . $endpoint;
-
-		$ch = @curl_init();
-		@curl_setopt( $ch, CURLOPT_POST, false );
-		@curl_setopt( $ch, CURLOPT_URL, $url );
-		@curl_setopt( $ch, CURLOPT_HTTPHEADER, $headers );
-		@curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
-		@curl_setopt( $ch, CURLOPT_SSL_VERIFYPEER, false );
-		@curl_setopt( $ch, CURLOPT_SSL_VERIFYHOST, false );
-		$response = @curl_exec( $ch );
-		$status_code = @curl_getinfo( $ch, CURLINFO_HTTP_CODE );
-		$curl_errors = curl_error( $ch );
-		@curl_close( $ch );
-
-		return array(
-			'status_code' => $status_code,
-			'response' => $response,
-			'errors' => $curl_errors,
-		);
-	}
-
 	/**
 	 * Handle Hubspot POST api calls.
 	 *
@@ -733,28 +703,32 @@ class Invoice_System_For_Woocommerce_Onboarding_Steps {
 	 * @param   array  $headers    data that must be included in header for request.
 	 */
 	private function mwb_isfw_hic_post( $endpoint, $post_params, $headers ) {
-
-		$url = $this->mwb_isfw_base_url . $endpoint;
-
-		$ch = @curl_init();
-		@curl_setopt( $ch, CURLOPT_POST, true );
-		@curl_setopt( $ch, CURLOPT_URL, $url );
-		@curl_setopt( $ch, CURLOPT_POSTFIELDS, $post_params );
-		@curl_setopt( $ch, CURLOPT_HTTPHEADER, $headers );
-		@curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
-		@curl_setopt( $ch, CURLOPT_SSL_VERIFYPEER, false );
-		@curl_setopt( $ch, CURLOPT_SSL_VERIFYHOST, false );
-		$response = @curl_exec( $ch );
-		$status_code = @curl_getinfo( $ch, CURLINFO_HTTP_CODE );
-		$curl_errors = curl_error( $ch );
-		@curl_close( $ch );
+		$url      = $this->mwb_isfw_base_url . $endpoint;
+		$request  = array(
+			'httpversion' => '1.0',
+			'sslverify'   => false,
+			'method'      => 'POST',
+			'timeout'     => 45,
+			'headers'     => $headers,
+			'body'        => $post_params,
+			'cookies'     => array(),
+		);
+		$response = wp_remote_post( $url, $request );
+		if ( is_wp_error( $response ) ) {
+			$status_code = 500;
+			$response    = esc_html__( 'Unexpected Error Occured', 'membership-for-woocommerce' );
+			$curl_errors = $response;
+		} else {
+			$response    = json_decode( wp_remote_retrieve_body( $response ) );
+			$status_code = wp_remote_retrieve_response_code( $response );
+			$curl_errors = $response;
+		}
 		return array(
 			'status_code' => $status_code,
-			'response' => $response,
-			'errors' => $curl_errors,
+			'response'    => $response,
+			'errors'      => $curl_errors,
 		);
 	}
-
 
 	/**
 	 * Function to get the client IP address.
@@ -765,15 +739,15 @@ class Invoice_System_For_Woocommerce_Onboarding_Steps {
 		$ipaddress = '';
 		if ( getenv( 'HTTP_CLIENT_IP' ) ) {
 			$ipaddress = getenv( 'HTTP_CLIENT_IP' );
-		} else if ( getenv( 'HTTP_X_FORWARDED_FOR' ) ) {
+		} elseif ( getenv( 'HTTP_X_FORWARDED_FOR' ) ) {
 			$ipaddress = getenv( 'HTTP_X_FORWARDED_FOR' );
-		} else if ( getenv( 'HTTP_X_FORWARDED' ) ) {
+		} elseif ( getenv( 'HTTP_X_FORWARDED' ) ) {
 			$ipaddress = getenv( 'HTTP_X_FORWARDED' );
-		} else if ( getenv( 'HTTP_FORWARDED_FOR' ) ) {
+		} elseif ( getenv( 'HTTP_FORWARDED_FOR' ) ) {
 			$ipaddress = getenv( 'HTTP_FORWARDED_FOR' );
-		} else if ( getenv( 'HTTP_FORWARDED' ) ) {
+		} elseif ( getenv( 'HTTP_FORWARDED' ) ) {
 			$ipaddress = getenv( 'HTTP_FORWARDED' );
-		} else if ( getenv( 'REMOTE_ADDR' ) ) {
+		} elseif ( getenv( 'REMOTE_ADDR' ) ) {
 			$ipaddress = getenv( 'REMOTE_ADDR' );
 		} else {
 			$ipaddress = 'UNKNOWN';
@@ -787,7 +761,7 @@ class Invoice_System_For_Woocommerce_Onboarding_Steps {
 	 * @since    1.0.0
 	 */
 	public function mwb_isfw_valid_page_screen_check() {
-		$mwb_isfw_screen = get_current_screen();
+		$mwb_isfw_screen  = get_current_screen();
 		$mwb_isfw_is_flag = false;
 		if ( isset( $mwb_isfw_screen->id ) && 'makewebbetter_page_invoice_system_for_woocommerce_menu' == $mwb_isfw_screen->id ) {
 			$mwb_isfw_is_flag = true;

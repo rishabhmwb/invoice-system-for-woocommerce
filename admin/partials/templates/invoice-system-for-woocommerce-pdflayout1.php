@@ -18,7 +18,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  * @return string
  */
 function return_ob_value( $order_id, $type ) {
-	$order_details         = do_shortcode( '[isw_fetch_order order_id ="' . $order_id . '"]' );
+	$order_details         = do_shortcode( '[isfw_fetch_order order_id ="' . $order_id . '"]' );
 	$order_details         = json_decode( $order_details, true );
 	$shipping_details      = $order_details['shipping_details'];
 	$billing_details       = $order_details['billing_details'];
@@ -246,37 +246,38 @@ function return_ob_value( $order_id, $type ) {
 		</tbody>
 	</table>';
 	}
-	$html .= '<table border = "0" cellpadding = "0" cellspacing = "0" style="width: 100%; vertical-align: top;text-align: left;" id="my-table-mwb-prod-listing">
-			<thead class="background-pdf-color-template">
-				<tr class="isfw-invoice-background-color">
-					<th style="text-align: left;padding: 10px;" class="isfw-invoice-color">
-						Name
-					</th>
-					<th style="text-align: left;padding: 10px;" class="isfw-invoice-color">
-						Qty
-					</th>
-					<th style="text-align: left;padding: 10px;" class="isfw-invoice-color">
-						Unit Price ( ' . $billing_details["order_currency"] . ' )
-					</th>
-					<th style="text-align: left;padding: 10px;" class="isfw-invoice-color">
-						Tax ( % )
-					</th>
-					<th style="text-align: left;padding: 10px;" class="isfw-invoice-color">
-						Total ( ' . $billing_details["order_currency"] . ' )
-					</th>
-				</tr>
-			</thead>
-			<tbody>';
-	foreach ( $order_product_details as $key => $product ) {
-		$style = ( $key % 2 != 0 ) ?  'class="isfw-invoice-background-color"' : '';
-		$html .= '<tr ' . $style . '>
-						<td style="text-align: left;padding: 10px;">' . $product["product_name"] . '</td>
-						<td style="text-align: left;padding: 10px;">' . $product["product_quantity"] . '</td>
-						<td style="text-align: left;padding: 10px;">' . $product["product_price"] . '</td>
-						<td style="text-align: left;padding: 10px;">' . $product["tax_percent"] . '</td>
-						<td style="text-align: left;padding: 10px;">' . $product["product_total"] . '</td>
-					</tr>';
-	}
+	if ( 'invoice' === $type ) {
+		$html .= '<table border = "0" cellpadding = "0" cellspacing = "0" style="width: 100%; vertical-align: top;text-align: left;" id="my-table-mwb-prod-listing">
+				<thead class="background-pdf-color-template">
+					<tr class="isfw-invoice-background-color">
+						<th style="text-align: left;padding: 10px;" class="isfw-invoice-color">
+							Name
+						</th>
+						<th style="text-align: left;padding: 10px;" class="isfw-invoice-color">
+							Qty
+						</th>
+						<th style="text-align: left;padding: 10px;" class="isfw-invoice-color">
+							Unit Price ( ' . $billing_details["order_currency"] . ' )
+						</th>
+						<th style="text-align: left;padding: 10px;" class="isfw-invoice-color">
+							Tax ( % )
+						</th>
+						<th style="text-align: left;padding: 10px;" class="isfw-invoice-color">
+							Total ( ' . $billing_details["order_currency"] . ' )
+						</th>
+					</tr>
+				</thead>
+				<tbody>';
+		foreach ( $order_product_details as $key => $product ) {
+			$style = ( $key % 2 != 0 ) ?  'class="isfw-invoice-background-color"' : '';
+			$html .= '<tr ' . $style . '>
+							<td style="text-align: left;padding: 10px;">' . $product["product_name"] . '</td>
+							<td style="text-align: left;padding: 10px;">' . $product["product_quantity"] . '</td>
+							<td style="text-align: left;padding: 10px;">' . $product["product_price"] . '</td>
+							<td style="text-align: left;padding: 10px;">' . $product["tax_percent"] . '</td>
+							<td style="text-align: left;padding: 10px;">' . $product["product_total"] . '</td>
+						</tr>';
+		}
 		$html .= '<tr>
 					<td colspan="3" style="padding: 2px 10px;font-weight: bold;">
 					</td>
@@ -323,10 +324,11 @@ function return_ob_value( $order_id, $type ) {
 		</table>
 		<div style="margin-top: 30px;font-size: 24px;padding: 10px;text-align: center;">
 			' . $disclaimer . '
-		</div>
-	</form>
-</div>
-</body>
-</html>';
+		</div>';
+	}
+	$html .= '</form>
+			</div>
+		</body>
+	</html>';
 	return $html;
 }
