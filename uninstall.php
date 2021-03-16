@@ -21,7 +21,7 @@
  * @link       https://makewebbetter.com/
  * @since      1.0.0
  *
- * @package    Invoice_system_for_woocommere
+ * @package    Invoice_system_for_woocommerce
  */
 
 // If uninstall not called from WordPress, then exit.
