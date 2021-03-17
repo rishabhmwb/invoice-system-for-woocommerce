@@ -109,11 +109,26 @@ class Invoice_System_For_Woocommerce_Public {
 		require_once INVOICE_SYSTEM_FOR_WOOCOMMERCE_DIR_PATH . 'common/class-invoice-system-for-woocommerce-common.php';
 		$common_class = new Invoice_System_For_Woocommerce_Common( $this->plugin_name, $this->version );
 		if ( isset( $_GET['order_id'] ) && isset( $_GET['action'] ) ) { // phpcs:ignore
-			if ( 'userpdfdownload' === $_GET['action'] ) { // phpcs:ignore
+			if ( 'userpdfdownload' === $_GET['action'] || 'generateinvoiceguest' === $_GET['action'] ) { // phpcs:ignore
 				$order_id = $_GET['order_id']; // phpcs:ignore
 				$common_class->isfw_common_generate_pdf( $order_id, 'invoice', 'download_locally' );
 			}
 		}
+	}
+	/**
+	 * Adding link to generate pdf at thank you page woocommerce for guest user.
+	 *
+	 * @param string $thanks_msg thank you message.
+	 * @return string
+	 */
+	public function isfw_pdf_generation_link_for_guest_user( $thanks_msg, $order ) {
+		global $wp;
+		$url_here = home_url( $wp->request );
+		if ( is_object( $order ) ) {
+			$download_button = '<div id="isfw_guest_download_invoice"><a href="' . $url_here . '/?order_id=' . $order->get_id() . '&action=generateinvoiceguest"><img src="' . INVOICE_SYSTEM_FOR_WOOCOMMERCE_DIR_URL . "admin/src/images/isfw_download_icon.svg" . '" style="max-width: 35px;" title="' . __( "Download Invoice", "invoice-system-for-woocommerce" ) . '"><span>' . __( 'Download Invoice', 'invoice-system-for-woocommerce' ) . '</span></a></div>';
+			return $thanks_msg . $download_button;
+		}
+		return $thanks_msg;
 	}
 }
 

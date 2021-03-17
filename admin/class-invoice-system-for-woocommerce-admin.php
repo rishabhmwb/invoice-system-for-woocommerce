@@ -76,6 +76,7 @@ class Invoice_System_For_Woocommerce_Admin {
 		}
 		wp_enqueue_style( 'mwb-isfw-admin-custom-css', INVOICE_SYSTEM_FOR_WOOCOMMERCE_DIR_URL . 'admin/src/scss/invoice-system-for-woocommerce-admin-custom.css', array(), $this->version, 'all' );
 		wp_enqueue_style( 'date-picker-css', INVOICE_SYSTEM_FOR_WOOCOMMERCE_DIR_URL . 'admin/src/scss/date-picker.css', array(), $this->version, 'all' );
+		wp_enqueue_style( 'colorpicker-jquery-css', INVOICE_SYSTEM_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/colorpicker-js/jquery.minicolors.css', array(), $this->version, 'all' );
 	}
 
 	/**
@@ -111,6 +112,7 @@ class Invoice_System_For_Woocommerce_Admin {
 		wp_enqueue_script( 'jquery-ui-core' );
 		wp_enqueue_script( 'jquery-ui-datepicker' );
 		wp_enqueue_script( 'mwb-isfw-pdf-general-settings', INVOICE_SYSTEM_FOR_WOOCOMMERCE_DIR_URL . 'admin/src/js/invoice-system-for-woocommerce-admin-pdfsettings.js', array( 'jquery' ), $this->version, true );
+		wp_enqueue_script( 'mwb-isfw-colorpicker-js-jquery', INVOICE_SYSTEM_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/colorpicker-js/jquery.minicolors.js', array( 'jquery' ), $this->version, true );
 		wp_enqueue_media();
 		wp_localize_script(
 			'mwb-isfw-pdf-general-settings',
