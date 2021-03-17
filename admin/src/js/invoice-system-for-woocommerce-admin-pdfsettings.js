@@ -8,25 +8,37 @@
             minDate: '0y',
             maxDate: '+1y',
         });
-        $('#isfw_invoice_color').colorpicker();
+        // $('#isfw_invoice_color').colorpicker();
+        if ( $('.mwb-isfw-logo-image').attr('src') ) {
+            $('#isfw-logo-upload_image').text(isfw_general_settings.remove_image);
+        }
         $('#isfw-logo-upload_image').click(function() {
-            if (this.window === undefined) {
-				this.window = wp.media({
-					title: isfw_general_settings.insert_image,
-					library: {type: 'image'},
-					multiple: false,
-					button: {text: isfw_general_settings.insert_image}
-				});
-				var self = this;
-				this.window.on('select', function() {
-					var response = self.window.state().get('selection').first().toJSON();
-					$('.wp_attachment_id').val(response.id);
-					$('.mwb-isfw-logo-image').attr('src', response.sizes.thumbnail.url);
-                    $('.mwb-isfw-logo-image').show();
-				});
-			}
-			this.window.open();
-			return false;
+            var image_src = $('.mwb-isfw-logo-image').attr('src');
+            if ( image_src ) {
+                $('.mwb-isfw-logo-image').attr('src', '');
+                $('.wp_attachment_id').val('');
+                $('.mwb-isfw-logo-image').hide();
+                $(this).text( isfw_general_settings.insert_image );
+            } else {
+                if (this.window === undefined) {
+                    this.window = wp.media({
+                        title: isfw_general_settings.insert_image,
+                        library: {type: 'image'},
+                        multiple: false,
+                        button: {text: isfw_general_settings.insert_image}
+                    });
+                    var self = this;
+                    this.window.on('select', function() {
+                        var response = self.window.state().get('selection').first().toJSON();
+                        $('.wp_attachment_id').val(response.id);
+                        $('.mwb-isfw-logo-image').attr('src', response.sizes.thumbnail.url);
+                        $('.mwb-isfw-logo-image').show();
+                        $(self).text(isfw_general_settings.remove_image);
+                    });
+                }
+                this.window.open();
+                return false;
+            }
         });
         $('#isfw_invoice_template1').change(function(){
 			if ( $(this).is(":checked") ) {

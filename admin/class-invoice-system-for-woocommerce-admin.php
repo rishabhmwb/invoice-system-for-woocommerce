@@ -119,6 +119,7 @@ class Invoice_System_For_Woocommerce_Admin {
 				'ajaxurl'                 => admin_url( 'admin-ajax.php' ),
 				'isfw_setting_page_nonce' => wp_create_nonce( 'isfw_general_setting_nonce' ),
 				'insert_image'            => __( 'Choose Image', 'invoice-system-for-woocommerce' ),
+				'remove_image'            => __( 'Remove Image', 'invoice-system-for-woocommerce' ),
 				'digit_limit'             => __( 'Please enter the digit in the digit field less then 10', 'invoice-system-for-woocommerce' ),
 				'suffix_limit'            => __( 'Please Enter Characters, Numbers and "-" only in prefix and suffix field', 'invoice-system-for-woocommerce' ),
 				'btn_load'                => INVOICE_SYSTEM_FOR_WOOCOMMERCE_DIR_URL . 'admin/src/images/loader.gif',
@@ -519,7 +520,7 @@ class Invoice_System_For_Woocommerce_Admin {
 	public function isfw_populating_field_for_custom_tab( $column ) {
 		global $post;
 		if ( 'order_number' === $column ) {
-			_e( '<div id="mwb_isfw_pdf_admin_order_icon"><span style="margin-left:20px;"><a href="/wp-admin/post.php?orderid='. $post->ID . '&action=generateinvoice" style="margin-left:5px;" id="isfw-print-invoice-order-listing-page" data-order-id="' . $post->ID . '"><img src="' . INVOICE_SYSTEM_FOR_WOOCOMMERCE_DIR_URL . 'admin/src/images/invoice_pdf.svg" width="20" height="20" title="'. __( "Generate invoice", "invoice-system-for-woocommerce" ) .'"></a><a href="/wp-admin/post.php?orderid='. $post->ID . '&action=generateslip" style="margin-left:5px;" id="isfw-print-invoice-order-listing-page" data-order-id="' . $post->ID . '"><img src="' . INVOICE_SYSTEM_FOR_WOOCOMMERCE_DIR_URL . 'admin/src/images/packing_slip.svg" width="20" height="20" title="' . __( "Generate packing slip", "invoice-system-for-woocommerce"  ) . '"></a></span></div>' ); // phpcs:ignore
+			_e( '<div id="mwb_isfw_pdf_admin_order_icon"><a href="/wp-admin/post.php?orderid='. $post->ID . '&action=generateinvoice" style="margin-left:5px;" id="isfw-print-invoice-order-listing-page" data-order-id="' . $post->ID . '"><img src="' . INVOICE_SYSTEM_FOR_WOOCOMMERCE_DIR_URL . 'admin/src/images/invoice_pdf.svg" width="20" height="20" title="'. __( "Generate invoice", "invoice-system-for-woocommerce" ) .'"></a><a href="/wp-admin/post.php?orderid='. $post->ID . '&action=generateslip" style="margin-left:5px;" id="isfw-print-invoice-order-listing-page" data-order-id="' . $post->ID . '"><img src="' . INVOICE_SYSTEM_FOR_WOOCOMMERCE_DIR_URL . 'admin/src/images/packing_slip.svg" width="20" height="20" title="' . __( "Generate packing slip", "invoice-system-for-woocommerce"  ) . '"></a></div>' ); // phpcs:ignore
 		}
 	}
 	/**
