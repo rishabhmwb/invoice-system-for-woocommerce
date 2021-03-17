@@ -847,6 +847,13 @@ class Invoice_System_For_Woocommerce {
 								id="<?php echo esc_attr( array_key_exists( 'id', $isfw_component ) ? $isfw_component['id'] : '' ); ?>"> <span class="mdc-button__ripple"></span>
 								<span class="mdc-button__label"><?php echo esc_attr( array_key_exists( 'button_text', $isfw_component ) ? $isfw_component['button_text'] : '' ); ?></span>
 							</button>
+							<button class="mdc-button--raised" name="<?php echo esc_attr( $isfw_component['img-remove']['btn-name'] ); ?>"
+								id="<?php echo esc_attr( $isfw_component['img-remove']['btn-id'] ); ?>"
+								style="<?php echo esc_attr( $isfw_component['img-remove']['btn-style'] ); ?>"
+								> <span class="mdc-button__ripple"
+								></span>
+								<span class="mdc-button__label"><?php echo esc_attr( $isfw_component['img-remove']['btn-title'] ); ?></span>
+							</button>
 						</div>
 					</div>
 						<?php

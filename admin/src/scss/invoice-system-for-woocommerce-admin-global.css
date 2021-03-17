@@ -84,6 +84,13 @@
     background-color: #5cbbe7;
     transition: 1s;
 }
+#mwb-isfw-logo-remove-image {
+    border: 2px solid #5cbbe7;
+    padding: .2em .4em;
+    border-radius: .2em;
+    background-color: #5cbbe7;
+    transition: 1s;
+}
 #isfw_invoice_template1, #isfw_invoice_template2{
     display: inline-block;
     height:60px;
@@ -169,6 +176,11 @@ select {
 .isfw_invoice_color {
     height: auto;
     padding: 0;
+}
+.isfw_invoice_renew_date img{
+    width: 50px;
+    height: 52px;
+    /* margin-left: -60px; */
 }
 .mwb-link {
     font-family: 'NunitoSans-Bold';

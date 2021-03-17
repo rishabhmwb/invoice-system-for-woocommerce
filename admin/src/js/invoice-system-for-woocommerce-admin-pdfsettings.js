@@ -2,6 +2,9 @@
     'use strict';
     $(document).ready(function(){
         $('#isfw_invoice_renew_date').datepicker({
+            showOn: "button",
+            buttonImage: isfw_general_settings.calender_image,
+            buttonImageOnly: true,
             changeMonth: true,
             changeYear: true,
             dateFormat: 'dd-mm-yy',
@@ -21,36 +24,34 @@
 
 
         });
-        if ( $('.mwb-isfw-logo-image').attr('src') ) {
-            $('#isfw-logo-upload_image').text(isfw_general_settings.remove_image);
-        }
+        // if ( $('.mwb-isfw-logo-image').attr('src') ) {
+        //     $('#isfw-logo-upload_image').text(isfw_general_settings.remove_image);
+        // }
+        $('#mwb-isfw-logo-remove-image').click(function(){
+            $('.mwb-isfw-logo-image').attr('src', '');
+            $('.wp_attachment_id').val('');
+            $('.mwb-isfw-logo-image').hide();
+            $(this).hide();
+        });
         $('#isfw-logo-upload_image').click(function() {
-            var image_src = $('.mwb-isfw-logo-image').attr('src');
-            if ( image_src ) {
-                $('.mwb-isfw-logo-image').attr('src', '');
-                $('.wp_attachment_id').val('');
-                $('.mwb-isfw-logo-image').hide();
-                $(this).text( isfw_general_settings.insert_image );
-            } else {
-                if (this.window === undefined) {
-                    this.window = wp.media({
-                        title: isfw_general_settings.insert_image,
-                        library: {type: 'image'},
-                        multiple: false,
-                        button: {text: isfw_general_settings.insert_image}
-                    });
-                    var self = this;
-                    this.window.on('select', function() {
-                        var response = self.window.state().get('selection').first().toJSON();
-                        $('.wp_attachment_id').val(response.id);
-                        $('.mwb-isfw-logo-image').attr('src', response.sizes.thumbnail.url);
-                        $('.mwb-isfw-logo-image').show();
-                        $(self).text(isfw_general_settings.remove_image);
-                    });
-                }
-                this.window.open();
-                return false;
+            if (this.window === undefined) {
+                this.window = wp.media({
+                    title: isfw_general_settings.insert_image,
+                    library: {type: 'image'},
+                    multiple: false,
+                    button: {text: isfw_general_settings.insert_image}
+                });
+                var self = this;
+                this.window.on('select', function() {
+                    var response = self.window.state().get('selection').first().toJSON();
+                    $('.wp_attachment_id').val(response.id);
+                    $('.mwb-isfw-logo-image').attr('src', response.sizes.thumbnail.url);
+                    $('.mwb-isfw-logo-image').show();
+                    $('#mwb-isfw-logo-remove-image').show();
+                });
             }
+            this.window.open();
+            return false;
         });
         $('#isfw_invoice_template1').change(function(){
 			if ( $(this).is(":checked") ) {
