@@ -57,7 +57,7 @@ function return_ob_value( $order_id, $type ) {
 		$company_email   = '';
 		$is_add_logo     = '';
 	}
-	if ( $date >= date( 'Y-m-d' ) ) {
+	if ( date( "Y-m-d", strtotime( $date ) ) <= date( 'Y-m-d' ) ) {
 		update_option( 'isfw_current_invoice_id', 1 );
 	}
 	$prev_invoice_id = get_option( 'isfw_current_invoice_id', true );
@@ -85,250 +85,253 @@ function return_ob_value( $order_id, $type ) {
 	// generating invoice number.
 	$invoice_number = str_pad( $curr_invoice_id, $digit, '0', STR_PAD_LEFT );
 	$invoice_id     = $prefix . $invoice_number . $suffix;
-	$html           = '<!DOCTYPE html>
-						<html lang="en">
-						<head>
-							<style>
-								.isfw-invoice-background-color{
-									background-color: #f5f5f5;
-								}
-								.isfw-invoice-color{
-									color: ' . $color . ';
-								}
-							</style>
-						</head>
-						<body>
-							<div id="mwb-pdf-form">
-								<form action="" method="post">';
-								if ('yes' === $is_add_logo && '' !== $logo ) {
-									$html .= '<div style="text-align:center;"><img src="' . $logo . '" height="120" width="120"></div>';
-								}
-			$html .= '<table border = "0" cellpadding = "0" cellspacing = "0" style="width: 100%; vertical-align: top; margin-bottom: 30px;">
-										<tbody>
-											<tr>
-												<td valign="top">
-													<table border = "0" cellpadding = "0" cellspacing = "0" style="width: 100%;"> 
-														<tbody>
-															<tr>
-																<td class="isfw-invoice-background-color" style="padding: 10px;">
-																	<h3 class="isfw-invoice-color" style="margin: 0;font-size: 24px;">' . $company_name . '</h3>
-																</td>
-															</tr>
-															<tr>
-																<td style="padding: 5px 10px;">' . ucfirst( $company_address ). '</td>
-															</tr>
-															<tr>
-																<td style="padding: 5px 10px;">' . ucfirst( $company_city ) . ',<br/> ' . ucfirst( $company_state ) . ',<br/> ' . $company_pin . '</td>
-															</tr>
-															<tr>
-																<td style="padding: 5px 10px;">Phone : ' . $company_phone . '</td>
-															</tr>
-															<tr>
-																<td style="padding: 5px 10px;">Email : ' . $company_email . '</td>
-															</tr>
-														</tbody>
-													</table>
-												</td>
-												<td valign="top">
-													<table border = "0" cellpadding = "0" cellspacing = "0" class="" style="width: 100%;table-layout: auto;">
-														<thead>
-															<tr>
-																<th colspan="2" class="isfw-invoice-background-color" style="padding: 10px;">
-																	<h3 class="isfw-invoice-color" style="margin: 0;text-align:right;font-size:24px;">
+	if ( $order_details ) {
+		$html           = '<!DOCTYPE html>
+							<html lang="en">
+							<head>
+								<style>
+									.isfw-invoice-background-color{
+										background-color: #f5f5f5;
+									}
+									.isfw-invoice-color{
+										color: ' . $color . ';
+									}
+								</style>
+							</head>
+							<body>
+								<div id="mwb-pdf-form">
+									<form action="" method="post">';
+									if ('yes' === $is_add_logo && '' !== $logo ) {
+										$html .= '<div style="text-align:center;"><img src="' . $logo . '" height="120" width="120"></div>';
+									}
+				$html .= '<table border = "0" cellpadding = "0" cellspacing = "0" style="width: 100%; vertical-align: top; margin-bottom: 30px;">
+											<tbody>
+												<tr>
+													<td valign="top">
+														<table border = "0" cellpadding = "0" cellspacing = "0" style="width: 100%;"> 
+															<tbody>
+																<tr>
+																	<td class="isfw-invoice-background-color" style="padding: 10px;">
+																		<h3 class="isfw-invoice-color" style="margin: 0;font-size: 24px;">' . $company_name . '</h3>
+																	</td>
+																</tr>
+																<tr>
+																	<td style="padding: 5px 10px;">' . ucfirst( $company_address ). '</td>
+																</tr>
+																<tr>
+																	<td style="padding: 5px 10px;">' . ucfirst( $company_city ) . ',<br/> ' . ucfirst( $company_state ) . ',<br/> ' . $company_pin . '</td>
+																</tr>
+																<tr>
+																	<td style="padding: 5px 10px;">Phone : ' . $company_phone . '</td>
+																</tr>
+																<tr>
+																	<td style="padding: 5px 10px;">Email : ' . $company_email . '</td>
+																</tr>
+															</tbody>
+														</table>
+													</td>
+													<td valign="top">
+														<table border = "0" cellpadding = "0" cellspacing = "0" class="" style="width: 100%;table-layout: auto;">
+															<thead>
+																<tr>
+																	<th colspan="2" class="isfw-invoice-background-color" style="padding: 10px;">
+																		<h3 class="isfw-invoice-color" style="margin: 0;text-align:right;font-size:24px;">
+																			Invoice
+																		</h3>
+																	</th>
+																</tr>
+																<tr>
+																	<th style="width: 70%;text-align: right;padding: 10px;">
 																		Invoice
-																	</h3>
-																</th>
-															</tr>
-															<tr>
-																<th style="width: 70%;text-align: right;padding: 10px;">
-																	Invoice
-																</th>
-																<th style="width: 30%;text-align: right;padding: 10px;">
-																	Date
-																</th>
-															</tr>
-														</thead>
-														<tbody>
-															<tr>
-																<td style="width: 30%;text-align: right;padding: 0 10px;">' . $invoice_id . '</td>
-																<td style="width: 30%;text-align: right;padding: 0 10px;">' . $billing_details["order_created_date"] . '</td>
-															</tr>
-														</tbody>
-													</table>
-													<table border = "0" class="" style="width: 100%;table-layout: auto;">
-														<thead>
-															<tr>
-																<th class="" style="width: 70%;text-align: right;padding: 10px;">
-																	Customer ID
-																</th>
-																<th class="" style="width: 30%;text-align: right;padding: 10px;">
-																	Status
-																</th>
-															</tr>
-														</thead>
-														<tbody>
-															<tr>
-																<td class="" style="width: 70%;text-align: right;padding: 0 10px;">
-																	' . $billing_details["customer_id"] . '
-																</td>
-																<td class="" style="width: 30%;text-align: right;padding: 0 10px;">
-																	' . $shipping_details["order_status"] . '
-																</td>
-															</tr>
-														</tbody>
-													</table>
-												</td>
-											</tr>';
-	if ( 'invoice' === $type ) {
-		$html .= '<tr>
-				<td colspan="2">
-					<table border = "0" cellpadding="0" cellpadding="0" style="width: 100%;margin-top: 20px;">
-						<thead>
-							<tr>
-								<th class="isfw-invoice-background-color isfw-invoice-color" style="text-align:left;padding:10px;font-size: 20px;">
-									BILL TO
-								</th>
-							</tr>
-						</thead>
-						<tbody>
-							<tr>
-								<td style="padding: 2px 10px;font-weight: bold;font-size: 18px;">' . ucfirst( $billing_details["billing_first_name"] ) . ' ' . ucfirst( $billing_details["billing_last_name"] ) . '</td>
-							</tr>
-							<tr>
-								<td style="padding: 2px 10px;font-size: 16px;">' . ucfirst( $billing_details["billing_address_1"] ) . ' ' . ucfirst( $billing_details["billing_address_2"] ) . '</td>
-							</tr>
-							<tr>
-								<td style="padding: 2px 10px;font-size: 16px;">' . ucfirst( $billing_details["billing_city"] ) . ', ' . ucfirst( $billing_details["billing_state"] ) . ', ' . $billing_details["billing_postcode"] . '</td>
-							</tr>
-							<tr>
-								<td style="padding: 2px 10px;font-size: 16px;">' . $billing_details["billing_phone"] . '</td>
-							</tr>
-							<tr>
-								<td style="padding: 2px 10px;font-size: 16px;">' . $billing_details["billing_email"] . '</td>
-							</tr>
-						</tbody>
-					</table>
-				</td>
-			</tr>
-		</tbody>
-	</table>';
-	} else {
-		$html .= '<tr>
-				<td colspan="2">
-					<table border = "0" cellpadding="0" cellpadding="0" style="width: 100%;margin-top: 20px;">
-						<thead>
-							<tr>
-								<th class="isfw-invoice-background-color isfw-invoice-color" style="text-align:left;padding:10px;font-size:20px;">
-									SHIP TO
-								</th>
-							</tr>
-						</thead>
-						<tbody>
-							<tr>
-								<td style="padding: 2px 10px;font-weight: bold;font-size: 18px;">' . ucfirst( $shipping_details["shipping_first_name"] ) . ' ' . ucfirst( $shipping_details["shipping_last_name"] ) . '</td>
-							</tr>
-							<tr>
-								<td style="padding: 2px 10px;font-size: 16px;">' . ucfirst( $shipping_details["shipping_address_1"] ) . ' ' . ucfirst( $shipping_details["shipping_address_2"] ) . '</td>
-							</tr>
-							<tr>
-								<td style="padding: 2px 10px;font-size: 16px;">' . ucfirst( $shipping_details["shipping_city"] ) . ', ' . ucfirst( $shipping_details["shipping_state"] ) . ', ' . $shipping_details["shipping_postcode"] . '</td>
-							</tr>
-							<tr>
-								<td style="padding: 2px 10px;font-size: 16px;">' . $billing_details["billing_phone"] . '</td>
-							</tr>
-							<tr>
-								<td style="padding: 2px 10px;font-size: 16px;">' . $billing_details["billing_email"] . '</td>
-							</tr>
-						</tbody>
-					</table>
-				</td>
-			</tr>
-		</tbody>
-	</table>';
-	}
-	if ( 'invoice' === $type ) {
-		$html .= '<table border = "0" cellpadding = "0" cellspacing = "0" style="width: 100%; vertical-align: top;text-align: left;" id="my-table-mwb-prod-listing">
-				<thead class="background-pdf-color-template">
-					<tr class="isfw-invoice-background-color">
-						<th style="text-align: left;padding: 10px;" class="isfw-invoice-color">
-							Name
-						</th>
-						<th style="text-align: left;padding: 10px;" class="isfw-invoice-color">
-							Qty
-						</th>
-						<th style="text-align: left;padding: 10px;" class="isfw-invoice-color">
-							Unit Price ( ' . $billing_details["order_currency"] . ' )
-						</th>
-						<th style="text-align: left;padding: 10px;" class="isfw-invoice-color">
-							Tax ( % )
-						</th>
-						<th style="text-align: left;padding: 10px;" class="isfw-invoice-color">
-							Total ( ' . $billing_details["order_currency"] . ' )
-						</th>
-					</tr>
-				</thead>
-				<tbody>';
-		foreach ( $order_product_details as $key => $product ) {
-			$style = ( $key % 2 != 0 ) ?  'class="isfw-invoice-background-color"' : '';
-			$html .= '<tr ' . $style . '>
-							<td style="text-align: left;padding: 10px;">' . $product["product_name"] . '</td>
-							<td style="text-align: left;padding: 10px;">' . $product["product_quantity"] . '</td>
-							<td style="text-align: left;padding: 10px;">' . $product["product_price"] . '</td>
-							<td style="text-align: left;padding: 10px;">' . $product["tax_percent"] . '</td>
-							<td style="text-align: left;padding: 10px;">' . $product["product_total"] . '</td>
-						</tr>';
-		}
-		$html .= '<tr>
-					<td colspan="3" style="padding: 2px 10px;font-weight: bold;">
-					</td>
-					<td style="padding: 2px 10px;font-weight: bold;">
-					Subtotal</td>
-					<td style="padding: 2px 10px;font-weight: bold;">
-						' . $billing_details["order_subtotal"] . '
-					</td>
-				</tr>
-				<tr>
-					<td colspan="3" style="padding: 2px 10px;font-weight: bold;" class="no-border">
-
-					</td>
-					<td style="padding: 2px 10px;font-weight: bold;">
-						Shipping
-					</td>
-					<td style="padding: 2px 10px;font-weight: bold;">
-						' . $shipping_details["shipping_total"] . '
-					</td>
-				</tr>
-				<tr>
-					<td colspan="3" style="padding: 2px 10px;font-weight: bold;" class="no-border">
-
-					</td>
-					<td style="padding: 2px 10px;font-weight: bold;">
-						Total Tax
-					</td>
-					<td style="padding: 2px 10px;font-weight: bold;">
-						' . $billing_details["tax_totals"] . '
-					</td>
-				</tr>
-				<tr>
-					<td colspan="3" style="padding: 2px 10px;font-weight: bold;" class="no-border">
-
-					</td>
-					<td style="padding: 2px 10px;font-weight: bold;">
-						Total ( ' . $billing_details["order_currency"] . ' ) 
-					</td>
-					<td style="padding: 2px 10px;font-weight: bold;">
-						' . $billing_details["cart_total"] . '
+																	</th>
+																	<th style="width: 30%;text-align: right;padding: 10px;">
+																		Date
+																	</th>
+																</tr>
+															</thead>
+															<tbody>
+																<tr>
+																	<td style="width: 30%;text-align: right;padding: 0 10px;">' . $invoice_id . '</td>
+																	<td style="width: 30%;text-align: right;padding: 0 10px;">' . $billing_details["order_created_date"] . '</td>
+																</tr>
+															</tbody>
+														</table>
+														<table border = "0" class="" style="width: 100%;table-layout: auto;">
+															<thead>
+																<tr>
+																	<th class="" style="width: 70%;text-align: right;padding: 10px;">
+																		Customer ID
+																	</th>
+																	<th class="" style="width: 30%;text-align: right;padding: 10px;">
+																		Status
+																	</th>
+																</tr>
+															</thead>
+															<tbody>
+																<tr>
+																	<td class="" style="width: 70%;text-align: right;padding: 0 10px;">
+																		' . $billing_details["customer_id"] . '
+																	</td>
+																	<td class="" style="width: 30%;text-align: right;padding: 0 10px;">
+																		' . $shipping_details["order_status"] . '
+																	</td>
+																</tr>
+															</tbody>
+														</table>
+													</td>
+												</tr>';
+		if ( 'invoice' === $type ) {
+			$html .= '<tr>
+					<td colspan="2">
+						<table border = "0" cellpadding="0" cellpadding="0" style="width: 100%;margin-top: 20px;">
+							<thead>
+								<tr>
+									<th class="isfw-invoice-background-color isfw-invoice-color" style="text-align:left;padding:10px;font-size: 20px;">
+										BILL TO
+									</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<td style="padding: 2px 10px;font-weight: bold;font-size: 18px;">' . ucfirst( $billing_details["billing_first_name"] ) . ' ' . ucfirst( $billing_details["billing_last_name"] ) . '</td>
+								</tr>
+								<tr>
+									<td style="padding: 2px 10px;font-size: 16px;">' . ucfirst( $billing_details["billing_address_1"] ) . ' ' . ucfirst( $billing_details["billing_address_2"] ) . '</td>
+								</tr>
+								<tr>
+									<td style="padding: 2px 10px;font-size: 16px;">' . ucfirst( $billing_details["billing_city"] ) . ', ' . ucfirst( $billing_details["billing_state"] ) . ', ' . $billing_details["billing_postcode"] . '</td>
+								</tr>
+								<tr>
+									<td style="padding: 2px 10px;font-size: 16px;">' . $billing_details["billing_phone"] . '</td>
+								</tr>
+								<tr>
+									<td style="padding: 2px 10px;font-size: 16px;">' . $billing_details["billing_email"] . '</td>
+								</tr>
+							</tbody>
+						</table>
 					</td>
 				</tr>
 			</tbody>
-		</table>
-		<div style="margin-top: 30px;font-size: 24px;padding: 10px;text-align: center;">
-			' . $disclaimer . '
-		</div>';
+		</table>';
+		} else {
+			$html .= '<tr>
+					<td colspan="2">
+						<table border = "0" cellpadding="0" cellpadding="0" style="width: 100%;margin-top: 20px;">
+							<thead>
+								<tr>
+									<th class="isfw-invoice-background-color isfw-invoice-color" style="text-align:left;padding:10px;font-size:20px;">
+										SHIP TO
+									</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<td style="padding: 2px 10px;font-weight: bold;font-size: 18px;">' . ucfirst( $shipping_details["shipping_first_name"] ) . ' ' . ucfirst( $shipping_details["shipping_last_name"] ) . '</td>
+								</tr>
+								<tr>
+									<td style="padding: 2px 10px;font-size: 16px;">' . ucfirst( $shipping_details["shipping_address_1"] ) . ' ' . ucfirst( $shipping_details["shipping_address_2"] ) . '</td>
+								</tr>
+								<tr>
+									<td style="padding: 2px 10px;font-size: 16px;">' . ucfirst( $shipping_details["shipping_city"] ) . ', ' . ucfirst( $shipping_details["shipping_state"] ) . ', ' . $shipping_details["shipping_postcode"] . '</td>
+								</tr>
+								<tr>
+									<td style="padding: 2px 10px;font-size: 16px;">' . $billing_details["billing_phone"] . '</td>
+								</tr>
+								<tr>
+									<td style="padding: 2px 10px;font-size: 16px;">' . $billing_details["billing_email"] . '</td>
+								</tr>
+							</tbody>
+						</table>
+					</td>
+				</tr>
+			</tbody>
+		</table>';
+		}
+		if ( 'invoice' === $type ) {
+			$html .= '<table border = "0" cellpadding = "0" cellspacing = "0" style="width: 100%; vertical-align: top;text-align: left;" id="my-table-mwb-prod-listing">
+					<thead class="background-pdf-color-template">
+						<tr class="isfw-invoice-background-color">
+							<th style="text-align: left;padding: 10px;" class="isfw-invoice-color">
+								Name
+							</th>
+							<th style="text-align: left;padding: 10px;" class="isfw-invoice-color">
+								Qty
+							</th>
+							<th style="text-align: left;padding: 10px;" class="isfw-invoice-color">
+								Unit Price ( ' . $billing_details["order_currency"] . ' )
+							</th>
+							<th style="text-align: left;padding: 10px;" class="isfw-invoice-color">
+								Tax ( % )
+							</th>
+							<th style="text-align: left;padding: 10px;" class="isfw-invoice-color">
+								Total ( ' . $billing_details["order_currency"] . ' )
+							</th>
+						</tr>
+					</thead>
+					<tbody>';
+			foreach ( $order_product_details as $key => $product ) {
+				$style = ( $key % 2 != 0 ) ?  'class="isfw-invoice-background-color"' : '';
+				$html .= '<tr ' . $style . '>
+								<td style="text-align: left;padding: 10px;">' . $product["product_name"] . '</td>
+								<td style="text-align: left;padding: 10px;">' . $product["product_quantity"] . '</td>
+								<td style="text-align: left;padding: 10px;">' . $product["product_price"] . '</td>
+								<td style="text-align: left;padding: 10px;">' . $product["tax_percent"] . '</td>
+								<td style="text-align: left;padding: 10px;">' . $product["product_total"] . '</td>
+							</tr>';
+			}
+			$html .= '<tr>
+						<td colspan="3" style="padding: 2px 10px;font-weight: bold;">
+						</td>
+						<td style="padding: 2px 10px;font-weight: bold;">
+						Subtotal</td>
+						<td style="padding: 2px 10px;font-weight: bold;">
+							' . $billing_details["order_subtotal"] . '
+						</td>
+					</tr>
+					<tr>
+						<td colspan="3" style="padding: 2px 10px;font-weight: bold;" class="no-border">
+
+						</td>
+						<td style="padding: 2px 10px;font-weight: bold;">
+							Shipping
+						</td>
+						<td style="padding: 2px 10px;font-weight: bold;">
+							' . $shipping_details["shipping_total"] . '
+						</td>
+					</tr>
+					<tr>
+						<td colspan="3" style="padding: 2px 10px;font-weight: bold;" class="no-border">
+
+						</td>
+						<td style="padding: 2px 10px;font-weight: bold;">
+							Total Tax
+						</td>
+						<td style="padding: 2px 10px;font-weight: bold;">
+							' . $billing_details["tax_totals"] . '
+						</td>
+					</tr>
+					<tr>
+						<td colspan="3" style="padding: 2px 10px;font-weight: bold;" class="no-border">
+
+						</td>
+						<td style="padding: 2px 10px;font-weight: bold;">
+							Total ( ' . $billing_details["order_currency"] . ' ) 
+						</td>
+						<td style="padding: 2px 10px;font-weight: bold;">
+							' . $billing_details["cart_total"] . '
+						</td>
+					</tr>
+				</tbody>
+			</table>
+			<div style="margin-top: 30px;font-size: 24px;padding: 10px;text-align: center;">
+				' . $disclaimer . '
+			</div>';
+		}
+		$html .= '</form>
+				</div>
+			</body>
+		</html>';
+		return $html;
 	}
-	$html .= '</form>
-			</div>
-		</body>
-	</html>';
-	return $html;
+	return 'order details not found';
 }

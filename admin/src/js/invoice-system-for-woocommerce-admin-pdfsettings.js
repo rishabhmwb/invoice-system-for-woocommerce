@@ -1,6 +1,14 @@
 (function( $ ) {
     'use strict';
     $(document).ready(function(){
+        $('#isfw_invoice_renew_date').datepicker({
+            changeMonth: true,
+            changeYear: true,
+            dateFormat: 'dd-mm-yy',
+            minDate: '0y',
+            maxDate: '+1y',
+        });
+        $('#isfw_invoice_color').colorpicker();
         $('#isfw-logo-upload_image').click(function() {
             if (this.window === undefined) {
 				this.window = wp.media({
@@ -62,11 +70,23 @@
             var order_status       = $( '#isfw_send_invoice_for' ).val();
             var is_add_logo        = $('#isfw_is_add_logo_invoice').is(":checked");
             var isfw_enable_plugin = $('.mdc-switch__native-control').is(":checked");
+            function mwb_parsedate( date ) {
+                var d = date.split(/\D/);
+                var current_year = new Date().getFullYear();
+                if ( d[0].toString().length == 2 && d[1].toString().length == 2 && d[2].toString().length == 4 ) {
+                    return ( d[2] == current_year || d[2] == current_year + 1 ) ? true : false;
+                } else {
+                    return false;
+                }
+            }
             var preg_prefix     = /^[a-zA-Z0-9_.-]*$/;
             if ( digit > 10 ) {
                 alert( isfw_general_settings.digit_limit );
             }
-            if ( ! prefix.match(preg_prefix) || ! suffix.match(preg_prefix) ) {
+            else if ( ! mwb_parsedate( date )) {
+                alert( isfw_general_settings.invalid_date );
+            }
+            else if ( ! prefix.match(preg_prefix) || ! suffix.match(preg_prefix) ) {
                 alert( isfw_general_settings.suffix_limit );
             } else {
                 var curr_obj = this;

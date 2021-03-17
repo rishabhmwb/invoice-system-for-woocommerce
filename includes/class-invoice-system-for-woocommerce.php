@@ -93,7 +93,7 @@ class Invoice_System_For_Woocommerce {
 		} else {
 			$this->invoice_system_for_woocommerce_public_hooks();
 		}
-
+		$this->invoice_system_for_woocommerce_common_hooks();
 		$this->invoice_system_for_woocommerce_api_hooks();
 
 	}
@@ -132,7 +132,6 @@ class Invoice_System_For_Woocommerce {
 
 			// The class responsible for defining all actions that occur in the admin area.
 			require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/class-invoice-system-for-woocommerce-admin.php';
-
 			// The class responsible for on-boarding steps for plugin.
 			if ( is_dir( plugin_dir_path( dirname( __FILE__ ) ) . 'onboarding' ) && ! class_exists( 'Invoice_System_For_Woocommerce_Onboarding_Steps' ) ) {
 				require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-invoice-system-for-woocommerce-onboarding-steps.php';
@@ -145,8 +144,9 @@ class Invoice_System_For_Woocommerce {
 
 			// The class responsible for defining all actions that occur in the public-facing side of the site.
 			require_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/class-invoice-system-for-woocommerce-public.php';
-
 		}
+		// The class responsible for defining all actions that occur in the common-facing side of the site.
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'common/class-invoice-system-for-woocommerce-common.php';
 
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'package/rest-api/class-invoice-system-for-woocommerce-rest-api.php';
 
@@ -196,8 +196,6 @@ class Invoice_System_For_Woocommerce {
 		$this->loader->add_filter( 'isfw_template_pdf_settings_array', $isfw_plugin_admin, 'isfw_template_pdf_settings_page', 10 );
 		// handling ajax requests for saving settings of isfw pdf.
 		$this->loader->add_action( 'wp_ajax_isfw_save_general_pdf_settings', $isfw_plugin_admin, 'isfw_save_general_pdf_settings' );
-		// adding shortcodes to fetch all order detials [isfw_fetch_order].
-		$this->loader->add_action( 'init', $isfw_plugin_admin, 'isfw_fetch_order_details_shortcode' );
 		// adding custom link to the order listing page.
 		$this->loader->add_action( 'manage_shop_order_posts_custom_column', $isfw_plugin_admin, 'isfw_populating_field_for_custom_tab', 15 );
 		$this->loader->add_action( 'init', $isfw_plugin_admin, 'isfw_create_pdf' );
@@ -212,6 +210,8 @@ class Invoice_System_For_Woocommerce {
 		$this->loader->add_filter( 'handle_bulk_actions-edit-shop_order', $isfw_plugin_admin, 'isfw_handling_bulk_action_for_pdf_generation', 10, 3 );
 		// showing notification for the processed downloads.
 		$this->loader->add_action( 'admin_notices', $isfw_plugin_admin, 'isfw_pdf_downloads_bulk_action_admin_notice' );
+		
+
 	}
 
 	/**
@@ -231,8 +231,20 @@ class Invoice_System_For_Woocommerce {
 		if ( 'on' === $isfw_enable_plugin ) {
 			$this->loader->add_filter( 'woocommerce_my_account_my_orders_columns', $isfw_plugin_public, 'isfw_add_content_to_orders_listing_page', 20, 1 );
 			$this->loader->add_action( 'woocommerce_my_account_my_orders_column_isfw_invoice_download', $isfw_plugin_public, 'isfw_add_data_to_custom_column', 10, 1 );
+			$this->loader->add_action( 'init', $isfw_plugin_public, 'isfw_generate_pdf_for_user' );
 		}
-
+	}
+	/**
+	 * Register all of the hooks related to the common-facing functionality
+	 * of the plugin.
+	 *
+	 * @since    1.0.0
+	 * @access   private
+	 */
+	private function invoice_system_for_woocommerce_common_hooks() {
+		$isfw_plugin_common = new Invoice_System_For_Woocommerce_Common( $this->isfw_get_plugin_name(), $this->isfw_get_version() );
+		// adding shortcodes to fetch all order detials [isfw_fetch_order].
+		$this->loader->add_action( 'plugins_loaded', $isfw_plugin_common, 'isfw_fetch_order_details_shortcode' );
 	}
 
 
@@ -514,8 +526,8 @@ class Invoice_System_For_Woocommerce {
 								<span class="mdc-notched-outline">
 									<span class="mdc-notched-outline__leading"></span>
 									<span class="mdc-notched-outline__notch">
-										<?php if ( 'number' != $isfw_component['type'] ) { ?>
-											<span class="mdc-floating-label" id="my-label-id" style=""><?php echo esc_attr( $isfw_component['placeholder'] ); ?></span>
+										<?php if ( 'number' !== $isfw_component['type'] ) { ?>
+											<span class="mdc-floating-label" id="my-label-id" style=""><?php echo esc_attr( array_key_exists( 'placeholder', $isfw_component ) ? $isfw_component['placeholder'] : '' ); ?></span>
 										<?php } ?>
 									</span>
 									<span class="mdc-notched-outline__trailing"></span>
