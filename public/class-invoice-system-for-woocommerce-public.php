@@ -96,13 +96,24 @@ class Invoice_System_For_Woocommerce_Public {
 	 * @return void
 	 */
 	public function isfw_add_data_to_custom_column( $order ) {
-		$upload_dir     = wp_upload_dir();
-		$upload_baseurl = $upload_dir['baseurl'] . '/invoices/';
-		$file_pdf_url   = $upload_baseurl . 'invoice_' . $order->get_id() . '.pdf';
-		$upload_basedir = $upload_dir['basedir'] . '/invoices/';
-		$file_pdf_path  = $upload_basedir . 'invoice_' . $order->get_id() . '.pdf';
-		if ( file_exists( $file_pdf_path ) ) {
-			echo '<a href="' . esc_attr( $file_pdf_url ) . '" download>' . __( "Download", "invoice-system-for-woocommerce" ) . '</a>'; // phpcs:ignore
+		global $wp;
+		$url_here = home_url( $wp->request );
+		echo '<a href="' . $url_here . '/?order_id=' . $order->get_id() . '&action=userpdfdownload"><img src="' . INVOICE_SYSTEM_FOR_WOOCOMMERCE_DIR_URL ."admin/src/images/isfw_download_icon.svg" . '" style="max-width: 35px;" title="' . __( "Download Invoice", "invoice-system-for-woocommerce" ) . '"></a>'; // phpcs:ignore
+	}
+	/**
+	 * Generate pdf for user from the orders listing page.
+	 *
+	 * @return void
+	 */
+	public function isfw_generate_pdf_for_user() {
+		require_once INVOICE_SYSTEM_FOR_WOOCOMMERCE_DIR_PATH . 'common/class-invoice-system-for-woocommerce-common.php';
+		$common_class = new Invoice_System_For_Woocommerce_Common( $this->plugin_name, $this->version );
+		if ( isset( $_GET['order_id'] ) && isset( $_GET['action'] ) ) { // phpcs:ignore
+			if ( 'userpdfdownload' === $_GET['action'] ) { // phpcs:ignore
+				$order_id = $_GET['order_id']; // phpcs:ignore
+				$common_class->isfw_common_generate_pdf( $order_id, 'invoice', 'download_locally' );
+			}
 		}
 	}
 }
+
