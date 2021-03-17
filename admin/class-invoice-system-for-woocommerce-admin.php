@@ -129,6 +129,7 @@ class Invoice_System_For_Woocommerce_Admin {
 				'btn_resubmit'            => __( 'Resubmit', 'invoice-system-for-woocommerce' ),
 				'saving_error'            => __( 'there might be some error in saving the settings please try again!', 'invoice-system-for-woocommerce' ),
 				'invalid_date'            => __( 'Date can be either current year or next year. Please choose again!', 'invoice-system-for-woocommerce' ),
+				'calender_image'          => INVOICE_SYSTEM_FOR_WOOCOMMERCE_DIR_URL . 'admin/src/images/calender.png',
 			)
 		);
 	}
@@ -432,6 +433,14 @@ class Invoice_System_For_Woocommerce_Admin {
 					'img-id'    => 'mwb-isfw-logo-image',
 					'img-style' => ( $logo ) ? 'margin:10px;' : 'display:none;margin:10px;',
 					'img-src'   => $logo,
+				),
+				'img-remove'    => array(
+					'btn-class' => 'mwb-isfw-logo-remove-image',
+					'btn-id'    => 'mwb-isfw-logo-remove-image',
+					'btn-text'  => __( 'Remove image', 'invoice-system-for-woocommerce' ),
+					'btn-title' => __( 'Remove image', 'invoice-system-for-woocommerce' ),
+					'btn-name'  => 'mwb-isfw-logo-remove-image',
+					'btn-style' => ! ( $logo ) ? 'display:none' : '',
 				),
 			),
 			array(
