@@ -210,8 +210,6 @@ class Invoice_System_For_Woocommerce {
 		$this->loader->add_filter( 'handle_bulk_actions-edit-shop_order', $isfw_plugin_admin, 'isfw_handling_bulk_action_for_pdf_generation', 10, 3 );
 		// showing notification for the processed downloads.
 		$this->loader->add_action( 'admin_notices', $isfw_plugin_admin, 'isfw_pdf_downloads_bulk_action_admin_notice' );
-		
-
 	}
 
 	/**
@@ -232,6 +230,7 @@ class Invoice_System_For_Woocommerce {
 			$this->loader->add_filter( 'woocommerce_my_account_my_orders_columns', $isfw_plugin_public, 'isfw_add_content_to_orders_listing_page', 20, 1 );
 			$this->loader->add_action( 'woocommerce_my_account_my_orders_column_isfw_invoice_download', $isfw_plugin_public, 'isfw_add_data_to_custom_column', 10, 1 );
 			$this->loader->add_action( 'init', $isfw_plugin_public, 'isfw_generate_pdf_for_user' );
+			$this->loader->add_filter( 'woocommerce_thankyou_order_received_text', $isfw_plugin_public, 'isfw_pdf_generation_link_for_guest_user', 20, 2 );
 		}
 	}
 	/**
@@ -522,7 +521,7 @@ class Invoice_System_For_Woocommerce {
 							<label for="<?php echo esc_attr( $isfw_component['id'] ); ?>" class="mwb-form-label"><?php echo esc_html( array_key_exists( 'title', $isfw_component ) ? $isfw_component['title'] : '' ); // WPCS: XSS ok. ?></label>
 						</div>
 						<div class="mwb-form-group__control">
-							<label class="mdc-text-field mdc-text-field--outlined">
+							<label class="mdc-text-field mdc-text-field--outlined <?php echo esc_attr( $isfw_component['id'] ); ?>">
 								<span class="mdc-notched-outline">
 									<span class="mdc-notched-outline__leading"></span>
 									<span class="mdc-notched-outline__notch">

@@ -166,7 +166,10 @@ select {
 
 
 /*=====  End of GLOBAL CSS  ======*/
-
+.isfw_invoice_color {
+    height: auto;
+    padding: 0;
+}
 .mwb-link {
     font-family: 'NunitoSans-Bold';
     font-style: normal;

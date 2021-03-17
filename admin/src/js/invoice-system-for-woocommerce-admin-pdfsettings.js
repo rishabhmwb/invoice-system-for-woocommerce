@@ -8,7 +8,19 @@
             minDate: '0y',
             maxDate: '+1y',
         });
-        // $('#isfw_invoice_color').colorpicker();
+        $('#isfw_invoice_color').minicolors({
+            animationSpeed: 50,
+            animationEasing:'swing',
+            changeDelay: 0,
+            control:'hue',
+            format:'hex',
+            showSpeed: 100,
+            hideSpeed: 100,
+            inline:false,
+
+
+
+        });
         if ( $('.mwb-isfw-logo-image').attr('src') ) {
             $('#isfw-logo-upload_image').text(isfw_general_settings.remove_image);
         }
