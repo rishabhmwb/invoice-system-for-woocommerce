@@ -12,9 +12,9 @@ jQuery(document).ready(function($) {
     const switchControl = [].map.call(document.querySelectorAll('.mdc-switch'), function(el) {
         return new MDCSwitch(el);
     });
-    // if ( jQuery(document).hasClass('mdc-dialog') ) {
+    if ( $('.mdc-dialog').length > 0 ) {
         const dialog = mdc.dialog.MDCDialog.attachTo(document.querySelector('.mdc-dialog'));
-    // }
+    }
     /*if device is mobile*/
     if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
         jQuery('body').addClass('mobile-device');

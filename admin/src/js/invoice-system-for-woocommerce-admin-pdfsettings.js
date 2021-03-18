@@ -1,6 +1,12 @@
 (function( $ ) {
     'use strict';
     $(document).ready(function(){
+        if ( $("#isfw_download_zip_pdf_hidden_button").length > 0 ) {
+            var cur_url = document.location.href;
+            cur_url = cur_url.split('&');
+            $('a#isfw_download_zip_pdf')[0].click();
+            window.history.pushState( '', document.title, cur_url[0] );
+        }
         $('#isfw_invoice_renew_date').datepicker({
             showOn: "button",
             buttonImage: isfw_general_settings.calender_image,
@@ -20,13 +26,7 @@
             showSpeed: 100,
             hideSpeed: 100,
             inline:false,
-
-
-
         });
-        // if ( $('.mwb-isfw-logo-image').attr('src') ) {
-        //     $('#isfw-logo-upload_image').text(isfw_general_settings.remove_image);
-        // }
         $('#mwb-isfw-logo-remove-image').click(function(){
             $('.mwb-isfw-logo-image').attr('src', '');
             $('.wp_attachment_id').val('');
@@ -110,7 +110,7 @@
                 $('.notice').remove();
             }
             var preg_prefix     = /^[a-zA-Z0-9_.-]*$/;
-            if ( digit > 10 ) {
+            if ( digit<=0 || digit > 10 ) {
                 window_scroll();
                 $('header').append( isfw_general_settings.digit_limit );
             }

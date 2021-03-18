@@ -469,3 +469,41 @@ a.ui-state-default.ui-state-active {
     background: #ffffff!important;
     border: 1px solid #90cbf9!important;
 }
+@media only screen and (max-width: 1150px) {
+    .isfw-section-wrap label.mdc-text-field.mdc-text-field--outlined {
+        margin-bottom: 10px;
+    }
+}
+
+@media only screen and (max-width: 540px) {
+    .mwb-header-title {
+        max-width: 100%;
+        flex: 0 0 100%;
+        margin-bottom: 10px;
+    }
+
+    .mwb-form-group {
+        display: block;
+    }
+
+    .mwb-form-group__label {
+        flex: 0 0 100%;
+        max-width: 100%;
+        margin-bottom: 15px;
+    }
+
+    .mwb-form-group__control {
+        flex: 0 0 100%;
+        max-width: 100%;
+    }
+
+    label.mdc-text-field.mdc-text-field--outlined {
+        width: 100%;
+    }
+
+    .mwb-navbar__items li {
+        flex: 0 0 50%;
+        max-width: 50%;
+        margin-right: 0;
+    }
+}
