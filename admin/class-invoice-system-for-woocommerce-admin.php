@@ -635,9 +635,9 @@ class Invoice_System_For_Woocommerce_Admin {
 				if ( ! file_exists( $file_pdf_path ) ) {
 					$this->isfw_generating_pdf( $order_id, 'invoice', 'download_on_server' );
 				}
-				$zip->addFile( $file_pdf_path );
+				$zip->addFile( $file_pdf_path, 'invoices/invoice_' . $order_id . '.pdf' );
 			}
-			$zip->close();
+			@$zip->close(); // phpcs:ignore
 			return $redirect_to = add_query_arg( // phpcs:ignore
 				array(
 					'write_downloads' => '1',
@@ -655,9 +655,9 @@ class Invoice_System_For_Woocommerce_Admin {
 				if ( ! file_exists( $file_pdf_path ) ) {
 					$this->isfw_generating_pdf( $order_id, 'packing_slip', 'download_on_server' );
 				}
-				$zip->addFile( $file_pdf_path );
+				$zip->addFile( $file_pdf_path, 'packing_slip/packing_slip_' . $order_id . '.pdf' );
 			}
-			$zip->close();
+			@$zip->close(); // phpcs:ignore
 			return $redirect_to = add_query_arg( // phpcs:ignore
 				array(
 					'write_downloads' => '1',
