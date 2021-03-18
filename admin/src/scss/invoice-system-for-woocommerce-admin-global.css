@@ -96,6 +96,7 @@
     height:60px;
     width:70px;
     background-repeat: no-repeat;
+    background-size: cover;
 }
 body,
 html {
@@ -178,9 +179,10 @@ select {
     padding: 0;
 }
 .isfw_invoice_renew_date img{
-    width: 50px;
-    height: 52px;
-    /* margin-left: -60px; */
+    width: 30px;
+    height: 30px;
+    display: block;
+    margin: 11px 0;
 }
 .mwb-link {
     font-family: 'NunitoSans-Bold';
@@ -438,4 +440,32 @@ select {
     display: block;
     font-size: 1.17em;
     font-weight: bold;
+}
+
+
+
+
+
+.ui-widget-content {
+    border: 1px solid #90cbf9/*{borderColorContent}*/!important;
+}
+
+.ui-widget-header {
+    border: 1px solid #e9f5fe/*{borderColorHeader}*/!important;
+    background: #e9f5fe/*{bgColorHeader}*/ url(images/ui-bg_highlight-soft_75_cccccc_1x100.png)/*{bgImgUrlHeader}*/ 50%/*{bgHeaderXPos}*/ 50%/*{bgHeaderYPos}*/ repeat-x/*{bgHeaderRepeat}*/!important;
+}
+
+.ui-datepicker-title select, .ui-datepicker-title option {
+    color: rgba(0, 0, 0, .7)!important;
+    border-color: #90cbf9!important;
+}
+
+.ui-state-default, .ui-widget-content .ui-state-default, .ui-widget-header .ui-state-default {
+    border: 1px solid #e9f5fe/*{borderColorDefault}*/!important;
+    background: #e9f5fe/*{bgColorDefault}*/ url(images/ui-bg_glass_75_e6e6e6_1x400.png)/*{bgImgUrlDefault}*/ 50%/*{bgDefaultXPos}*/ 50%/*{bgDefaultYPos}*/ repeat-x/*{bgDefaultRepeat}*/!important;
+}
+
+a.ui-state-default.ui-state-active {
+    background: #ffffff!important;
+    border: 1px solid #90cbf9!important;
 }

@@ -130,5 +130,19 @@ class Invoice_System_For_Woocommerce_Public {
 		}
 		return $thanks_msg;
 	}
+	/**
+	 * Adding button to download invoice at the order details page for my account users.
+	 *
+	 * @param object $order order object.
+	 * @return void
+	 */
+	public function isfw_show_download_invoice_button_on_order_description_page( $order ) {
+		global $wp;
+		$url_here = home_url( $wp->request );
+		if ( is_object( $order ) ) {
+			$download_button = '<div id="isfw_guest_download_invoice"><a href="' . $url_here . '/?order_id=' . $order->get_id() . '&action=userpdfdownload"><img src="' . INVOICE_SYSTEM_FOR_WOOCOMMERCE_DIR_URL . "admin/src/images/isfw_download_icon.svg" . '" style="max-width: 35px;" title="' . __( "Download Invoice", "invoice-system-for-woocommerce" ) . '"><span>' . __( 'Download Invoice', 'invoice-system-for-woocommerce' ) . '</span></a></div>'; // phpcs:ignore
+			echo $download_button; // phpcs:ignore
+		}
+	}
 }
 

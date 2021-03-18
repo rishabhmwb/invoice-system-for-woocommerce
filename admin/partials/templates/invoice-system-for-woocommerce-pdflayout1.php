@@ -102,7 +102,7 @@ function return_ob_value( $order_id, $type ) {
 								<div id="mwb-pdf-form">
 									<form action="" method="post">';
 									if ('yes' === $is_add_logo && '' !== $logo ) {
-										$html .= '<div style="text-align:center;"><img src="' . $logo . '" height="120" width="120"></div>';
+										$html .= '<div style="text-align:center;margin-bottom: 30px;"><img src="' . $logo . '" height="120" width="120"></div>';
 									}
 				$html .= '<table border = "0" cellpadding = "0" cellspacing = "0" style="width: 100%; vertical-align: top; margin-bottom: 30px;">
 											<tbody>

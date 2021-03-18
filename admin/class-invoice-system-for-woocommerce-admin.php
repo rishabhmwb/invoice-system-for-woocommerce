@@ -478,10 +478,10 @@ class Invoice_System_For_Woocommerce_Admin {
 						'type'  => 'checkbox',
 						'id'    => 'isfw_invoice_template1',
 						'class' => 'isfw_invoice_template1',
-						'src'   => INVOICE_SYSTEM_FOR_WOOCOMMERCE_DIR_URL . 'admin/src/images/email-icon.png',
+						'src'   => INVOICE_SYSTEM_FOR_WOOCOMMERCE_DIR_URL . 'admin/src/images/template1.png',
 						'name'  => 'isfw_invoice_template1',
 						'alt'   => 'Template1',
-						'style' => 'style=max-height:500px;max-width:200px;padding:0px;',
+						'style' => 'style=max-height:100%;max-width:100%;padding:0px;',
 						'value' => ( 'one' === $template ) ? 'isfw_invoice_template1' : '',
 					),
 					array(
@@ -489,10 +489,10 @@ class Invoice_System_For_Woocommerce_Admin {
 						'type'  => 'checkbox',
 						'id'    => 'isfw_invoice_template2',
 						'class' => 'isfw_invoice_template2',
-						'src'   => INVOICE_SYSTEM_FOR_WOOCOMMERCE_DIR_URL . 'admin/src/images/email-icon.png',
+						'src'   => INVOICE_SYSTEM_FOR_WOOCOMMERCE_DIR_URL . 'admin/src/images/template2.png',
 						'name'  => 'isfw_invoice_template2',
 						'alt'   => 'Template2',
-						'style' => 'style=max-height:500px;max-width:200px;padding:0px;',
+						'style' => 'style=max-height:100%;max-width:100%;padding:0px;',
 						'value' => ( 'two' === $template ) ? 'isfw_invoice_template2' : '',
 					),
 				),
@@ -541,8 +541,9 @@ class Invoice_System_For_Woocommerce_Admin {
 	 */
 	public function isfw_populating_field_for_custom_tab( $column ) {
 		global $post;
+		$post_page = admin_url( 'post.php' );
 		if ( 'order_number' === $column ) {
-			_e( '<div id="mwb_isfw_pdf_admin_order_icon"><a href="/wp-admin/post.php?orderid='. $post->ID . '&action=generateinvoice" style="margin-left:5px;" id="isfw-print-invoice-order-listing-page" data-order-id="' . $post->ID . '"><img src="' . INVOICE_SYSTEM_FOR_WOOCOMMERCE_DIR_URL . 'admin/src/images/invoice_pdf.svg" width="20" height="20" title="'. __( "Generate invoice", "invoice-system-for-woocommerce" ) .'"></a><a href="/wp-admin/post.php?orderid='. $post->ID . '&action=generateslip" style="margin-left:5px;" id="isfw-print-invoice-order-listing-page" data-order-id="' . $post->ID . '"><img src="' . INVOICE_SYSTEM_FOR_WOOCOMMERCE_DIR_URL . 'admin/src/images/packing_slip.svg" width="20" height="20" title="' . __( "Generate packing slip", "invoice-system-for-woocommerce"  ) . '"></a></div>' ); // phpcs:ignore
+			_e( '<div id="mwb_isfw_pdf_admin_order_icon"><a href="' . $post_page . '?orderid='. $post->ID . '&action=generateinvoice" style="margin-left:5px;box-shadow: none;display: inline-block;" id="isfw-print-invoice-order-listing-page" data-order-id="' . $post->ID . '"><img src="' . INVOICE_SYSTEM_FOR_WOOCOMMERCE_DIR_URL . 'admin/src/images/invoice_pdf.svg" width="20" height="20" title="'. __( "Generate invoice", "invoice-system-for-woocommerce" ) .'"></a><a href="/wp-admin/post.php?orderid='. $post->ID . '&action=generateslip" style="margin-left:5px;box-shadow: none;display: inline-block;" id="isfw-print-invoice-order-listing-page" data-order-id="' . $post->ID . '"><img src="' . INVOICE_SYSTEM_FOR_WOOCOMMERCE_DIR_URL . 'admin/src/images/packing_slip.svg" width="20" height="20" title="' . __( "Generate packing slip", "invoice-system-for-woocommerce"  ) . '"></a></div>' ); // phpcs:ignore
 		}
 	}
 	/**
@@ -710,7 +711,7 @@ class Invoice_System_For_Woocommerce_Admin {
 			jQuery(document).ready(function($){
 				setTimeout(function(){
 					$(document).find('a.thickbox').trigger('click');
-					$(document).find('a#isfw_download_zip_pdf').css('color', 'green');
+					// $(document).find('a#isfw_download_zip_pdf').css('color', 'green');
 					$(document).find('a#isfw_download_zip_pdf').trigger('click');
 				}, 2000);
 			});
