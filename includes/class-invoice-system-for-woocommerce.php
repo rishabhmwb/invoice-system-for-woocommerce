@@ -231,6 +231,8 @@ class Invoice_System_For_Woocommerce {
 			$this->loader->add_action( 'woocommerce_my_account_my_orders_column_isfw_invoice_download', $isfw_plugin_public, 'isfw_add_data_to_custom_column', 10, 1 );
 			$this->loader->add_action( 'init', $isfw_plugin_public, 'isfw_generate_pdf_for_user' );
 			$this->loader->add_filter( 'woocommerce_thankyou_order_received_text', $isfw_plugin_public, 'isfw_pdf_generation_link_for_guest_user', 20, 2 );
+			// add icon at the order details page for user my account.
+			$this->loader->add_action( 'woocommerce_order_details_before_order_table_items', $isfw_plugin_public, 'isfw_show_download_invoice_button_on_order_description_page' );
 		}
 	}
 	/**
