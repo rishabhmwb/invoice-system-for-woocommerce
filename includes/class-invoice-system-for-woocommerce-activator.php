@@ -54,6 +54,7 @@ class Invoice_System_For_Woocommerce_Activator {
 		);
 		if ( ! get_option( 'mwb_isfw_pdf_general_settings' ) ) {
 			update_option( 'mwb_isfw_pdf_general_settings', $setting_fields );
+			update_option( 'isfw_mwb_plugin_enable', 'on' );
 		}
 	}
 }

@@ -123,7 +123,7 @@ class Invoice_System_For_Woocommerce_Admin {
 				'insert_image'            => __( 'Choose Image', 'invoice-system-for-woocommerce' ),
 				'remove_image'            => __( 'Remove Image', 'invoice-system-for-woocommerce' ),
 				'digit_limit'             => '<div class="notice notice-error is-dismissible">
-												<p>' . __( "Please choose digits less then 10", "invoice-system-for-woocommerce" ) . '</p>
+												<p>' . __( "Please choose digits greater then 0 and less then 10", "invoice-system-for-woocommerce" ) . '</p>
 											</div>',
 				'suffix_limit'            => '<div class="notice notice-error is-dismissible">
 												<p>' . __( "Please Enter Characters, Numbers and - only, in prefix and suffix field", "invoice-system-for-woocommerce" ) . '</p>
@@ -689,33 +689,13 @@ class Invoice_System_For_Woocommerce_Admin {
 		if ( empty( $_REQUEST['write_downloads'] ) ) { // phpcs:ignore
 			return;  // Exit.
 		}
-		$processed_count = sanitize_text_field( wp_unslash( $_REQUEST['processed_count'] ) ); // phpcs:ignore
-		add_thickbox();
+		$upload_dir     = wp_upload_dir();
+		$upload_baseurl = $upload_dir['baseurl'] . '/invoices/';
+		$file_url       = $upload_baseurl . 'document.zip';
 		?>
-		<div class="updated">
-		<div><?php esc_html_e( 'Files has been processed and are ready to download in zip.', 'invoice-system-for-woocommerce' ); ?></div>
-		<a href="#TB_inline?width=100&height=100&inlineId=modal-window-id" class="thickbox"><?php esc_html_e( 'Click here to open panel to download', 'invoice-system-for-woocommerce' ); ?></a>
-			<div id="modal-window-id" style="display:none;">
-			<?php
-				$upload_dir     = wp_upload_dir();
-				$upload_baseurl = $upload_dir['baseurl'] . '/invoices/';
-				$file_url       = $upload_baseurl . 'document.zip';
-			?>
-				<div>
-					<?php printf( _n( '%s file has been processed', '%s files has been procesed', $processed_count, 'invoice-system-for-woocommerce' ), $processed_count ); // phpcs:ignore?>
-					<a href='<?php echo esc_attr( $file_url ); ?>' id="isfw_download_zip_pdf"><?php esc_html_e( 'Download zip', 'invoice-system-for-woocommerce' ); ?></a>
-				</div>
-			</div>
+		<div id="isfw_download_zip_pdf_hidden_button" style="display:none;">
+			<a href='<?php echo esc_attr( $file_url ); ?>' id="isfw_download_zip_pdf"><?php esc_html_e( 'Download zip', 'invoice-system-for-woocommerce' ); ?></a>
 		</div>
-		<script type='text/javascript'>
-			jQuery(document).ready(function($){
-				setTimeout(function(){
-					$(document).find('a.thickbox').trigger('click');
-					// $(document).find('a#isfw_download_zip_pdf').css('color', 'green');
-					$(document).find('a#isfw_download_zip_pdf').trigger('click');
-				}, 2000);
-			});
-		</script>
 		<?php
 	}
 }
