@@ -104,15 +104,23 @@
                     return false;
                 }
             }
+            function window_scroll() {
+                document.body.scrollTop = 0; // For Safari
+                document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
+                $('.notice').remove();
+            }
             var preg_prefix     = /^[a-zA-Z0-9_.-]*$/;
             if ( digit > 10 ) {
-                alert( isfw_general_settings.digit_limit );
+                window_scroll();
+                $('header').append( isfw_general_settings.digit_limit );
             }
             else if ( ! mwb_parsedate( date )) {
-                alert( isfw_general_settings.invalid_date );
+                window_scroll();
+                $('header').append( isfw_general_settings.invalid_date );
             }
             else if ( ! prefix.match(preg_prefix) || ! suffix.match(preg_prefix) ) {
-                alert( isfw_general_settings.suffix_limit );
+                window_scroll();
+                $('header').append( isfw_general_settings.suffix_limit );
             } else {
                 var curr_obj = this;
                 $(curr_obj).html( "<img src="+isfw_general_settings.btn_load+" width='30' height='30'>" );
@@ -147,6 +155,8 @@
                     },
                     success: function( msg ) {
                         $(curr_obj).text(isfw_general_settings.btn_success);
+                        window_scroll();
+                        $('header').append(msg);
                     }, error : function() {
                         $(curr_obj).text(isfw_general_settings.btn_resubmit);
                         alert(isfw_general_settings.saving_error);

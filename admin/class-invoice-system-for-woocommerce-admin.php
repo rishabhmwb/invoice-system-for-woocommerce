@@ -122,13 +122,21 @@ class Invoice_System_For_Woocommerce_Admin {
 				'isfw_setting_page_nonce' => wp_create_nonce( 'isfw_general_setting_nonce' ),
 				'insert_image'            => __( 'Choose Image', 'invoice-system-for-woocommerce' ),
 				'remove_image'            => __( 'Remove Image', 'invoice-system-for-woocommerce' ),
-				'digit_limit'             => __( 'Please enter the digit in the digit field less then 10', 'invoice-system-for-woocommerce' ),
-				'suffix_limit'            => __( 'Please Enter Characters, Numbers and "-" only in prefix and suffix field', 'invoice-system-for-woocommerce' ),
+				'digit_limit'             => '<div class="notice notice-error is-dismissible">
+												<p>' . __( "Please choose digits less then 10", "invoice-system-for-woocommerce" ) . '</p>
+											</div>',
+				'suffix_limit'            => '<div class="notice notice-error is-dismissible">
+												<p>' . __( "Please Enter Characters, Numbers and - only, in prefix and suffix field", "invoice-system-for-woocommerce" ) . '</p>
+											</div>',
 				'btn_load'                => INVOICE_SYSTEM_FOR_WOOCOMMERCE_DIR_URL . 'admin/src/images/loader.gif',
 				'btn_success'             => __( 'Saved', 'invoice-system-for-woocommerce' ),
 				'btn_resubmit'            => __( 'Resubmit', 'invoice-system-for-woocommerce' ),
-				'saving_error'            => __( 'there might be some error in saving the settings please try again!', 'invoice-system-for-woocommerce' ),
-				'invalid_date'            => __( 'Date can be either current year or next year. Please choose again!', 'invoice-system-for-woocommerce' ),
+				'saving_error'            => '<div class="notice notice-error is-dismissible">
+												<p>' . __( "Error,Please try again later", "invoice-system-for-woocommerce" ) . '</p>
+											</div>',
+				'invalid_date'            => '<div class="notice notice-error is-dismissible">
+												<p>' . __( "Date can be either current year or next year. Please choose again!", "invoice-system-for-woocommerce" ) . '</p>
+											</div>',
 				'calender_image'          => INVOICE_SYSTEM_FOR_WOOCOMMERCE_DIR_URL . 'admin/src/images/calender.png',
 			)
 		);
@@ -519,7 +527,10 @@ class Invoice_System_For_Woocommerce_Admin {
 		$isfw_enable_plugin = array_key_exists( 'isfw_enable_plugin', $_POST ) ? $_POST['isfw_enable_plugin'] : 'off'; // phpcs:ignore
 		update_option( 'mwb_isfw_pdf_general_settings', $settings_data );
 		update_option( 'isfw_mwb_plugin_enable', $isfw_enable_plugin );
-		esc_html_e( 'updated successfully', 'invoice-system-for-woocommere' );
+		$html = '<div class="notice notice-success is-dismissible">
+					<p>' . __( "Settings saved successfully", "invoice-system-for-woocommerce" ) . '</p>
+				</div>';
+		echo $html; // phpcs:ignore
 		wp_die();
 	}
 	/**
