@@ -78,6 +78,7 @@ class Invoice_System_For_Woocommerce_Common {
 		$dompdf = new Dompdf( array( 'enable_remote' => true ) );
 		$dompdf->loadHtml( $html );
 		$dompdf->setPaper( 'A4' );
+		@ob_end_clean(); // phpcs:ignore
 		$dompdf->render();
 		if ( 'download_locally' === $action ) {
 			$output         = $dompdf->output();
