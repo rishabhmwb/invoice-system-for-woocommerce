@@ -52,6 +52,7 @@ jQuery(document).ready(function($) {
 
     /* Close Button Click */
     jQuery(document).on('click', '.mwb-isfw-on-boarding-close-btn a', function(e) {
+        const dialog = mdc.dialog.MDCDialog.attachTo(document.querySelector('.mdc-dialog'));
         e.preventDefault();
         mwb_isfw_hide_onboard_popup();
     });
@@ -107,6 +108,7 @@ jQuery(document).ready(function($) {
 
     /* Open Popup */
     function mwb_isfw_show_onboard_popup() {
+        const dialog = mdc.dialog.MDCDialog.attachTo(document.querySelector('.mdc-dialog'));
         dialog.open();
         if (!jQuery('body').hasClass('mobile-device')) {
             jQuery('body').addClass('mwb-on-boarding-wrapper-control');
@@ -115,6 +117,7 @@ jQuery(document).ready(function($) {
 
     /* Close Popup */
     function mwb_isfw_hide_onboard_popup() {
+        const dialog = mdc.dialog.MDCDialog.attachTo(document.querySelector('.mdc-dialog'));
         dialog.close();
         if (!jQuery('body').hasClass('mobile-device')) {
             jQuery('body').removeClass('mwb-on-boarding-wrapper-control');

@@ -409,7 +409,7 @@ class Invoice_System_For_Woocommerce_Admin {
 				'class'       => 'isfw_invoice_renew_date',
 				'value'       => $date,
 				'name'        => 'isfw_invoice_renew_date',
-				'placeholder' => __( 'date', 'invoice-system-for-woocommerce' ),
+				'placeholder' => __( '', 'invoice-system-for-woocommerce' ),
 			),
 			array(
 				'title'       => __( 'Disclaimer', 'invoice-system-for-woocommere' ),
