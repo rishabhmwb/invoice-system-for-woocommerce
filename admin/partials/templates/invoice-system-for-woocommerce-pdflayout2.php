@@ -57,8 +57,10 @@ function return_ob_value( $order_id, $type ) {
 		$company_address = '';
 		$is_add_logo     = '';
 	}
-	if ( date( "Y-m-d", strtotime( $date ) ) <= date( 'Y-m-d' ) ) {
-		update_option( 'isfw_current_invoice_id', 1 );
+	if ( $date !== '' ) {
+		if ( date( "Y-m-d", strtotime( $date ) ) <= date( 'Y-m-d' ) ) {
+			update_option( 'isfw_current_invoice_id', 1 );
+		}
 	}
 	$in_id = get_post_meta( $order_id, 'isfw_order_invoice_id', true );
 	if ( $in_id ) {
