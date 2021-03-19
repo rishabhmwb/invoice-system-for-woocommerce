@@ -335,6 +335,10 @@ class Invoice_System_For_Woocommerce {
 			'title' => esc_html__( 'System Status', 'invoice-system-for-woocommerce' ),
 			'name'  => 'invoice-system-for-woocommerce-system-status',
 		);
+		$isfw_default_tabs['invoice-system-for-woocommerce-overview']      = array(
+			'title' => esc_html__( 'Overview', 'invoice-system-for-woocommerce' ),
+			'name'  => 'invoice-system-for-woocommerce-overview',
+		);
 		return $isfw_default_tabs;
 	}
 
