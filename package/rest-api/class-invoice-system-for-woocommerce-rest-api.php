@@ -77,7 +77,6 @@ class Invoice_system_for_woocommerce_Rest_Api {
 			'isfw-route/v1',
 			'/isfw-dummy-data/',
 			array(
-				// 'methods'  => 'POST',
 				'methods'  => WP_REST_Server::CREATABLE,
 				'callback' => array( $this, 'mwb_isfw_default_callback' ),
 				'permission_callback' => array( $this, 'mwb_isfw_default_permission_check' ),

@@ -98,6 +98,9 @@ function return_ob_value( $order_id, $type ) {
 									.isfw-invoice-color{
 										color: ' . $color . ';
 									}
+									#mwb-pdf-form{
+										font-family: DejaVu Sans !important;
+									}
 								</style>
 							</head>
 							<body>
