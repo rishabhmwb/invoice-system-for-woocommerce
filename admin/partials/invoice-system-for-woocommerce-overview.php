@@ -27,7 +27,7 @@
 
 			</div>
 		</div>
-		<h1> <?php esc_html_e( 'The Free Plugin Benefits', 'invoice-system-for-woocommerce' ); ?></h1>
+		<h2> <?php esc_html_e( 'The Free Plugin Benefits', 'invoice-system-for-woocommerce' ); ?></h2>
 		<div class="isfw-overview__keywords">
 			<div class="isfw-overview__keywords-item">
 				<div class="isfw-overview__keywords-card">
@@ -35,12 +35,11 @@
 						<img src="<?php echo esc_html( INVOICE_SYSTEM_FOR_WOOCOMMERCE_DIR_URL . 'admin/src/images/Advanced-report.png' ); ?>" alt="Advanced-report image">
 					</div>
 					<div class="isfw-overview__keywords-text">
-						<h3 class="isfw-overview__keywords-heading"><?php echo esc_html_e( ' Advanced Reports For Invoice System Products', 'invoice-system-for-woocommerce' ); ?></h3>
+						<h3 class="isfw-overview__keywords-heading"><?php echo esc_html_e( 'Pre-built Invoice Templates', 'invoice-system-for-woocommerce' ); ?></h3>
 						<p class="isfw-overview__keywords-description">
 							<?php
 							esc_html_e(
-								'The plugin comes with advanced reports for the abandoned carts made in your store. Thus, allowing you to 
-								make an informed abandoned cart recovery strategy.',
+								'The Invoice System for WooCommerce plugin provides 2 fully customizable invoice templates to enhance brand value for the products.',
 								'invoice-system-for-woocommerce'
 							);
 							?>
@@ -54,8 +53,8 @@
 						<img src="<?php echo esc_html( INVOICE_SYSTEM_FOR_WOOCOMMERCE_DIR_URL . 'admin/src/images/Workflow.png' ); ?>" alt="Workflow image">
 					</div>
 					<div class="isfw-overview__keywords-text">
-						<h3 class="isfw-overview__keywords-heading"><?php echo esc_html_e( 'Workflow For Invoice System', 'invoice-system-for-woocommerce' ); ?></h3>
-						<p class="isfw-overview__keywords-description"><?php echo esc_html_e( 'Abandoned Cart For WooCommerce comes with a customizable workflow that lets you send emails and win back your lost customers.', 'invoice-system-for-woocommerce' ); ?></p>
+						<h3 class="isfw-overview__keywords-heading"><?php echo esc_html_e( 'Share Invoices via Email', 'invoice-system-for-woocommerce' ); ?></h3>
+						<p class="isfw-overview__keywords-description"><?php echo esc_html_e( 'This invoice plugin allows you to share individual or bulk invoices and packing slips with the concerned customers via WooCommerce email.', 'invoice-system-for-woocommerce' ); ?></p>
 					</div>
 				</div>
 			</div>
@@ -65,11 +64,11 @@
 						<img src="<?php echo esc_html( INVOICE_SYSTEM_FOR_WOOCOMMERCE_DIR_URL . 'admin/src/images/Variable-product.png' ); ?>" alt="Variable product image">
 					</div>
 					<div class="isfw-overview__keywords-text">
-						<h3 class="isfw-overview__keywords-heading"><?php echo esc_html_e( 'Support Variable Product', 'invoice-system-for-woocommerce' ); ?></h3>
+						<h3 class="isfw-overview__keywords-heading"><?php echo esc_html_e( 'Customizable Invoice Number', 'invoice-system-for-woocommerce' ); ?></h3>
 						<p class="isfw-overview__keywords-description">
 							<?php
 							echo esc_html_e(
-								'The plugin works very well with and supports variable products on your WooCommerce store.',
+								'Admin can add/remove prefix and suffix to the invoice number to provide more personalized perception to customers.',
 								'invoice-system-for-woocommerce'
 							);
 							?>
@@ -83,11 +82,11 @@
 						<img src="<?php echo esc_html( INVOICE_SYSTEM_FOR_WOOCOMMERCE_DIR_URL . 'admin/src/images/List-of-abandoned-users.png' ); ?>" alt="List-of-abandoned-users image">
 					</div>
 					<div class="isfw-overview__keywords-text">
-						<h3 class="isfw-overview__keywords-heading"><?php echo esc_html_e( 'Complete List Of Invoice Users', 'invoice-system-for-woocommerce' ); ?></h3>
+						<h3 class="isfw-overview__keywords-heading"><?php echo esc_html_e( 'Easy Downloading of PDF Invoices', 'invoice-system-for-woocommerce' ); ?></h3>
 						<p class="isfw-overview__keywords-description">
 							<?php
 							echo esc_html_e(
-								'The plugin gives you a complete list of shoppers that left carts abandoned on your WooCommerce store.',
+								'This Invoice System for WooCommerce plugin gives admin and customers an equal right to download the invoices in PDF format from the Order Admin page and My Account page.',
 								'invoice-system-for-woocommerce'
 							);
 							?>
@@ -102,12 +101,31 @@
 							<img src="<?php echo esc_html( INVOICE_SYSTEM_FOR_WOOCOMMERCE_DIR_URL . 'admin/src/images/Support.png' ); ?>" alt="Support image">
 						</div>
 						<div class="isfw-overview__keywords-text">
-							<h3 class="isfw-overview__keywords-heading"><?php echo esc_html_e( 'Support', 'invoice-system-for-woocommerce' ); ?></h3>
+							<h3 class="isfw-overview__keywords-heading"><?php echo esc_html_e( 'Renew Invoice Number Sequence', 'invoice-system-for-woocommerce' ); ?></h3>
 							<p class="isfw-overview__keywords-description">
 								<?php
 								esc_html_e(
-									"Phone, Email & Skype support. Our Support is ready to assist you regarding any query, issue, or feature request and if that doesn't help our Technical team will connect with you personally and have your query
-									resolved.",
+									'Invoice System for WooCommerce plugin also allows the admin to renew the invoice number sequence with every new financial year.',
+									'invoice-system-for-woocommerce'
+								);
+								?>
+							</p>
+						</div>
+					</a>
+				</div>
+			</div>
+			<div class="isfw-overview__keywords-item">
+				<a href="https://makewebbetter.com/contact-us/" title="">
+					<div class="isfw-overview__keywords-card mwb-card-support">
+						<div class="isfw-overview__keywords-image">
+							<img src="<?php echo esc_html( INVOICE_SYSTEM_FOR_WOOCOMMERCE_DIR_URL . 'admin/src/images/Support.png' ); ?>" alt="Support image">
+						</div>
+						<div class="isfw-overview__keywords-text">
+							<h3 class="isfw-overview__keywords-heading"><?php echo esc_html_e( 'Bulk Invoices & Packaging Slips', 'invoice-system-for-woocommerce' ); ?></h3>
+							<p class="isfw-overview__keywords-description">
+								<?php
+								esc_html_e(
+									'Invoice System for WooCommerce plugin allows the admin to generate PDF invoices and packaging slips in bulk.',
 									'invoice-system-for-woocommerce'
 								);
 								?>

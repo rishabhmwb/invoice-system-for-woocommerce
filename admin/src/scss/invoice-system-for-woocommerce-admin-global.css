@@ -540,7 +540,7 @@ a.ui-state-default.ui-state-active {
 .isfw-overview__content-description {
     background-color: #ffffff;
     margin-bottom: 30px;
-    padding: 25px 50px;
+    padding: 25px 0;
     text-align: left;
 }
 
@@ -754,5 +754,9 @@ a.ui-state-default.ui-state-active {
 .isfw-overview__video--url {
     flex: 0 0 50%;
     max-width: 50%;
+}
+
+.isfw-overview__video--url iframe {
+    width: 100%;
 }
 /* overview page css ends */ 
