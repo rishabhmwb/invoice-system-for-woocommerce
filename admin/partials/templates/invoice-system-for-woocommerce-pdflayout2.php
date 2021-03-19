@@ -143,6 +143,9 @@ function return_ob_value( $order_id, $type ) {
 												margin-top: -20px;
 												text-align: right;
 											}
+											#isfw-pdf{
+												font-family: DejaVu Sans !important;
+											}
 										</style>
 									</head>
 									<body>

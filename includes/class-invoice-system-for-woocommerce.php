@@ -819,16 +819,14 @@ class Invoice_System_For_Woocommerce {
 									<label for="<?php echo esc_attr( array_key_exists( 'id', $isfw_component ) ? $isfw_component['id'] : '' ); ?>" class="mwb-form-label"><?php echo esc_html( array_key_exists( 'title', $isfw_component ) ? $isfw_component['title'] : '' ); // WPCS: XSS ok. ?></label>
 								</div>
 								<div class="mwb-form-group__control">
-									<!-- <label class="mdc-text-field--outlined"> -->
-										<input 
-										class="<?php echo esc_attr( array_key_exists( 'class', $isfw_component ) ? $isfw_component['class'] : '' ); ?>" 
-										name="<?php echo esc_attr( array_key_exists( 'namre', $isfw_component ) ? $isfw_component['name'] : '' ); ?>"
-										id="<?php echo esc_attr( array_key_exists( 'id', $isfw_component ) ? $isfw_component['id'] : '' ); ?>"
-										type="<?php echo esc_attr( array_key_exists( 'type', $isfw_component ) ? $isfw_component['type'] : '' ); ?>"
-										value="<?php echo esc_attr( array_key_exists( 'value', $isfw_component ) ? $isfw_component['value'] : '' ); ?>"
-										<?php echo esc_html( ( 'date' === $isfw_component['type'] ) ? 'max='. date( 'Y-m-d', strtotime( date( "Y-m-d", time() ) . " + 365 day" ) ) .' ' . 'min=' . date( "Y-m-d" ) . '' : '' ); ?>
-										>
-									<!-- </label> -->
+									<input 
+									class="<?php echo esc_attr( array_key_exists( 'class', $isfw_component ) ? $isfw_component['class'] : '' ); ?>" 
+									name="<?php echo esc_attr( array_key_exists( 'namre', $isfw_component ) ? $isfw_component['name'] : '' ); ?>"
+									id="<?php echo esc_attr( array_key_exists( 'id', $isfw_component ) ? $isfw_component['id'] : '' ); ?>"
+									type="<?php echo esc_attr( array_key_exists( 'type', $isfw_component ) ? $isfw_component['type'] : '' ); ?>"
+									value="<?php echo esc_attr( array_key_exists( 'value', $isfw_component ) ? $isfw_component['value'] : '' ); ?>"
+									<?php echo esc_html( ( 'date' === $isfw_component['type'] ) ? 'max='. date( 'Y-m-d', strtotime( date( "Y-m-d", time() ) . " + 365 day" ) ) .' ' . 'min=' . date( "Y-m-d" ) . '' : '' ); ?>
+									>
 									<div class="mdc-text-field-helper-line">
 										<div class="mdc-text-field-helper-text--persistent mwb-helper-text" id="" aria-hidden="true"><?php echo esc_attr( $isfw_component['description'] ); ?></div>
 									</div>
