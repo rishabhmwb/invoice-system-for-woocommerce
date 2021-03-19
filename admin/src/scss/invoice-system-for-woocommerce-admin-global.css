@@ -93,10 +93,12 @@
 }
 #isfw_invoice_template1, #isfw_invoice_template2{
     display: inline-block;
-    height:60px;
+    height:70px;
     width:70px;
     background-repeat: no-repeat;
     background-size: cover;
+    border: 1px solid gray !important;
+    margin-bottom: 5px;
 }
 body,
 html {

@@ -98,10 +98,14 @@
             function mwb_parsedate( date ) {
                 var d = date.split(/\D/);
                 var current_year = new Date().getFullYear();
-                if ( d[0].toString().length == 2 && d[1].toString().length == 2 && d[2].toString().length == 4 ) {
-                    return ( d[2] == current_year || d[2] == current_year + 1 ) ? true : false;
-                } else {
+                if ( date.toString().length < 10 ) {
                     return false;
+                } else {
+                    if ( d[0].toString().length == 2 && d[1].toString().length == 2 && d[2].toString().length == 4 ) {
+                        return ( d[2] == current_year || d[2] == current_year + 1 ) ? true : false;
+                    } else {
+                        return false;
+                    }
                 }
             }
             function window_scroll() {
