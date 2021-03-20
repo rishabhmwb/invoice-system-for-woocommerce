@@ -450,11 +450,6 @@ class Invoice_System_For_Woocommerce {
 		// See if WP Cache is enabled.
 		$isfw_wordpress_status['wp_cache_enabled'] = defined( 'WP_CACHE' ) ? __( 'Yes', 'invoice-system-for-woocommerce' ) : __( 'No', 'invoice-system-for-woocommerce' );
 
-		// Get the total number of WordPress users on the site.
-		$isfw_wordpress_status['wp_users'] = function_exists( 'count_users' ) ? count_users() : __( 'N/A (count_users function does not exist)', 'invoice-system-for-woocommerce' );
-
-		// Get the number of published WordPress posts.
-		$isfw_wordpress_status['wp_posts'] = wp_count_posts()->publish >= 1 ? wp_count_posts()->publish : __( '0', 'invoice-system-for-woocommerce' );
 
 		// Get PHP memory limit.
 		$isfw_system_status['php_memory_limit'] = function_exists( 'ini_get' ) ? (int) ini_get( 'memory_limit' ) : __( 'N/A (ini_get function does not exist)', 'invoice-system-for-woocommerce' );
@@ -480,11 +475,7 @@ class Invoice_System_For_Woocommerce {
 		// Get server host name.
 		$isfw_system_status['server_hostname'] = function_exists( 'gethostname' ) ? gethostname() : __( 'N/A (gethostname function does not exist)', 'invoice-system-for-woocommerce' );
 
-		// Show the number of processes currently running on the server.
-		$isfw_system_status['processes'] = function_exists( 'exec' ) ? @exec( 'ps aux | wc -l' ) : __( 'N/A (make sure exec is enabled)', 'invoice-system-for-woocommerce' );
 
-		// Get the memory usage.
-		$isfw_system_status['memory_usage'] = function_exists( 'memory_get_peak_usage' ) ? round( memory_get_peak_usage( true ) / 1024 / 1024, 2 ) : 0;
 
 		// Get CPU usage.
 		// Check to see if system is Windows, if so then use an alternative since sys_getloadavg() won't work.
@@ -499,8 +490,6 @@ class Invoice_System_For_Woocommerce {
 		// Get the PHP maximum execution time.
 		$isfw_system_status['php_max_execution_time'] = function_exists( 'ini_get' ) ? ini_get( 'max_execution_time' ) : __( 'N/A (ini_get function does not exist)', 'invoice-system-for-woocommerce' );
 
-		// Get outgoing IP address.
-		$isfw_system_status['outgoing_ip'] = function_exists( 'file_get_contents' ) ? file_get_contents( 'http://ipecho.net/plain' ) : __( 'N/A (file_get_contents function does not exist)', 'invoice-system-for-woocommerce' );
 
 		$isfw_system_data['php'] = $isfw_system_status;
 		$isfw_system_data['wp']  = $isfw_wordpress_status;

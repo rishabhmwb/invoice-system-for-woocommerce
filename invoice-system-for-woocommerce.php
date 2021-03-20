@@ -13,8 +13,8 @@
  *
  * @wordpress-plugin
  * Plugin Name:       Invoice System for WooCommerce
- * Plugin URI:        https://makewebbetter.com/product/invoice-system-for-woocommerce/
- * Description:       Plugin will create invoice and packing slip, you can send invoice with mail.make sure woocommerce plugin is activated before activating this.
+ * Plugin URI:        https://wordpress.org/plugins/invoice-system-for-woocommerce/
+ * Description:       Generate Invoices and packing slips automatically and sent them to your customers via email with Invoice System for WooCommerce.
  * Version:           1.0.0
  * Author:            MakeWebBetter
  * Author URI:        https://makewebbetter.com/
@@ -101,6 +101,22 @@ if ( $tmp ) {
 			define( $key, $value );
 		}
 	}
+	/**
+	 * Adding custom setting links at the plugin activation list.
+	 *
+	 * @param array  $links_array array containing the links to plugin.
+	 * @param string $plugin_file_name plugin file name.
+	 * @return array
+	 */
+	function invoice_system_for_woocommerce_custom_settings_at_plugin_tab( $links_array, $plugin_file_name ) {
+		if ( strpos( $plugin_file_name, basename( __FILE__ ) ) ) {
+			$links_array[] = '<a href="https://demo.makewebbetter.com/invoice-system-for-woocommerce" target="_blank"><i class="fas fa-laptop" style="margin-right:3px;"></i>Demo</a>';
+			$links_array[] = '<a href="https://docs.makewebbetter.com/invoice-system-for-woocommerce/" target="_blank"><i class="far fa-file-alt" style="margin-right:3px;"></i>Documentation</a>';
+			$links_array[] = '<a href="https://makewebbetter.com/submit-query/" target="_blank"><i class="fas fa-user-ninja" style="margin-right:3px;"></i>Support</a>';
+		}
+		return $links_array;
+	}
+	add_filter( 'plugin_row_meta', 'invoice_system_for_woocommerce_custom_settings_at_plugin_tab', 10, 2 );
 	/**
 	 * The code that runs during plugin activation.
 	 * This action is documented in includes/class-invoice-system-for-woocommerce-activator.php
