@@ -1,3 +1,17 @@
+<?php
+/**
+ * Provide a admin area page overview.
+ *
+ * This file is used to markup the html field for overview tab.
+ *
+ * @link       https://makewebbetter.com/
+ * @since      1.0.0
+ *
+ * @package    Invoice_system_for_woocommere
+ * @subpackage Invoice_system_for_woocommere/admin/partials
+ */
+
+?>
 <div class="isfw-overview__wrapper">
 	<div class="isfw-overview__banner">
 		<img src="<?php echo esc_html( INVOICE_SYSTEM_FOR_WOOCOMMERCE_DIR_URL . 'admin/src/images/isfw-banner.png' ); ?>" alt="Overview banner image">
@@ -32,7 +46,7 @@
 			<div class="isfw-overview__keywords-item">
 				<div class="isfw-overview__keywords-card">
 					<div class="isfw-overview__keywords-image">
-						<img src="<?php echo esc_html( INVOICE_SYSTEM_FOR_WOOCOMMERCE_DIR_URL . 'admin/src/images/Advanced-report.png' ); ?>" alt="Advanced-report image">
+						<img src="<?php echo esc_html( INVOICE_SYSTEM_FOR_WOOCOMMERCE_DIR_URL . 'admin/src/images/invoice_prebuilt_template_icon.png' ); ?>" alt="Advanced-report image">
 					</div>
 					<div class="isfw-overview__keywords-text">
 						<h3 class="isfw-overview__keywords-heading"><?php echo esc_html_e( 'Pre-built Invoice Templates', 'invoice-system-for-woocommerce' ); ?></h3>
@@ -50,7 +64,7 @@
 			<div class="isfw-overview__keywords-item">
 				<div class="isfw-overview__keywords-card">
 					<div class="isfw-overview__keywords-image">
-						<img src="<?php echo esc_html( INVOICE_SYSTEM_FOR_WOOCOMMERCE_DIR_URL . 'admin/src/images/Workflow.png' ); ?>" alt="Workflow image">
+						<img src="<?php echo esc_html( INVOICE_SYSTEM_FOR_WOOCOMMERCE_DIR_URL . 'admin/src/images/invoice_share_via_email_icon.png' ); ?>" alt="Workflow image">
 					</div>
 					<div class="isfw-overview__keywords-text">
 						<h3 class="isfw-overview__keywords-heading"><?php echo esc_html_e( 'Share Invoices via Email', 'invoice-system-for-woocommerce' ); ?></h3>
@@ -61,7 +75,7 @@
 			<div class="isfw-overview__keywords-item">
 				<div class="isfw-overview__keywords-card">
 					<div class="isfw-overview__keywords-image">
-						<img src="<?php echo esc_html( INVOICE_SYSTEM_FOR_WOOCOMMERCE_DIR_URL . 'admin/src/images/Variable-product.png' ); ?>" alt="Variable product image">
+						<img src="<?php echo esc_html( INVOICE_SYSTEM_FOR_WOOCOMMERCE_DIR_URL . 'admin/src/images/invoice_customizable_icon.png' ); ?>" alt="Variable product image">
 					</div>
 					<div class="isfw-overview__keywords-text">
 						<h3 class="isfw-overview__keywords-heading"><?php echo esc_html_e( 'Customizable Invoice Number', 'invoice-system-for-woocommerce' ); ?></h3>
@@ -79,7 +93,7 @@
 			<div class="isfw-overview__keywords-item">
 				<div class="isfw-overview__keywords-card">
 					<div class="isfw-overview__keywords-image">
-						<img src="<?php echo esc_html( INVOICE_SYSTEM_FOR_WOOCOMMERCE_DIR_URL . 'admin/src/images/List-of-abandoned-users.png' ); ?>" alt="List-of-abandoned-users image">
+						<img src="<?php echo esc_html( INVOICE_SYSTEM_FOR_WOOCOMMERCE_DIR_URL . 'admin/src/images/invoice_easy_downloading_icon.png' ); ?>" alt="List-of-abandoned-users image">
 					</div>
 					<div class="isfw-overview__keywords-text">
 						<h3 class="isfw-overview__keywords-heading"><?php echo esc_html_e( 'Easy Downloading of PDF Invoices', 'invoice-system-for-woocommerce' ); ?></h3>
@@ -98,7 +112,7 @@
 				<a href="https://makewebbetter.com/contact-us/" title="">
 					<div class="isfw-overview__keywords-card mwb-card-support">
 						<div class="isfw-overview__keywords-image">
-							<img src="<?php echo esc_html( INVOICE_SYSTEM_FOR_WOOCOMMERCE_DIR_URL . 'admin/src/images/Support.png' ); ?>" alt="Support image">
+							<img src="<?php echo esc_html( INVOICE_SYSTEM_FOR_WOOCOMMERCE_DIR_URL . 'admin/src/images/invoice_renew_number_sequence_icon.png' ); ?>" alt="Support image">
 						</div>
 						<div class="isfw-overview__keywords-text">
 							<h3 class="isfw-overview__keywords-heading"><?php echo esc_html_e( 'Renew Invoice Number Sequence', 'invoice-system-for-woocommerce' ); ?></h3>
@@ -118,7 +132,7 @@
 				<a href="https://makewebbetter.com/contact-us/" title="">
 					<div class="isfw-overview__keywords-card mwb-card-support">
 						<div class="isfw-overview__keywords-image">
-							<img src="<?php echo esc_html( INVOICE_SYSTEM_FOR_WOOCOMMERCE_DIR_URL . 'admin/src/images/Support.png' ); ?>" alt="Support image">
+							<img src="<?php echo esc_html( INVOICE_SYSTEM_FOR_WOOCOMMERCE_DIR_URL . 'admin/src/images/invoice_bulk_icon.png' ); ?>" alt="Support image">
 						</div>
 						<div class="isfw-overview__keywords-text">
 							<h3 class="isfw-overview__keywords-heading"><?php echo esc_html_e( 'Bulk Invoices & Packaging Slips', 'invoice-system-for-woocommerce' ); ?></h3>
@@ -136,4 +150,4 @@
 			</div>
 		</div>
 	</div>
-</div> 
+</div>

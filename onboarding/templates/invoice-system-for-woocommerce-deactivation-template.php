@@ -12,7 +12,7 @@
  */
 
 global $pagenow, $isfw_mwb_isfw_obj;
-if ( empty( $pagenow ) || 'plugins.php' != $pagenow ) {
+if ( empty( $pagenow ) || 'plugins.php' !== $pagenow ) {
 	return false;
 }
 
@@ -32,7 +32,7 @@ $isfw_onboarding_form_deactivate = apply_filters( 'mwb_isfw_deactivation_form_fi
 					<h3 class="mwb-isfw-on-boarding-heading mdc-dialog__title"></h3>
 					<p class="mwb-isfw-on-boarding-desc"><?php esc_html_e( 'May we have a little info about why you are deactivating?', 'invoice-system-for-woocommerce' ); ?></p>
 					<form action="#" method="post" class="mwb-isfw-on-boarding-form">
-						<?php 
+						<?php
 						$isfw_onboarding_deactive_html = $isfw_mwb_isfw_obj->mwb_isfw_plug_generate_html( $isfw_onboarding_form_deactivate );
 						echo esc_html( $isfw_onboarding_deactive_html );
 						?>

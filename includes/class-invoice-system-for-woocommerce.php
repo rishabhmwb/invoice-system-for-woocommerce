@@ -258,7 +258,7 @@ class Invoice_System_For_Woocommerce {
 	 */
 	private function invoice_system_for_woocommerce_api_hooks() {
 
-		$isfw_plugin_api = new Invoice_system_for_woocommerce_Rest_Api( $this->isfw_get_plugin_name(), $this->isfw_get_version() );
+		$isfw_plugin_api = new Invoice_System_For_Woocommerce_Rest_Api( $this->isfw_get_plugin_name(), $this->isfw_get_version() );
 
 		$this->loader->add_action( 'rest_api_init', $isfw_plugin_api, 'mwb_isfw_add_endpoint' );
 
@@ -475,12 +475,10 @@ class Invoice_System_For_Woocommerce {
 		// Get server host name.
 		$isfw_system_status['server_hostname'] = function_exists( 'gethostname' ) ? gethostname() : __( 'N/A (gethostname function does not exist)', 'invoice-system-for-woocommerce' );
 
-
-
 		// Get CPU usage.
 		// Check to see if system is Windows, if so then use an alternative since sys_getloadavg() won't work.
 		if ( stristr( PHP_OS, 'win' ) ) {
-			$isfw_system_status['is_windows'] = true;
+			$isfw_system_status['is_windows']        = true;
 			$isfw_system_status['windows_cpu_usage'] = function_exists( 'exec' ) ? @exec( 'wmic cpu get loadpercentage /all' ) : __( 'N/A (make sure exec is enabled)', 'invoice-system-for-woocommerce' );
 		}
 
@@ -489,7 +487,6 @@ class Invoice_System_For_Woocommerce {
 
 		// Get the PHP maximum execution time.
 		$isfw_system_status['php_max_execution_time'] = function_exists( 'ini_get' ) ? ini_get( 'max_execution_time' ) : __( 'N/A (ini_get function does not exist)', 'invoice-system-for-woocommerce' );
-
 
 		$isfw_system_data['php'] = $isfw_system_status;
 		$isfw_system_data['wp']  = $isfw_wordpress_status;

@@ -57,8 +57,8 @@ function return_ob_value( $order_id, $type ) {
 		$company_address = '';
 		$is_add_logo     = '';
 	}
-	if ( $date !== '' ) {
-		if ( date( "Y-m-d", strtotime( $date ) ) <= date( 'Y-m-d' ) ) {
+	if ( '' !== $date ) {
+		if ( gmdate( 'Y-m-d', strtotime( $date ) ) <= gmdate( 'Y-m-d' ) ) {
 			update_option( 'isfw_current_invoice_id', 1 );
 		}
 	}
@@ -80,7 +80,7 @@ function return_ob_value( $order_id, $type ) {
 	$invoice_id     = $prefix . $invoice_number . $suffix;
 	if ( $order_details ) {
 
-		$html           = '<!DOCTYPE html>
+		$html = '<!DOCTYPE html>
 									<html>
 									<head>
 										<title> INVOICE SYSTEM FOR WOOCOMMERCE </title>
@@ -151,17 +151,17 @@ function return_ob_value( $order_id, $type ) {
 									<body>
 										<div id="isfw-pdf">
 											<h2 id="isfw-invoice-text">
-											' . __( "INVOICE" , "invoice-system-for-woocommerce" ) . '
+											' . __( 'INVOICE', 'invoice-system-for-woocommerce' ) . '
 											</h2>
 											<div id="isfw-pdf-header">
 												<div id="isfw-invoice-title-left" class="isfw-invoice-inline">
 													<div>
-														<b>' . __( "Invoice Number", "invoice-system-for-woocommerce" ) . '</b><br/>
+														<b>' . __( 'Invoice Number', 'invoice-system-for-woocommerce' ) . '</b><br/>
 														' . $invoice_id . '
 													</div>
 													<div>
-														<b>' . __( "Date", "invoice-system-for-woocommerce" ) . '</b><br/>
-														' . $billing_details["order_created_date"] . '
+														<b>' . __( 'Date', 'invoice-system-for-woocommerce' ) . '</b><br/>
+														' . $billing_details['order_created_date'] . '
 													</div>
 												</div>
 												<div id="isfw-invoice-title-right" class="isfw-invoice-inline">
@@ -177,53 +177,53 @@ function return_ob_value( $order_id, $type ) {
 													</div>
 												</div>
 											</div>';
-		if ( $type === 'invoice' ) {
+		if ( 'invoice' === $type ) {
 			$html .= '<div id="isfw-invoice-title-to" >
-						<b>' . __( "Invoice to", "invoice-system-for-woocommerce" ) . '</b><br/>
+						<b>' . __( 'Invoice to', 'invoice-system-for-woocommerce' ) . '</b><br/>
 						<div>
-							' . ucfirst( $billing_details["billing_first_name"] ) . ' ' .ucfirst( $billing_details["billing_last_name"] ) . '<br/>
-							' . ucfirst( $billing_details["billing_address_1"] ) . ' ' . ucfirst( $billing_details["billing_address_2"] ) . '<br/>
-							' . ucfirst( $billing_details["billing_city"] ) . '<br/>
-							' . ucfirst( $billing_details["billing_state"] ) . '<br/>
-							' . $billing_details["billing_postcode"] . '<br/>
-							' . $billing_details["billing_phone"] . '<br/>
-							' . $billing_details["billing_email"] . '<br/>
+							' . ucfirst( $billing_details['billing_first_name'] ) . ' ' . ucfirst( $billing_details['billing_last_name'] ) . '<br/>
+							' . ucfirst( $billing_details['billing_address_1'] ) . ' ' . ucfirst( $billing_details['billing_address_2'] ) . '<br/>
+							' . ucfirst( $billing_details['billing_city'] ) . '<br/>
+							' . ucfirst( $billing_details['billing_state'] ) . '<br/>
+							' . $billing_details['billing_postcode'] . '<br/>
+							' . $billing_details['billing_phone'] . '<br/>
+							' . $billing_details['billing_email'] . '<br/>
 						</div>
 					</div>';
 		} else {
 			$html .= '<div id="isfw-invoice-title-to" >
-						<b>' . __( "SHIP TO", "invoice-system-for-woocommerce" ) . '</b><br/>
+						<b>' . __( 'SHIP TO', 'invoice-system-for-woocommerce' ) . '</b><br/>
 						<div>
-							' . ucfirst( $shipping_details["shipping_first_name"] ) . ' ' . ucfirst( $shipping_details["shipping_last_name"] ) . '<br/>
-							' . ucfirst( $shipping_details["shipping_address_1"] ) . ' ' . ucfirst( $shipping_details["shipping_address_2"] ) . '<br/>
-							' . ucfirst( $shipping_details["shipping_city"] ) . '<br/>
-							' . ucfirst( $shipping_details["shipping_state"] ) . '<br/>
-							' . $shipping_details["shipping_postcode"] . '<br/>
-							' . $billing_details["billing_phone"] . '<br/>
-							' . $billing_details["billing_email"] . '<br/>
+							' . ucfirst( $shipping_details['shipping_first_name'] ) . ' ' . ucfirst( $shipping_details['shipping_last_name'] ) . '<br/>
+							' . ucfirst( $shipping_details['shipping_address_1'] ) . ' ' . ucfirst( $shipping_details['shipping_address_2'] ) . '<br/>
+							' . ucfirst( $shipping_details['shipping_city'] ) . '<br/>
+							' . ucfirst( $shipping_details['shipping_state'] ) . '<br/>
+							' . $shipping_details['shipping_postcode'] . '<br/>
+							' . $billing_details['billing_phone'] . '<br/>
+							' . $billing_details['billing_email'] . '<br/>
 						</div>
 					</div>';
 		}
-		if ( $type === 'invoice' ) {
+		if ( 'invoice' === $type ) {
 			$html .= '<div>
 						<table border = "0" cellpadding = "0" cellspacing = "0" id="isfw-prod-listing-table">
 							<thead>
 								<tr id="isfw-prod-listing-table-title">
-									<th id="isfw-table-items">' . __( "Items", "invoice-system-for-woocommerce" ) . '</th>
-									<th>' . __( "Quantity", "invoice-system-for-woocommerce" ) . '</th>
-									<th>' . __( "Price", "invoice-system-for-woocommerce" ) . '(' . $billing_details["order_currency"] . ')</th>
-									<th>' . __( "Tax", "invoice-system-for-woocommerce" ) . ' (%)</th>
-									<th>' . __( "Amount", "invoice-system-for-woocommerce" ) . '(' . $billing_details["order_currency"] . ')</th>
+									<th id="isfw-table-items">' . __( 'Items', 'invoice-system-for-woocommerce' ) . '</th>
+									<th>' . __( 'Quantity', 'invoice-system-for-woocommerce' ) . '</th>
+									<th>' . __( 'Price', 'invoice-system-for-woocommerce' ) . '(' . $billing_details['order_currency'] . ')</th>
+									<th>' . __( 'Tax', 'invoice-system-for-woocommerce' ) . ' (%)</th>
+									<th>' . __( 'Amount', 'invoice-system-for-woocommerce' ) . '(' . $billing_details['order_currency'] . ')</th>
 								</tr>
 							</thead>
 							<tbody id="isfw-pdf-prod-body">';
 			foreach ( $order_product_details as $product ) {
 				$html .= '<tr>
-						<td class="isfw-product-name">' . $product["product_name"] . '</td>
-						<td>' . $product["product_quantity"] . '</td>
-						<td>' . $product["product_price"] . '</td>
-						<td>' . $product["tax_percent"] . '</td>
-						<td>' . $product["product_total"] . '</td>
+						<td class="isfw-product-name">' . $product['product_name'] . '</td>
+						<td>' . $product['product_quantity'] . '</td>
+						<td>' . $product['product_price'] . '</td>
+						<td>' . $product['tax_percent'] . '</td>
+						<td>' . $product['product_total'] . '</td>
 					</tr>';
 			}
 				$html .= '</tbody>
@@ -232,16 +232,16 @@ function return_ob_value( $order_id, $type ) {
 						<div id="isfw-prod-total-calc">
 							<table border = "0" cellpadding = "0" cellspacing = "0">
 								<tr>
-									<td>' . __( "Subtotal", "invoice-system-for-woocommerce" ) . '(' . $billing_details["order_currency"] . '): ' . $billing_details["order_subtotal"] . '</td>
+									<td>' . __( 'Subtotal', 'invoice-system-for-woocommerce' ) . '(' . $billing_details['order_currency'] . '): ' . $billing_details['order_subtotal'] . '</td>
 								</tr>
 								<tr>
-									<td>' . __( "Shipping", "invoice-system-for-woocommerce" ) . '(' . $billing_details["order_currency"] . '): ' . $shipping_details["shipping_total"] . '</td>
+									<td>' . __( 'Shipping', 'invoice-system-for-woocommerce' ) . '(' . $billing_details['order_currency'] . '): ' . $shipping_details['shipping_total'] . '</td>
 								</tr>
 								<tr>
-									<td>' . __( "Total tax", "invoice-system-for-woocommerce" ) . '(' . $billing_details["order_currency"] . '): ' . $billing_details["tax_totals"] . '</td>
+									<td>' . __( 'Total tax', 'invoice-system-for-woocommerce' ) . '(' . $billing_details['order_currency'] . '): ' . $billing_details['tax_totals'] . '</td>
 								</tr>
 								<tr>
-									<td>' . __( "Total", "invoice-system-for-woocommerce" ) . '(' . $billing_details["order_currency"] . '): ' . $billing_details["cart_total"] . '</td>
+									<td>' . __( 'Total', 'invoice-system-for-woocommerce' ) . '(' . $billing_details['order_currency'] . '): ' . $billing_details['cart_total'] . '</td>
 								</tr>
 							</table>
 						</div>
@@ -255,5 +255,5 @@ function return_ob_value( $order_id, $type ) {
 		</html>';
 		return $html;
 	}
-	return '<div>' . __( "Looks like order is not found", "invoice-system-for-woocommerce" ) . '</div>';
+	return '<div>' . esc_html_e( 'Looks like order is not found', 'invoice-system-for-woocommerce' ) . '</div>';
 }
