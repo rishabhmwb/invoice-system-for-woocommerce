@@ -53,7 +53,7 @@ $isfw_php_details = is_array( $isfw_default_status['php'] ) && ! empty( $isfw_de
 				<table class="mwb-isfw-table mdc-data-table__table mwb-table" id="mwb-isfw-sys">
 					<thead>
 						<tr>
-							<th class="mdc-data-table__header-cell"><?php esc_html_e( 'Sysytem Variables', 'invoice-system-for-woocommerce' ); ?></th>
+							<th class="mdc-data-table__header-cell"><?php esc_html_e( 'System Variables', 'invoice-system-for-woocommerce' ); ?></th>
 							<th class="mdc-data-table__header-cell"><?php esc_html_e( 'System Values', 'invoice-system-for-woocommerce' ); ?></th>
 						</tr>
 					</thead>
