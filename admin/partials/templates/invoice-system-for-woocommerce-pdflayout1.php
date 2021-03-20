@@ -57,8 +57,8 @@ function return_ob_value( $order_id, $type ) {
 		$company_email   = '';
 		$is_add_logo     = '';
 	}
-	if ( $date !== '' ) {
-		if ( date( "Y-m-d", strtotime( $date ) ) <= date( 'Y-m-d' ) ) {
+	if ( '' !== $date ) {
+		if ( gmdate( 'Y-m-d', strtotime( $date ) ) <= gmdate( 'Y-m-d' ) ) {
 			update_option( 'isfw_current_invoice_id', 1 );
 		}
 	}
@@ -88,7 +88,7 @@ function return_ob_value( $order_id, $type ) {
 	$invoice_number = str_pad( $curr_invoice_id, $digit, '0', STR_PAD_LEFT );
 	$invoice_id     = $prefix . $invoice_number . $suffix;
 	if ( $order_details ) {
-		$html           = '<!DOCTYPE html>
+		$html = '<!DOCTYPE html>
 							<html lang="en">
 							<head>
 								<style>
@@ -106,9 +106,9 @@ function return_ob_value( $order_id, $type ) {
 							<body>
 								<div id="mwb-pdf-form">
 									<form action="" method="post">';
-									if ('yes' === $is_add_logo && '' !== $logo ) {
-										$html .= '<div style="text-align:center;margin-bottom: 30px;"><img src="' . $logo . '" height="120" width="120"></div>';
-									}
+		if ( 'yes' === $is_add_logo && '' !== $logo ) {
+			$html .= '<div style="text-align:center;margin-bottom: 30px;"><img src="' . $logo . '" height="120" width="120"></div>';
+		}
 				$html .= '<table border = "0" cellpadding = "0" cellspacing = "0" style="width: 100%; vertical-align: top; margin-bottom: 30px;">
 											<tbody>
 												<tr>
@@ -121,7 +121,7 @@ function return_ob_value( $order_id, $type ) {
 																	</td>
 																</tr>
 																<tr>
-																	<td style="padding: 5px 10px;">' . ucfirst( $company_address ). '</td>
+																	<td style="padding: 5px 10px;">' . ucfirst( $company_address ) . '</td>
 																</tr>
 																<tr>
 																	<td style="padding: 5px 10px;">' . ucfirst( $company_city ) . ',<br/> ' . ucfirst( $company_state ) . ',<br/> ' . $company_pin . '</td>
@@ -141,44 +141,44 @@ function return_ob_value( $order_id, $type ) {
 																<tr>
 																	<th colspan="2" class="isfw-invoice-background-color" style="padding: 10px;">
 																		<h3 class="isfw-invoice-color" style="margin: 0;text-align:right;font-size:24px;">
-																			' . __( "Invoice", "invoice-system-for-woocommerce" ) . '
+																			' . __( 'Invoice', 'invoice-system-for-woocommerce' ) . '
 																		</h3>
 																	</th>
 																</tr>
 																<tr>
 																	<th style="width: 70%;text-align: right;padding: 10px;">
-																		' . __( "Invoice", "invoice-system-for-woocommerce" ) . '
+																		' . __( 'Invoice', 'invoice-system-for-woocommerce' ) . '
 																	</th>
 																	<th style="width: 30%;text-align: right;padding: 10px;">
-																		' . __( "Date", "invoice-system-for-woocommerce" ) . '
+																		' . __( 'Date', 'invoice-system-for-woocommerce' ) . '
 																	</th>
 																</tr>
 															</thead>
 															<tbody>
 																<tr>
 																	<td style="width: 30%;text-align: right;padding: 0 10px;">' . $invoice_id . '</td>
-																	<td style="width: 30%;text-align: right;padding: 0 10px;">' . $billing_details["order_created_date"] . '</td>
+																	<td style="width: 30%;text-align: right;padding: 0 10px;">' . $billing_details['order_created_date'] . '</td>
 																</tr>
 															</tbody>
 														</table>
 														<table border = "0" class="" style="width: 100%;table-layout: auto;">
 															<thead>
 																<tr>
-																	<th class="" style="width: 70%;text-align: right;padding: 10px;">
-																		' . __( "Customer ID", "invoice-system-for-woocommerce" ) . '
+																	<th style="width: 70%;text-align: right;padding: 10px;">
+																		' . __( 'Customer ID', 'invoice-system-for-woocommerce' ) . '
 																	</th>
-																	<th class="" style="width: 30%;text-align: right;padding: 10px;">
-																		' . __( "Status", "invoice-system-for-woocommerce" ) . '
+																	<th style="width: 30%;text-align: right;padding: 10px;">
+																		' . __( 'Status', 'invoice-system-for-woocommerce' ) . '
 																	</th>
 																</tr>
 															</thead>
 															<tbody>
 																<tr>
 																	<td class="" style="width: 70%;text-align: right;padding: 0 10px;">
-																		' . $billing_details["customer_id"] . '
+																		' . $billing_details['customer_id'] . '
 																	</td>
 																	<td class="" style="width: 30%;text-align: right;padding: 0 10px;">
-																		' . $shipping_details["order_status"] . '
+																		' . $shipping_details['order_status'] . '
 																	</td>
 																</tr>
 															</tbody>
@@ -192,25 +192,25 @@ function return_ob_value( $order_id, $type ) {
 							<thead>
 								<tr>
 									<th class="isfw-invoice-background-color isfw-invoice-color" style="text-align:left;padding:10px;font-size: 20px;">
-										' . __( "BILL TO", "invoice-system-for-woocommerce" ) . '
+										' . __( 'BILL TO', 'invoice-system-for-woocommerce' ) . '
 									</th>
 								</tr>
 							</thead>
 							<tbody>
 								<tr>
-									<td style="padding: 2px 10px;font-weight: bold;font-size: 18px;">' . ucfirst( $billing_details["billing_first_name"] ) . ' ' . ucfirst( $billing_details["billing_last_name"] ) . '</td>
+									<td style="padding: 2px 10px;font-weight: bold;font-size: 18px;">' . ucfirst( $billing_details['billing_first_name'] ) . ' ' . ucfirst( $billing_details['billing_last_name'] ) . '</td>
 								</tr>
 								<tr>
-									<td style="padding: 2px 10px;font-size: 16px;">' . ucfirst( $billing_details["billing_address_1"] ) . ' ' . ucfirst( $billing_details["billing_address_2"] ) . '</td>
+									<td style="padding: 2px 10px;font-size: 16px;">' . ucfirst( $billing_details['billing_address_1'] ) . ' ' . ucfirst( $billing_details['billing_address_2'] ) . '</td>
 								</tr>
 								<tr>
-									<td style="padding: 2px 10px;font-size: 16px;">' . ucfirst( $billing_details["billing_city"] ) . ', ' . ucfirst( $billing_details["billing_state"] ) . ', ' . $billing_details["billing_postcode"] . '</td>
+									<td style="padding: 2px 10px;font-size: 16px;">' . ucfirst( $billing_details['billing_city'] ) . ', ' . ucfirst( $billing_details['billing_state'] ) . ', ' . $billing_details['billing_postcode'] . '</td>
 								</tr>
 								<tr>
-									<td style="padding: 2px 10px;font-size: 16px;">' . $billing_details["billing_phone"] . '</td>
+									<td style="padding: 2px 10px;font-size: 16px;">' . $billing_details['billing_phone'] . '</td>
 								</tr>
 								<tr>
-									<td style="padding: 2px 10px;font-size: 16px;">' . $billing_details["billing_email"] . '</td>
+									<td style="padding: 2px 10px;font-size: 16px;">' . $billing_details['billing_email'] . '</td>
 								</tr>
 							</tbody>
 						</table>
@@ -225,25 +225,25 @@ function return_ob_value( $order_id, $type ) {
 							<thead>
 								<tr>
 									<th class="isfw-invoice-background-color isfw-invoice-color" style="text-align:left;padding:10px;font-size:20px;">
-										' . __( "SHIP TO", "invoice-system-for-woocommerce" ) . '
+										' . __( 'SHIP TO', 'invoice-system-for-woocommerce' ) . '
 									</th>
 								</tr>
 							</thead>
 							<tbody>
 								<tr>
-									<td style="padding: 2px 10px;font-weight: bold;font-size: 18px;">' . ucfirst( $shipping_details["shipping_first_name"] ) . ' ' . ucfirst( $shipping_details["shipping_last_name"] ) . '</td>
+									<td style="padding: 2px 10px;font-weight: bold;font-size: 18px;">' . ucfirst( $shipping_details['shipping_first_name'] ) . ' ' . ucfirst( $shipping_details['shipping_last_name'] ) . '</td>
 								</tr>
 								<tr>
-									<td style="padding: 2px 10px;font-size: 16px;">' . ucfirst( $shipping_details["shipping_address_1"] ) . ' ' . ucfirst( $shipping_details["shipping_address_2"] ) . '</td>
+									<td style="padding: 2px 10px;font-size: 16px;">' . ucfirst( $shipping_details['shipping_address_1'] ) . ' ' . ucfirst( $shipping_details['shipping_address_2'] ) . '</td>
 								</tr>
 								<tr>
-									<td style="padding: 2px 10px;font-size: 16px;">' . ucfirst( $shipping_details["shipping_city"] ) . ', ' . ucfirst( $shipping_details["shipping_state"] ) . ', ' . $shipping_details["shipping_postcode"] . '</td>
+									<td style="padding: 2px 10px;font-size: 16px;">' . ucfirst( $shipping_details['shipping_city'] ) . ', ' . ucfirst( $shipping_details['shipping_state'] ) . ', ' . $shipping_details['shipping_postcode'] . '</td>
 								</tr>
 								<tr>
-									<td style="padding: 2px 10px;font-size: 16px;">' . $billing_details["billing_phone"] . '</td>
+									<td style="padding: 2px 10px;font-size: 16px;">' . $billing_details['billing_phone'] . '</td>
 								</tr>
 								<tr>
-									<td style="padding: 2px 10px;font-size: 16px;">' . $billing_details["billing_email"] . '</td>
+									<td style="padding: 2px 10px;font-size: 16px;">' . $billing_details['billing_email'] . '</td>
 								</tr>
 							</tbody>
 						</table>
@@ -257,40 +257,40 @@ function return_ob_value( $order_id, $type ) {
 					<thead class="background-pdf-color-template">
 						<tr class="isfw-invoice-background-color">
 							<th style="text-align: left;padding: 10px;" class="isfw-invoice-color">
-								' . __( "Name", "invoice-system-for-woocommerce" ) . '
+								' . __( 'Name', 'invoice-system-for-woocommerce' ) . '
 							</th>
 							<th style="text-align: left;padding: 10px;" class="isfw-invoice-color">
-								' . __( "Qty", "invoice-system-for-woocommerce" ) . '
+								' . __( 'Qty', 'invoice-system-for-woocommerce' ) . '
 							</th>
 							<th style="text-align: left;padding: 10px;" class="isfw-invoice-color">
-								' . __( "Unit Price", "invoice-system-for-woocommerce" ) . ' ( ' . $billing_details["order_currency"] . ' )
+								' . __( 'Unit Price', 'invoice-system-for-woocommerce' ) . ' ( ' . $billing_details['order_currency'] . ' )
 							</th>
 							<th style="text-align: left;padding: 10px;" class="isfw-invoice-color">
-								' . __( "Tax", "invoice-system-for-woocommerce" ) . '( % )
+								' . __( 'Tax', 'invoice-system-for-woocommerce' ) . '( % )
 							</th>
 							<th style="text-align: left;padding: 10px;" class="isfw-invoice-color">
-								' . __( "Total", "invoice-system-for-woocommerce" ) . ' ( ' . $billing_details["order_currency"] . ' )
+								' . __( 'Total', 'invoice-system-for-woocommerce' ) . ' ( ' . $billing_details['order_currency'] . ' )
 							</th>
 						</tr>
 					</thead>
 					<tbody>';
 			foreach ( $order_product_details as $key => $product ) {
-				$style = ( $key % 2 != 0 ) ?  'class="isfw-invoice-background-color"' : '';
+				$style = ( 0 !== $key % 2 ) ? 'class="isfw-invoice-background-color"' : '';
 				$html .= '<tr ' . $style . '>
-								<td style="text-align: left;padding: 10px;">' . $product["product_name"] . '</td>
-								<td style="text-align: left;padding: 10px;">' . $product["product_quantity"] . '</td>
-								<td style="text-align: left;padding: 10px;">' . $product["product_price"] . '</td>
-								<td style="text-align: left;padding: 10px;">' . $product["tax_percent"] . '</td>
-								<td style="text-align: left;padding: 10px;">' . $product["product_total"] . '</td>
+								<td style="text-align: left;padding: 10px;">' . $product['product_name'] . '</td>
+								<td style="text-align: left;padding: 10px;">' . $product['product_quantity'] . '</td>
+								<td style="text-align: left;padding: 10px;">' . $product['product_price'] . '</td>
+								<td style="text-align: left;padding: 10px;">' . $product['tax_percent'] . '</td>
+								<td style="text-align: left;padding: 10px;">' . $product['product_total'] . '</td>
 							</tr>';
 			}
 			$html .= '<tr>
 						<td colspan="3" style="padding: 2px 10px;font-weight: bold;">
 						</td>
 						<td style="padding: 2px 10px;font-weight: bold;">
-						' . __( "Subtotal", "invoice-system-for-woocommerce" ) . '</td>
+						' . __( 'Subtotal', 'invoice-system-for-woocommerce' ) . '</td>
 						<td style="padding: 2px 10px;font-weight: bold;">
-							' . $billing_details["order_subtotal"] . '
+							' . $billing_details['order_subtotal'] . '
 						</td>
 					</tr>
 					<tr>
@@ -298,10 +298,10 @@ function return_ob_value( $order_id, $type ) {
 
 						</td>
 						<td style="padding: 2px 10px;font-weight: bold;">
-							' . __( "Shipping", "invoice-system-for-woocommerce" ) . '
+							' . __( 'Shipping', 'invoice-system-for-woocommerce' ) . '
 						</td>
 						<td style="padding: 2px 10px;font-weight: bold;">
-							' . $shipping_details["shipping_total"] . '
+							' . $shipping_details['shipping_total'] . '
 						</td>
 					</tr>
 					<tr>
@@ -309,10 +309,10 @@ function return_ob_value( $order_id, $type ) {
 
 						</td>
 						<td style="padding: 2px 10px;font-weight: bold;">
-							' . __( "Total Tax", "invoice-system-for-woocommerce" ) . '
+							' . __( 'Total Tax', 'invoice-system-for-woocommerce' ) . '
 						</td>
 						<td style="padding: 2px 10px;font-weight: bold;">
-							' . $billing_details["tax_totals"] . '
+							' . $billing_details['tax_totals'] . '
 						</td>
 					</tr>
 					<tr>
@@ -320,10 +320,10 @@ function return_ob_value( $order_id, $type ) {
 
 						</td>
 						<td style="padding: 2px 10px;font-weight: bold;">
-							' . __( "Total", "invoice-system-for-woocommerce" ) . ' ( ' . $billing_details["order_currency"] . ' ) 
+							' . __( 'Total', 'invoice-system-for-woocommerce' ) . ' ( ' . $billing_details['order_currency'] . ' ) 
 						</td>
 						<td style="padding: 2px 10px;font-weight: bold;">
-							' . $billing_details["cart_total"] . '
+							' . $billing_details['cart_total'] . '
 						</td>
 					</tr>
 				</tbody>
@@ -338,5 +338,5 @@ function return_ob_value( $order_id, $type ) {
 		</html>';
 		return $html;
 	}
-	return '<div>' . __( "Looks like order is not found", "invoice-system-for-woocommerce" ) . '</div>';
+	return '<div>' . esc_html_e( 'Looks like order is not found', 'invoice-system-for-woocommerce' ) . '</div>';
 }

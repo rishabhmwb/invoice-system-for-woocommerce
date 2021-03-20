@@ -10,6 +10,7 @@
  * @package    Makewebbetter_Onboarding
  * @subpackage Makewebbetter_Onboarding/admin/onboarding
  */
+
 global $isfw_mwb_isfw_obj;
 $isfw_onboarding_form_fields = apply_filters( 'mwb_isfw_on_boarding_form_fields', array() );
 ?>
@@ -27,7 +28,7 @@ $isfw_onboarding_form_fields = apply_filters( 'mwb_isfw_on_boarding_form_fields'
 					<p class="mwb-isfw-on-boarding-desc"><?php esc_html_e( 'We love making new friends! Subscribe below and we promise to keep you up-to-date with our latest new plugins, updates, awesome deals and a few special offers.', 'invoice-system-for-woocommerce' ); ?></p>
 
 					<form action="#" method="post" class="mwb-isfw-on-boarding-form">
-						<?php 
+						<?php
 						$isfw_onboarding_html = $isfw_mwb_isfw_obj->mwb_isfw_plug_generate_html( $isfw_onboarding_form_fields );
 						echo esc_html( $isfw_onboarding_html );
 						?>

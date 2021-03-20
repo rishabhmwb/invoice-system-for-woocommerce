@@ -12,7 +12,7 @@
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
-if ( ! class_exists( 'Invoice_system_for_woocommerce_Api_Process' ) ) {
+if ( ! class_exists( 'Invoice_System_For_Woocommerce_Api_Process' ) ) {
 
 	/**
 	 * The plugin API class.
@@ -24,7 +24,7 @@ if ( ! class_exists( 'Invoice_system_for_woocommerce_Api_Process' ) ) {
 	 * @subpackage Hydroshop_Api_Management/includes
 	 * @author     MakeWebBetter <makewebbetter.com>
 	 */
-	class Invoice_system_for_woocommerce_Api_Process {
+	class Invoice_System_For_Woocommerce_Api_Process {
 
 		/**
 		 * Initialize the class and set its properties.
@@ -39,7 +39,7 @@ if ( ! class_exists( 'Invoice_system_for_woocommerce_Api_Process' ) ) {
 		 * Define the function to process data for custom endpoint.
 		 *
 		 * @since    1.0.0
-		 * @param   Array $isfw_request  data of requesting headers and other information.
+		 * @param   object $isfw_request  data of requesting headers and other information.
 		 * @return  Array $mwb_isfw_rest_response    returns processed data and status of operations.
 		 */
 		public function mwb_isfw_default_process( $isfw_request ) {
@@ -48,7 +48,7 @@ if ( ! class_exists( 'Invoice_system_for_woocommerce_Api_Process' ) ) {
 			// Write your custom code here.
 
 			$mwb_isfw_rest_response['status'] = 200;
-			$mwb_isfw_rest_response['data'] = $isfw_request->get_headers();
+			$mwb_isfw_rest_response['data']   = $isfw_request->get_headers();
 			return $mwb_isfw_rest_response;
 		}
 	}
