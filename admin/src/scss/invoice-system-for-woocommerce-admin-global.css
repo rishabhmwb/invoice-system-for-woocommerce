@@ -759,9 +759,6 @@ a.ui-state-default.ui-state-active {
 .isfw-overview__video--url iframe {
     width: 100%;
 }
-.toplevel_page_mwb-plugins div img {
-    width: 30px;
-}
 /* overview page css ends */ 
 @media only screen and (max-width: 992px) {
     .isfw-overview__features {

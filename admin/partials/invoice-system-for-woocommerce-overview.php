@@ -35,9 +35,9 @@
 					<li><?php esc_html_e( 'Prefix/suffix feature for creating customized invoice numbers increase brand value', 'invoice-system-for-woocommerce' ); ?></li>
 					<li><?php esc_html_e( 'Improves brand image and awareness among your customers with customizable invoice templates.', 'invoice-system-for-woocommerce' ); ?></li>
 				</ul>
-				<div class="isfw-overview__video--url">
+				<!-- <div class="isfw-overview__video--url">
 					<iframe width="560" height="315" src="https://www.youtube.com/embed/fTET_cOY9qg" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-				</div>
+				</div> -->
 
 			</div>
 		</div>
