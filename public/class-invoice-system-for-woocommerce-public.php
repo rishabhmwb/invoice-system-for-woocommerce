@@ -141,10 +141,16 @@ class Invoice_System_For_Woocommerce_Public {
 	 */
 	public function isfw_pdf_generation_link_for_guest_user( $thanks_msg, $order ) {
 		global $wp;
-		$url_here = home_url( $wp->request );
-		if ( is_object( $order ) ) {
-			$download_button = '<div id="isfw_guest_download_invoice"><a href="' . $url_here . '/?order_id=' . $order->get_id() . '&action=generateinvoiceguest"><img src="' . INVOICE_SYSTEM_FOR_WOOCOMMERCE_DIR_URL . 'admin/src/images/isfw_download_icon.svg" style="max-width: 35px;" title="' . __( 'Download Invoice', 'invoice-system-for-woocommerce' ) . '"><span>' . __( 'Download Invoice', 'invoice-system-for-woocommerce' ) . '</span></a></div>';
-			return $thanks_msg . $download_button;
+		$url_here          = home_url( $wp->request );
+		$isfw_pdf_settings = get_option( 'mwb_isfw_pdf_general_settings' );
+		if ( $isfw_pdf_settings ) {
+			$order_status_show_invoice = array_key_exists( 'order_status', $isfw_pdf_settings ) ? preg_replace( '/wc-/', '', $isfw_pdf_settings['order_status'] ) : 'completed';
+			if ( is_object( $order ) ) {
+				if ( $order_status_show_invoice === $order->get_status() ) {
+					$download_button = '<div id="isfw_guest_download_invoice"><a href="' . $url_here . '/?order_id=' . $order->get_id() . '&action=generateinvoiceguest"><img src="' . INVOICE_SYSTEM_FOR_WOOCOMMERCE_DIR_URL . 'admin/src/images/isfw_download_icon.svg" style="max-width: 35px;" title="' . __( 'Download Invoice', 'invoice-system-for-woocommerce' ) . '"><span>' . __( 'Download Invoice', 'invoice-system-for-woocommerce' ) . '</span></a></div>';
+					return $thanks_msg . $download_button;
+				}
+			}
 		}
 		return $thanks_msg;
 	}
