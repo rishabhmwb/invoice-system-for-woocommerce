@@ -109,7 +109,7 @@ class Invoice_System_For_Woocommerce_Onboarding_Steps {
 	public function __construct() {
 		self::$mwb_isfw_store_name        = get_bloginfo( 'name' );
 		self::$mwb_isfw_store_url         = home_url();
-		self::$mwb_isfw_plugin_name       = 'invoice-system-for-woocommerce';
+		self::$mwb_isfw_plugin_name       = 'Invoice System For WooCommerce';
 		self::$mwb_isfw_plugin_name_label = 'MWB STANDARD PLUGIN';
 
 		add_action( 'admin_enqueue_scripts', array( $this, 'mwb_isfw_onboarding_enqueue_styles' ) );
@@ -531,7 +531,7 @@ class Invoice_System_For_Woocommerce_Onboarding_Steps {
 				'type'        => 'hidden',
 				'placeholder' => '',
 				'name'        => 'org_plugin_name',
-				'value'       => '',
+				'value'       => self::$mwb_isfw_plugin_name,
 				'required'    => '',
 				'class'       => '',
 			),

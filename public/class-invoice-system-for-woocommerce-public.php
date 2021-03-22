@@ -121,7 +121,7 @@ class Invoice_System_For_Woocommerce_Public {
 		$isfw_pdf_settings = get_option( 'mwb_isfw_pdf_general_settings' );
 		if ( isset( $_GET['order_id'] ) && isset( $_GET['action'] ) ) { // phpcs:ignore
 			if ( 'userpdfdownload' === $_GET['action'] || 'generateinvoiceguest' === $_GET['action'] ) { // phpcs:ignore
-				$order_id = $_GET['order_id']; // phpcs:ignore
+				$order_id = sanitize_text_field( wp_unslash( $_GET['order_id'] ) ); // phpcs:ignore
 				if ( $isfw_pdf_settings ) {
 					$order_status_show_invoice = array_key_exists( 'order_status', $isfw_pdf_settings ) ? preg_replace( '/wc-/', '', $isfw_pdf_settings['order_status'] ) : 'completed';
 					$order                     = wc_get_order( $order_id );

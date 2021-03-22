@@ -70,10 +70,11 @@ function isfw_show_admin_notices() {
 	$isfw_child_plugin  = __( 'Invoice system for woocommerce', 'invoice-system-for-woocommerce' );
 	$isfw_parent_plugin = __( 'Woocommerce', 'invoice-system-for-woocommerce' );
 	echo '<div class="notice notice-error is-dismissible"><p>'
-		. sprintf( __( '%1$s requires %2$s to function correctly. Please activate %2$s before activating %1$s. For now, the plugin has been deactivated.', 'invoice-system-for-woocommerce' ), '<strong>' . esc_html( $isfw_child_plugin ) . '</strong>', '<strong>' . esc_html( $isfw_parent_plugin ) . '</strong>' )
+		/* translators: %s: dependency checks */
+		. sprintf( esc_html__( '%1$s requires %2$s to function correctly. Please activate %2$s before activating %1$s. For now, the plugin has been deactivated.', 'invoice-system-for-woocommerce' ), '<strong>' . esc_html( $isfw_child_plugin ) . '</strong>', '<strong>' . esc_html( $isfw_parent_plugin ) . '</strong>' )
 		. '</p></div>';
-	if ( isset( $_GET['activate'] ) ) {
-		unset( $_GET['activate'] );
+	if ( isset( $_GET['activate'] ) ) { // phpcs:ignore
+		unset( $_GET['activate'] ); //phpcs:ignore
 	}
 }
 if ( $tmp ) {
