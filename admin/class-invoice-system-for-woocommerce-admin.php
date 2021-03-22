@@ -13,7 +13,8 @@
  * The admin-specific functionality of the plugin.
  *
  * Defines the plugin name, version, and two examples hooks for how to
- * enqueue the admin-specific stylesheet and JavaScript.
+ * enqueue the admin-specific stylesheet and JavaScript plugin enable key :isfw_mwb_plugin_enable & setting data: mwb_isfw_pdf_general_settings
+ * order details shortcode [isfw_fetch_order order_id ='' ].
  *
  * @package    Invoice_system_for_woocommerce
  * @subpackage Invoice_system_for_woocommerce/admin
