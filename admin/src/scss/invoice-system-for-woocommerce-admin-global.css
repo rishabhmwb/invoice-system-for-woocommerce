@@ -477,6 +477,7 @@ a.ui-state-default.ui-state-active {
     }
 }
 
+
 @media only screen and (max-width: 540px) {
     .mwb-header-title {
         max-width: 100%;
@@ -509,7 +510,6 @@ a.ui-state-default.ui-state-active {
         margin-right: 0;
     }
 }
-
 /* Overview page css */
 
 .isfw-overview__wrapper h2,
@@ -541,7 +541,7 @@ a.ui-state-default.ui-state-active {
 .isfw-overview__content-description {
     background-color: #ffffff;
     margin-bottom: 30px;
-    padding: 25px 50px;
+    padding: 25px 0;
     text-align: left;
 }
 
@@ -690,7 +690,6 @@ a.ui-state-default.ui-state-active {
 .isfw-overview__help-icon::before {
     content: '←';
 }
-
 .isfw-help__out .acfw-overview__help-icon::before {
     content: '→';
 }
@@ -757,4 +756,36 @@ a.ui-state-default.ui-state-active {
     flex: 0 0 50%;
     max-width: 50%;
 }
-/* overview page css ends */
+
+.isfw-overview__video--url iframe {
+    width: 100%;
+}
+/* overview page css ends */ 
+
+
+@media only screen and (max-width: 992px) {
+    .isfw-overview__features {
+        max-width: 100%;
+        flex: 0 0 100%;
+        margin-right: 0;
+        margin-bottom: 30px;
+    }
+
+    .isfw-overview__video--url {
+        max-width: 100%;
+        flex: 0 0 100%;
+    }
+
+    .isfw-overview__keywords-item {
+        max-width: 50%;
+        flex: 0 0 50%;
+    }
+}
+
+@media only screen and (max-width:768px) {
+    
+    .isfw-overview__keywords-item {
+        max-width: 100%;
+        flex: 0 0 100%;
+    }
+}
