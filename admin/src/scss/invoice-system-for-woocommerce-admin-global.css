@@ -759,4 +759,33 @@ a.ui-state-default.ui-state-active {
 .isfw-overview__video--url iframe {
     width: 100%;
 }
+.toplevel_page_mwb-plugins div img {
+    width: 30px;
+}
 /* overview page css ends */ 
+@media only screen and (max-width: 992px) {
+    .isfw-overview__features {
+        max-width: 100%;
+        flex: 0 0 100%;
+        margin-right: 0;
+        margin-bottom: 30px;
+    }
+
+    .isfw-overview__video--url {
+        max-width: 100%;
+        flex: 0 0 100%;
+    }
+
+    .isfw-overview__keywords-item {
+        max-width: 50%;
+        flex: 0 0 50%;
+    }
+}
+
+@media only screen and (max-width:768px) {
+
+    .isfw-overview__keywords-item {
+        max-width: 100%;
+        flex: 0 0 100%;
+    }
+}
