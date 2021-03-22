@@ -163,7 +163,7 @@ class Invoice_System_For_Woocommerce_Onboarding_Steps {
 	public function mwb_isfw_onboarding_enqueue_styles() {
 		global $pagenow;
 		$is_valid = false;
-		if ( ! $is_valid && 'plugins.php' == $pagenow ) {
+		if ( ! $is_valid && 'plugins.php' === $pagenow ) {
 			$is_valid = true;
 		}
 		if ( $this->mwb_isfw_valid_page_screen_check() || $is_valid ) {
@@ -193,7 +193,7 @@ class Invoice_System_For_Woocommerce_Onboarding_Steps {
 	public function mwb_isfw_onboarding_enqueue_scripts() {
 		global $pagenow;
 		$is_valid = false;
-		if ( ! $is_valid && 'plugins.php' == $pagenow ) {
+		if ( ! $is_valid && 'plugins.php' === $pagenow ) {
 			$is_valid = true;
 		}
 		if ( $this->mwb_isfw_valid_page_screen_check() || $is_valid ) {
@@ -239,7 +239,7 @@ class Invoice_System_For_Woocommerce_Onboarding_Steps {
 	public function mwb_isfw_add_deactivation_popup_screen() {
 
 		global $pagenow;
-		if ( ! empty( $pagenow ) && 'plugins.php' == $pagenow ) {
+		if ( ! empty( $pagenow ) && 'plugins.php' === $pagenow ) {
 			require_once INVOICE_SYSTEM_FOR_WOOCOMMERCE_DIR_PATH . 'onboarding/templates/invoice-system-for-woocommerce-deactivation-template.php';
 		}
 	}
@@ -251,7 +251,7 @@ class Invoice_System_For_Woocommerce_Onboarding_Steps {
 	 */
 	public function mwb_isfw_skip_onboarding_popup() {
 		$get_skipped_timstamp = update_option( 'mwb_isfw_onboarding_data_skipped', time() );
-		echo json_encode( 'true' );
+		echo wp_json_encode( 'true' );
 		wp_die();
 	}
 
@@ -292,7 +292,7 @@ class Invoice_System_For_Woocommerce_Onboarding_Steps {
 			 * Email field with label. ( auto filled with admin email )
 			 */
 
-			rand() => array(
+			wp_rand() => array(
 				'id'          => 'mwb-isfw-monthly-revenue',
 				'title'       => esc_html__( 'What is your monthly revenue?', 'invoice-system-for-woocommerce' ),
 				'type'        => 'radio',
@@ -311,7 +311,7 @@ class Invoice_System_For_Woocommerce_Onboarding_Steps {
 				),
 			),
 
-			rand() => array(
+			wp_rand() => array(
 				'id'          => 'mwb_isfw_industry_type',
 				'title'       => esc_html__( 'What industry defines your business?', 'invoice-system-for-woocommerce' ),
 				'type'        => 'select',
@@ -348,76 +348,76 @@ class Invoice_System_For_Woocommerce_Onboarding_Steps {
 				),
 			),
 
-			rand() => array(
-				'id' => 'mwb-isfw-onboard-email',
-				'title' => esc_html__( 'What is the best email address to contact you?', 'invoice-system-for-woocommerce' ),
-				'type' => 'email',
+			wp_rand() => array(
+				'id'          => 'mwb-isfw-onboard-email',
+				'title'       => esc_html__( 'What is the best email address to contact you?', 'invoice-system-for-woocommerce' ),
+				'type'        => 'email',
 				'description' => '',
-				'name' => 'email',
+				'name'        => 'email',
 				'placeholder' => esc_html__( 'Email', 'invoice-system-for-woocommerce' ),
-				'value' => $current_user_email,
-				'required' => 'yes',
-				'class' => 'isfw-text-class',
+				'value'       => $current_user_email,
+				'required'    => 'yes',
+				'class'       => 'isfw-text-class',
 			),
 
-			rand() => array(
-				'id' => 'mwb-isfw-onboard-number',
-				'title' => esc_html__( 'What is your contact number?', 'invoice-system-for-woocommerce' ),
-				'type' => 'text',
+			wp_rand() => array(
+				'id'          => 'mwb-isfw-onboard-number',
+				'title'       => esc_html__( 'What is your contact number?', 'invoice-system-for-woocommerce' ),
+				'type'        => 'text',
 				'description' => '',
-				'name' => 'phone',
-				'value' => '',
+				'name'        => 'phone',
+				'value'       => '',
 				'placeholder' => esc_html__( 'Contact Number', 'invoice-system-for-woocommerce' ),
-				'required' => 'yes',
-				'class' => '',
+				'required'    => 'yes',
+				'class'       => '',
 			),
 
-			rand() => array(
-				'id' => 'mwb-isfw-store-name',
-				'title' => '',
+			wp_rand() => array(
+				'id'          => 'mwb-isfw-store-name',
+				'title'       => '',
 				'description' => '',
-				'type' => 'hidden',
-				'name' => 'company',
+				'type'        => 'hidden',
+				'name'        => 'company',
 				'placeholder' => '',
-				'value' => self::$mwb_isfw_store_name,
-				'required' => '',
-				'class' => '',
+				'value'       => self::$mwb_isfw_store_name,
+				'required'    => '',
+				'class'       => '',
 			),
 
-			rand() => array(
-				'id' => 'mwb-isfw-store-url',
-				'title' => '',
+			wp_rand() => array(
+				'id'          => 'mwb-isfw-store-url',
+				'title'       => '',
 				'description' => '',
-				'type' => 'hidden',
-				'name' => 'website',
+				'type'        => 'hidden',
+				'name'        => 'website',
 				'placeholder' => '',
-				'value' => self::$mwb_isfw_store_url,
-				'required' => '',
-				'class' => '',
+				'value'       => self::$mwb_isfw_store_url,
+				'required'    => '',
+				'class'       => '',
 			),
 
-			rand() => array(
-				'id' => 'mwb-isfw-show-counter',
-				'title' => '',
+			wp_rand() => array(
+				'id'          => 'mwb-isfw-show-counter',
+				'title'       => '',
 				'description' => '',
-				'type' => 'hidden',
+				'type'        => 'hidden',
 				'placeholder' => '',
-				'name' => 'mwb-isfw-show-counter',
-				'value' => get_option( 'mwb_isfw_onboarding_data_sent', 'not-sent' ),
-				'required' => '',
-				'class' => '',
+				'name'        => 'mwb-isfw-show-counter',
+				'value'       => get_option( 'mwb_isfw_onboarding_data_sent', 'not-sent' ),
+				'required'    => '',
+				'class'       => '',
 			),
 
-			rand() => array(
-				'id' => 'mwb-isfw-plugin-name',
-				'title' => '',
+			wp_rand() => array(
+				'id'          => 'mwb-isfw-plugin-name',
+				'title'       => '',
 				'description' => '',
-				'type' => 'hidden',
+				'type'        => 'hidden',
 				'placeholder' => '',
-				'name' => 'org_plugin_name',
-				'value' => self::$mwb_isfw_plugin_name,
-				'required' => '',
-				'class' => '',
+				'name'        => 'org_plugin_name',
+				'value'       => self::$mwb_isfw_plugin_name,
+				'required'    => '',
+				'class'       => '',
 			),
 		);
 
@@ -455,85 +455,85 @@ class Invoice_System_For_Woocommerce_Onboarding_Steps {
 			 * Email field with label. ( auto filled with admin email )
 			 */
 
-			rand() => array(
-				'id' => 'mwb-isfw-deactivation-reason',
-				'title' => '',
+			wp_rand() => array(
+				'id'          => 'mwb-isfw-deactivation-reason',
+				'title'       => '',
 				'description' => '',
-				'type' => 'radio',
+				'type'        => 'radio',
 				'placeholder' => '',
-				'name' => 'plugin_deactivation_reason',
-				'value' => '',
-				'multiple' => 'no',
-				'required' => 'yes',
-				'class' => 'isfw-radio-class',
-				'options' => array(
-					'temporary-deactivation-for-debug'      => 'It is a temporary deactivation. I am just debugging an issue.',
-					'site-layout-broke'         => 'The plugin broke my layout or some functionality.',
-					'complicated-configuration'         => 'The plugin is too complicated to configure.',
-					'no-longer-need'        => 'I no longer need the plugin',
-					'found-better-plugin'       => 'I found a better plugin',
-					'other'         => 'Other',
+				'name'        => 'plugin_deactivation_reason',
+				'value'       => '',
+				'multiple'    => 'no',
+				'required'    => 'yes',
+				'class'       => 'isfw-radio-class',
+				'options'     => array(
+					'temporary-deactivation-for-debug' => 'It is a temporary deactivation. I am just debugging an issue.',
+					'site-layout-broke'                => 'The plugin broke my layout or some functionality.',
+					'complicated-configuration'        => 'The plugin is too complicated to configure.',
+					'no-longer-need'                   => 'I no longer need the plugin',
+					'found-better-plugin'              => 'I found a better plugin',
+					'other'                            => 'Other',
 				),
 			),
 
-			rand() => array(
-				'id' => 'mwb-isfw-deactivation-reason-text',
-				'title' => esc_html__( 'Let us know why you are deactivating ' . self::$mwb_isfw_plugin_name_label . ' so we can improve the plugin', 'invoice-system-for-woocommerce' ),
-				'type' => 'textarea',
+			wp_rand() => array(
+				'id'          => 'mwb-isfw-deactivation-reason-text',
+				'title'       => esc_html__( 'Let us know why you are deactivating ' . self::$mwb_isfw_plugin_name_label . ' so we can improve the plugin', 'invoice-system-for-woocommerce' ),
+				'type'        => 'textarea',
 				'description' => '',
-				'name' => 'deactivation_reason_text',
+				'name'        => 'deactivation_reason_text',
 				'placeholder' => esc_html__( 'Reason', 'invoice-system-for-woocommerce' ),
-				'value' => '',
-				'required' => '',
-				'class' => 'mwb-keep-hidden',
+				'value'       => '',
+				'required'    => '',
+				'class'       => 'mwb-keep-hidden',
 			),
 
-			rand() => array(
-				'id' => 'mwb-isfw-admin-email',
-				'title' => '',
+			wp_rand() => array(
+				'id'          => 'mwb-isfw-admin-email',
+				'title'       => '',
 				'description' => '',
-				'type' => 'hidden',
-				'name' => 'email',
+				'type'        => 'hidden',
+				'name'        => 'email',
 				'placeholder' => '',
-				'value' => $current_user_email,
-				'required' => '',
-				'class' => '',
+				'value'       => $current_user_email,
+				'required'    => '',
+				'class'       => '',
 			),
 
-			rand() => array(
-				'id' => 'mwb-isfw-store-name',
-				'title' => '',
+			wp_rand() => array(
+				'id'          => 'mwb-isfw-store-name',
+				'title'       => '',
 				'description' => '',
-				'type' => 'hidden',
+				'type'        => 'hidden',
 				'placeholder' => '',
-				'name' => 'company',
-				'value' => self::$mwb_isfw_store_name,
-				'required' => '',
-				'class' => '',
+				'name'        => 'company',
+				'value'       => self::$mwb_isfw_store_name,
+				'required'    => '',
+				'class'       => '',
 			),
 
-			rand() => array(
-				'id' => 'mwb-isfw-store-url',
-				'title' => '',
+			wp_rand() => array(
+				'id'          => 'mwb-isfw-store-url',
+				'title'       => '',
 				'description' => '',
-				'type' => 'hidden',
-				'name' => 'website',
+				'type'        => 'hidden',
+				'name'        => 'website',
 				'placeholder' => '',
-				'value' => self::$mwb_isfw_store_url,
-				'required' => '',
-				'class' => '',
+				'value'       => self::$mwb_isfw_store_url,
+				'required'    => '',
+				'class'       => '',
 			),
 
-			rand() => array(
-				'id' => 'mwb-isfw-plugin-name',
-				'title' => '',
+			wp_rand() => array(
+				'id'          => 'mwb-isfw-plugin-name',
+				'title'       => '',
 				'description' => '',
-				'type' => 'hidden',
+				'type'        => 'hidden',
 				'placeholder' => '',
-				'name' => 'org_plugin_name',
-				'value' => '',
-				'required' => '',
-				'class' => '',
+				'name'        => 'org_plugin_name',
+				'value'       => '',
+				'required'    => '',
+				'class'       => '',
 			),
 		);
 
@@ -558,7 +558,7 @@ class Invoice_System_For_Woocommerce_Onboarding_Steps {
 
 			foreach ( $form_data as $key => $input ) {
 
-				if ( 'mwb-isfw-show-counter' == $input->name ) {
+				if ( 'mwb-isfw-show-counter' === $input->name ) {
 					continue;
 				}
 
@@ -596,7 +596,7 @@ class Invoice_System_For_Woocommerce_Onboarding_Steps {
 				array_filter(
 					$formatted_data,
 					function( $item ) {
-						return isset( $item['name'] ) && 'plugin_deactivation_reason' == $item['name'];
+						return isset( $item['name'] ) && 'plugin_deactivation_reason' === $item['name'];
 					}
 				)
 			);
@@ -615,26 +615,26 @@ class Invoice_System_For_Woocommerce_Onboarding_Steps {
 			}
 		} catch ( Exception $e ) {
 
-			echo json_encode( $e->getMessage() );
+			echo wp_json_encode( $e->getMessage() );
 			wp_die();
 		}
 
-		if ( ! empty( $action_type ) && 'onboarding' == $action_type ) {
+		if ( ! empty( $action_type ) && 'onboarding' === $action_type ) {
 			$get_skipped_timstamp = update_option( 'mwb_isfw_onboarding_data_sent', 'sent' );
 		}
-		echo json_encode( $formatted_data );
+		echo wp_json_encode( $formatted_data );
 		wp_die();
 	}
 	/**
 	 * Handle invoice-system-for-woocommerce form submission.
 	 *
-	 * @param      bool   $submission       The resultant data of the form.
+	 * @param      array  $submission       The resultant data of the form.
 	 * @param      string $action_type      Type of action.
 	 * @since    1.0.0
 	 */
-	protected function mwb_isfw_handle_form_submission_for_hubspot( $submission = false, $action_type = 'onboarding' ) {
+	protected function mwb_isfw_handle_form_submission_for_hubspot( $submission = array(), $action_type = 'onboarding' ) {
 
-		if ( 'onboarding' == $action_type ) {
+		if ( 'onboarding' === $action_type ) {
 			array_push(
 				$submission,
 				array(
@@ -646,7 +646,7 @@ class Invoice_System_For_Woocommerce_Onboarding_Steps {
 
 		$result = $this->mwb_isfw_hubwoo_submit_form( $submission, $action_type );
 
-		if ( true == $result['success'] ) {
+		if ( true === $result['success'] ) {
 			return true;
 		} else {
 			return false;
@@ -662,7 +662,7 @@ class Invoice_System_For_Woocommerce_Onboarding_Steps {
 	 * @since       1.0.0
 	 */
 	protected function mwb_isfw_hubwoo_submit_form( $form_data = array(), $action_type = 'onboarding' ) {
-		if ( 'onboarding' == $action_type ) {
+		if ( 'onboarding' === $action_type ) {
 			$form_id = self::$mwb_isfw_onboarding_form_id;
 		} else {
 			$form_id = self::$mwb_isfw_deactivation_form_id;
@@ -671,7 +671,7 @@ class Invoice_System_For_Woocommerce_Onboarding_Steps {
 		$url = 'submissions/v3/integration/submit/' . self::$mwb_isfw_portal_id . '/' . $form_id;
 
 		$headers = array(
-			'Content-Type: application/json',
+			'Content-Type' => 'application/json',
 		);
 
 		$form_data = wp_json_encode(
@@ -685,7 +685,7 @@ class Invoice_System_For_Woocommerce_Onboarding_Steps {
 			)
 		);
 		$response  = $this->mwb_isfw_hic_post( $url, $form_data, $headers );
-		if ( 200 == $response['status_code'] ) {
+		if ( 200 === $response['status_code'] ) {
 			$result            = json_decode( $response['response'], true );
 			$result['success'] = true;
 		} else {
@@ -705,10 +705,11 @@ class Invoice_System_For_Woocommerce_Onboarding_Steps {
 	private function mwb_isfw_hic_post( $endpoint, $post_params, $headers ) {
 		$url      = $this->mwb_isfw_base_url . $endpoint;
 		$request  = array(
-			'httpversion' => '1.0',
-			'sslverify'   => false,
 			'method'      => 'POST',
 			'timeout'     => 45,
+			'redirection' => 5,
+			'httpversion' => '1.0',
+			'blocking'    => true,
 			'headers'     => $headers,
 			'body'        => $post_params,
 			'cookies'     => array(),
@@ -716,10 +717,10 @@ class Invoice_System_For_Woocommerce_Onboarding_Steps {
 		$response = wp_remote_post( $url, $request );
 		if ( is_wp_error( $response ) ) {
 			$status_code = 500;
-			$response    = esc_html__( 'Unexpected Error Occured', 'membership-for-woocommerce' );
+			$response    = esc_html__( 'Unexpected Error Occured', 'invoice-system-for-woocommerce' );
 			$curl_errors = $response;
 		} else {
-			$response    = json_decode( wp_remote_retrieve_body( $response ) );
+			$response    = wp_remote_retrieve_body( $response );
 			$status_code = wp_remote_retrieve_response_code( $response );
 			$curl_errors = $response;
 		}
@@ -763,7 +764,7 @@ class Invoice_System_For_Woocommerce_Onboarding_Steps {
 	public function mwb_isfw_valid_page_screen_check() {
 		$mwb_isfw_screen  = get_current_screen();
 		$mwb_isfw_is_flag = false;
-		if ( isset( $mwb_isfw_screen->id ) && 'makewebbetter_page_invoice_system_for_woocommerce_menu' == $mwb_isfw_screen->id ) {
+		if ( isset( $mwb_isfw_screen->id ) && 'makewebbetter_page_invoice_system_for_woocommerce_menu' === $mwb_isfw_screen->id ) {
 			$mwb_isfw_is_flag = true;
 		}
 
@@ -780,7 +781,7 @@ class Invoice_System_For_Woocommerce_Onboarding_Steps {
 		$mwb_isfw_is_already_sent = get_option( 'mwb_isfw_onboarding_data_sent', false );
 
 		// Already submitted the data.
-		if ( ! empty( $mwb_isfw_is_already_sent ) && 'sent' == $mwb_isfw_is_already_sent ) {
+		if ( ! empty( $mwb_isfw_is_already_sent ) && 'sent' === $mwb_isfw_is_already_sent ) {
 			return false;
 		}
 
