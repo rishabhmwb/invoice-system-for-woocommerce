@@ -5,3 +5,7 @@
 .toplevel_page_mwb-plugins div img {
     width: 30px;
 }
+.mwb_isfw_plugin_extra_custom_tab{
+    width: 20px;
+    padding-right: 5px;
+}

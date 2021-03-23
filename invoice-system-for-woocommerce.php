@@ -111,9 +111,9 @@ if ( $tmp ) {
 	 */
 	function invoice_system_for_woocommerce_custom_settings_at_plugin_tab( $links_array, $plugin_file_name ) {
 		if ( strpos( $plugin_file_name, basename( __FILE__ ) ) ) {
-			$links_array[] = '<a href="https://demo.makewebbetter.com/invoice-system-for-woocommerce" target="_blank"><i class="fas fa-laptop" style="margin-right:3px;"></i>Demo</a>';
-			$links_array[] = '<a href="https://docs.makewebbetter.com/invoice-system-for-woocommerce/" target="_blank"><i class="far fa-file-alt" style="margin-right:3px;"></i>Documentation</a>';
-			$links_array[] = '<a href="https://makewebbetter.com/submit-query/" target="_blank"><i class="fas fa-user-ninja" style="margin-right:3px;"></i>Support</a>';
+			$links_array[] = '<a href="https://demo.makewebbetter.com/invoice-system-for-woocommerce" target="_blank"><img src="' . INVOICE_SYSTEM_FOR_WOOCOMMERCE_DIR_URL . 'admin/src/images/Demo.svg" class="mwb_isfw_plugin_extra_custom_tab"></i>Demo</a>';
+			$links_array[] = '<a href="https://docs.makewebbetter.com/invoice-system-for-woocommerce/" target="_blank"><img src="' . INVOICE_SYSTEM_FOR_WOOCOMMERCE_DIR_URL . 'admin/src/images/Documentation.svg" class="mwb_isfw_plugin_extra_custom_tab"></i>Documentation</a>';
+			$links_array[] = '<a href="https://makewebbetter.com/submit-query/" target="_blank"><img src="' . INVOICE_SYSTEM_FOR_WOOCOMMERCE_DIR_URL . 'admin/src/images/Support.svg" class="mwb_isfw_plugin_extra_custom_tab"></i>Support</a>';
 		}
 		return $links_array;
 	}
@@ -129,13 +129,13 @@ if ( $tmp ) {
 		if ( is_array( $mwb_isfw_active_plugin ) && ! empty( $mwb_isfw_active_plugin ) ) {
 			$mwb_isfw_active_plugin['invoice-system-for-woocommerce'] = array(
 				'plugin_name' => __( 'invoice-system-for-woocommerce', 'invoice-system-for-woocommerce' ),
-				'active' => '1',
+				'active'      => '1',
 			);
 		} else {
 			$mwb_isfw_active_plugin = array();
 			$mwb_isfw_active_plugin['invoice-system-for-woocommerce'] = array(
 				'plugin_name' => __( 'invoice-system-for-woocommerce', 'invoice-system-for-woocommerce' ),
-				'active' => '1',
+				'active'      => '1',
 			);
 		}
 		update_option( 'mwb_all_plugins_active', $mwb_isfw_active_plugin );
