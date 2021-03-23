@@ -54,21 +54,18 @@ jQuery(document).ready(function($) {
 
     /* Close Button Click */
     jQuery(document).on('click', '.mwb-isfw-on-boarding-close-btn a', function(e) {
-        const dialog = mdc.dialog.MDCDialog.attachTo(document.querySelector('.mdc-dialog'));
         e.preventDefault();
         mwb_isfw_hide_onboard_popup();
     });
 
     /* Skip and deactivate. */
     jQuery(document).on('click', '.mwb-deactivation-no_thanks', function(e) {
-
         window.location.replace(deactivate_url);
         mwb_isfw_hide_onboard_popup();
     });
 
     /* Skip For a day. */
     jQuery(document).on('click', '.mwb-isfw-on-boarding-no_thanks', function(e) {
-
         jQuery.ajax({
             type: 'post',
             dataType: 'json',
@@ -118,7 +115,6 @@ jQuery(document).ready(function($) {
 
     /* Close Popup */
     function mwb_isfw_hide_onboard_popup() {
-        // const dialog = mdc.dialog.MDCDialog.attachTo(document.querySelector('.mdc-dialog'));
         dialog.close();
         if (!jQuery('body').hasClass('mobile-device')) {
             jQuery('body').removeClass('mwb-on-boarding-wrapper-control');
