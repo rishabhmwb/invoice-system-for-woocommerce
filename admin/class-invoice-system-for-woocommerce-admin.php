@@ -600,7 +600,6 @@ class Invoice_System_For_Woocommerce_Admin {
 			if ( $order_status ) {
 				$order_statuses = preg_replace( '/wc-/', 'customer_', $order_status ) . '_order';
 				if ( $email_id === $order_statuses ) {
-					$this->isfw_generating_pdf( $order->get_id(), 'invoice', 'download_on_server' );
 					$upload_dir     = wp_upload_dir();
 					$upload_basedir = $upload_dir['basedir'] . '/invoices/';
 					$file           = $upload_basedir . 'invoice_' . $order->get_id() . '.pdf';
