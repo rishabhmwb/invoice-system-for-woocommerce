@@ -152,7 +152,7 @@ class Invoice_System_For_Woocommerce_Admin {
 	public function isfw_options_page() {
 		global $submenu;
 		if ( empty( $GLOBALS['admin_page_hooks']['mwb-plugins'] ) ) {
-			add_menu_page( __( 'MakeWebBetter', 'invoice-system-for-woocommerce' ), __( 'MakeWebBetter', 'invoice-system-for-woocommerce' ), 'manage_options', 'mwb-plugins', array( $this, 'mwb_plugins_listing_page' ), INVOICE_SYSTEM_FOR_WOOCOMMERCE_DIR_URL . 'admin/src/images/MWB_Grey-01.svg', 15 );
+			add_menu_page( 'MakeWebBetter', 'MakeWebBetter', 'manage_options', 'mwb-plugins', array( $this, 'mwb_plugins_listing_page' ), INVOICE_SYSTEM_FOR_WOOCOMMERCE_DIR_URL . 'admin/src/images/MWB_Grey-01.svg', 15 );
 			$isfw_menus = apply_filters( 'mwb_add_plugins_menus_array', array() );
 			if ( is_array( $isfw_menus ) && ! empty( $isfw_menus ) ) {
 				foreach ( $isfw_menus as $isfw_key => $isfw_value ) {
@@ -185,7 +185,7 @@ class Invoice_System_For_Woocommerce_Admin {
 	 */
 	public function isfw_admin_submenu_page( $menus = array() ) {
 		$menus[] = array(
-			'name'      => __( 'Invoice System for WooCommerce', 'invoice-system-for-woocommerce' ),
+			'name'      => 'Invoice System for WooCommerce',
 			'slug'      => 'invoice_system_for_woocommerce_menu',
 			'menu_link' => 'invoice_system_for_woocommerce_menu',
 			'instance'  => $this,

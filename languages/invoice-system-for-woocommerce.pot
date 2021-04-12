@@ -1,7 +1,8 @@
+#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: Invoice System for WooCommerce 1.0.0\n"
-"POT-Creation-Date: 2021-03-22 16:17+0530\n"
+"POT-Creation-Date: 2021-03-25 11:58+0530\n"
 "PO-Revision-Date: 2021-03-22 16:17+0530\n"
 "Last-Translator: \n"
 "Language-Team: MakeWebBetter\n"
@@ -17,257 +18,249 @@ msgstr ""
 "esc_url_raw\n"
 "X-Poedit-SearchPath-0: .\n"
 
-#: admin/class-invoice-system-for-woocommerce-admin.php:124
+#: admin/class-invoice-system-for-woocommerce-admin.php:125
 msgid "Choose Image"
 msgstr ""
 
-#: admin/class-invoice-system-for-woocommerce-admin.php:125
+#: admin/class-invoice-system-for-woocommerce-admin.php:126
 msgid "Remove Image"
 msgstr ""
 
-#: admin/class-invoice-system-for-woocommerce-admin.php:127
+#: admin/class-invoice-system-for-woocommerce-admin.php:128
 msgid "Please choose digits greater then 0 and less then 10"
 msgstr ""
 
-#: admin/class-invoice-system-for-woocommerce-admin.php:130
+#: admin/class-invoice-system-for-woocommerce-admin.php:131
 msgid "Please Enter Characters, Numbers and - only, in prefix and suffix field"
 msgstr ""
 
-#: admin/class-invoice-system-for-woocommerce-admin.php:133
+#: admin/class-invoice-system-for-woocommerce-admin.php:134
 msgid "Saved"
 msgstr ""
 
-#: admin/class-invoice-system-for-woocommerce-admin.php:134
+#: admin/class-invoice-system-for-woocommerce-admin.php:135
 msgid "Resubmit"
 msgstr ""
 
-#: admin/class-invoice-system-for-woocommerce-admin.php:136
+#: admin/class-invoice-system-for-woocommerce-admin.php:137
 msgid "Error,Please reload the page and try again."
 msgstr ""
 
-#: admin/class-invoice-system-for-woocommerce-admin.php:139
+#: admin/class-invoice-system-for-woocommerce-admin.php:140
 msgid "Date can be either current year or next year. Please choose again!"
 msgstr ""
 
-#: admin/class-invoice-system-for-woocommerce-admin.php:154
-msgid "MakeWebBetter"
-msgstr ""
-
-#: admin/class-invoice-system-for-woocommerce-admin.php:187
-msgid "Invoice System for WooCommerce"
-msgstr ""
-
-#: admin/class-invoice-system-for-woocommerce-admin.php:268
+#: admin/class-invoice-system-for-woocommerce-admin.php:269
 msgid "Never"
 msgstr ""
 
-#: admin/class-invoice-system-for-woocommerce-admin.php:275
+#: admin/class-invoice-system-for-woocommerce-admin.php:276
 msgid "Enable plugin"
 msgstr ""
 
-#: admin/class-invoice-system-for-woocommerce-admin.php:277
+#: admin/class-invoice-system-for-woocommerce-admin.php:278
 msgid "Enable this to start the functionality for users."
 msgstr ""
 
-#: admin/class-invoice-system-for-woocommerce-admin.php:283
+#: admin/class-invoice-system-for-woocommerce-admin.php:284
 msgid "YES"
 msgstr ""
 
-#: admin/class-invoice-system-for-woocommerce-admin.php:284
+#: admin/class-invoice-system-for-woocommerce-admin.php:285
 msgid "NO"
 msgstr ""
 
-#: admin/class-invoice-system-for-woocommerce-admin.php:288
+#: admin/class-invoice-system-for-woocommerce-admin.php:289
 msgid "Company Details"
 msgstr ""
 
-#: admin/class-invoice-system-for-woocommerce-admin.php:293
+#: admin/class-invoice-system-for-woocommerce-admin.php:294
 #: admin/partials/templates/invoice-system-for-woocommerce-pdflayout1.php:260
 msgid "Name"
 msgstr ""
 
-#: admin/class-invoice-system-for-woocommerce-admin.php:299
+#: admin/class-invoice-system-for-woocommerce-admin.php:300
 msgid "name"
 msgstr ""
 
-#: admin/class-invoice-system-for-woocommerce-admin.php:302
+#: admin/class-invoice-system-for-woocommerce-admin.php:303
 msgid "Address"
 msgstr ""
 
-#: admin/class-invoice-system-for-woocommerce-admin.php:308
+#: admin/class-invoice-system-for-woocommerce-admin.php:309
 msgid "address"
 msgstr ""
 
-#: admin/class-invoice-system-for-woocommerce-admin.php:311
+#: admin/class-invoice-system-for-woocommerce-admin.php:312
 msgid "City"
 msgstr ""
 
-#: admin/class-invoice-system-for-woocommerce-admin.php:317
+#: admin/class-invoice-system-for-woocommerce-admin.php:318
 msgid "city"
 msgstr ""
 
-#: admin/class-invoice-system-for-woocommerce-admin.php:326
+#: admin/class-invoice-system-for-woocommerce-admin.php:327
 msgid "State"
 msgstr ""
 
-#: admin/class-invoice-system-for-woocommerce-admin.php:332
+#: admin/class-invoice-system-for-woocommerce-admin.php:333
 msgid "state"
 msgstr ""
 
-#: admin/class-invoice-system-for-woocommerce-admin.php:335
+#: admin/class-invoice-system-for-woocommerce-admin.php:336
 msgid "Pin"
 msgstr ""
 
-#: admin/class-invoice-system-for-woocommerce-admin.php:341
+#: admin/class-invoice-system-for-woocommerce-admin.php:342
 msgid "pin"
 msgstr ""
 
-#: admin/class-invoice-system-for-woocommerce-admin.php:344
+#: admin/class-invoice-system-for-woocommerce-admin.php:345
 msgid "Phone"
 msgstr ""
 
-#: admin/class-invoice-system-for-woocommerce-admin.php:350
+#: admin/class-invoice-system-for-woocommerce-admin.php:351
 msgid "phone"
 msgstr ""
 
-#: admin/class-invoice-system-for-woocommerce-admin.php:357
+#: admin/class-invoice-system-for-woocommerce-admin.php:358
 msgid "These Details will be shown on invoice or packing slip"
 msgstr ""
 
-#: admin/class-invoice-system-for-woocommerce-admin.php:360
+#: admin/class-invoice-system-for-woocommerce-admin.php:361
 msgid "Email"
 msgstr ""
 
-#: admin/class-invoice-system-for-woocommerce-admin.php:366
+#: admin/class-invoice-system-for-woocommerce-admin.php:367
 msgid "email"
 msgstr ""
 
-#: admin/class-invoice-system-for-woocommerce-admin.php:371
+#: admin/class-invoice-system-for-woocommerce-admin.php:372
 #: admin/partials/templates/invoice-system-for-woocommerce-pdflayout2.php:159
 msgid "Invoice Number"
 msgstr ""
 
-#: admin/class-invoice-system-for-woocommerce-admin.php:374
+#: admin/class-invoice-system-for-woocommerce-admin.php:375
 msgid "This combination will be used as the invoice number"
 msgstr ""
 
-#: admin/class-invoice-system-for-woocommerce-admin.php:377
-#: admin/class-invoice-system-for-woocommerce-admin.php:383
+#: admin/class-invoice-system-for-woocommerce-admin.php:378
+#: admin/class-invoice-system-for-woocommerce-admin.php:384
 msgid "Prefix"
 msgstr ""
 
-#: admin/class-invoice-system-for-woocommerce-admin.php:386
+#: admin/class-invoice-system-for-woocommerce-admin.php:387
 msgid "Digit"
 msgstr ""
 
-#: admin/class-invoice-system-for-woocommerce-admin.php:392
+#: admin/class-invoice-system-for-woocommerce-admin.php:393
 msgid "digit"
 msgstr ""
 
-#: admin/class-invoice-system-for-woocommerce-admin.php:395
+#: admin/class-invoice-system-for-woocommerce-admin.php:396
 msgid "Suffix"
 msgstr ""
 
-#: admin/class-invoice-system-for-woocommerce-admin.php:401
+#: admin/class-invoice-system-for-woocommerce-admin.php:402
 msgid "suffix"
 msgstr ""
 
-#: admin/class-invoice-system-for-woocommerce-admin.php:406
+#: admin/class-invoice-system-for-woocommerce-admin.php:407
 msgid "Invoice Number Renew date"
 msgstr ""
 
-#: admin/class-invoice-system-for-woocommerce-admin.php:408
+#: admin/class-invoice-system-for-woocommerce-admin.php:409
 msgid "Please choose the invoice number renew date"
 msgstr ""
 
-#: admin/class-invoice-system-for-woocommerce-admin.php:416
+#: admin/class-invoice-system-for-woocommerce-admin.php:417
 msgid "Disclaimer"
 msgstr ""
 
-#: admin/class-invoice-system-for-woocommerce-admin.php:418
+#: admin/class-invoice-system-for-woocommerce-admin.php:419
 msgid "Please enter desclaimer of you choice"
 msgstr ""
 
-#: admin/class-invoice-system-for-woocommerce-admin.php:422
+#: admin/class-invoice-system-for-woocommerce-admin.php:423
 msgid "disclaimer"
 msgstr ""
 
-#: admin/class-invoice-system-for-woocommerce-admin.php:426
+#: admin/class-invoice-system-for-woocommerce-admin.php:427
 msgid "Color"
 msgstr ""
 
-#: admin/class-invoice-system-for-woocommerce-admin.php:430
+#: admin/class-invoice-system-for-woocommerce-admin.php:431
 msgid "Choose color of your choice"
 msgstr ""
 
-#: admin/class-invoice-system-for-woocommerce-admin.php:435
+#: admin/class-invoice-system-for-woocommerce-admin.php:436
 msgid "Choose logo"
 msgstr ""
 
-#: admin/class-invoice-system-for-woocommerce-admin.php:437
+#: admin/class-invoice-system-for-woocommerce-admin.php:438
 msgid "Upload Image"
 msgstr ""
 
-#: admin/class-invoice-system-for-woocommerce-admin.php:449
 #: admin/class-invoice-system-for-woocommerce-admin.php:450
+#: admin/class-invoice-system-for-woocommerce-admin.php:451
 msgid "Remove image"
 msgstr ""
 
-#: admin/class-invoice-system-for-woocommerce-admin.php:463
+#: admin/class-invoice-system-for-woocommerce-admin.php:464
 msgid "Add logo on invoice"
 msgstr ""
 
-#: admin/class-invoice-system-for-woocommerce-admin.php:465
+#: admin/class-invoice-system-for-woocommerce-admin.php:466
 msgid ""
 "Please select if you want the above selected image to be used on invoice."
 msgstr ""
 
-#: admin/class-invoice-system-for-woocommerce-admin.php:472
+#: admin/class-invoice-system-for-woocommerce-admin.php:473
 msgid "Choose Template"
 msgstr ""
 
-#: admin/class-invoice-system-for-woocommerce-admin.php:475
+#: admin/class-invoice-system-for-woocommerce-admin.php:476
 msgid "This template will be used as the invoice and packing slip"
 msgstr ""
 
-#: admin/class-invoice-system-for-woocommerce-admin.php:478
+#: admin/class-invoice-system-for-woocommerce-admin.php:479
 msgid "Template1"
 msgstr ""
 
-#: admin/class-invoice-system-for-woocommerce-admin.php:489
+#: admin/class-invoice-system-for-woocommerce-admin.php:490
 msgid "Template2"
 msgstr ""
 
-#: admin/class-invoice-system-for-woocommerce-admin.php:502
+#: admin/class-invoice-system-for-woocommerce-admin.php:503
 msgid "Send invoice for"
 msgstr ""
 
-#: admin/class-invoice-system-for-woocommerce-admin.php:504
+#: admin/class-invoice-system-for-woocommerce-admin.php:505
 msgid ""
 "Please choose the status of orders to send invoice for. If you do not want "
 "to send invoice please choose never."
 msgstr ""
 
-#: admin/class-invoice-system-for-woocommerce-admin.php:514
+#: admin/class-invoice-system-for-woocommerce-admin.php:515
 msgid "Save settings"
 msgstr ""
 
-#: admin/class-invoice-system-for-woocommerce-admin.php:533
+#: admin/class-invoice-system-for-woocommerce-admin.php:534
 msgid "Settings saved successfully"
 msgstr ""
 
-#: admin/class-invoice-system-for-woocommerce-admin.php:549
+#: admin/class-invoice-system-for-woocommerce-admin.php:550
 msgid "Generate invoice"
 msgstr ""
 
-#: admin/class-invoice-system-for-woocommerce-admin.php:549
+#: admin/class-invoice-system-for-woocommerce-admin.php:550
 msgid "Generate packing slip"
 msgstr ""
 
 #: admin/class-invoice-system-for-woocommerce-admin.php:623
 #: public/class-invoice-system-for-woocommerce-public.php:107
-#: public/class-invoice-system-for-woocommerce-public.php:150
-#: public/class-invoice-system-for-woocommerce-public.php:172
+#: public/class-invoice-system-for-woocommerce-public.php:153
+#: public/class-invoice-system-for-woocommerce-public.php:175
 msgid "Download Invoice"
 msgstr ""
 
@@ -583,31 +576,31 @@ msgstr ""
 msgid "No"
 msgstr ""
 
-#: includes/class-invoice-system-for-woocommerce.php:454
-#: includes/class-invoice-system-for-woocommerce.php:460
-#: includes/class-invoice-system-for-woocommerce.php:463
-#: includes/class-invoice-system-for-woocommerce.php:485
-#: includes/class-invoice-system-for-woocommerce.php:488
+#: includes/class-invoice-system-for-woocommerce.php:455
+#: includes/class-invoice-system-for-woocommerce.php:461
+#: includes/class-invoice-system-for-woocommerce.php:464
+#: includes/class-invoice-system-for-woocommerce.php:486
+#: includes/class-invoice-system-for-woocommerce.php:489
 msgid "N/A (ini_get function does not exist)"
 msgstr ""
 
-#: includes/class-invoice-system-for-woocommerce.php:457
+#: includes/class-invoice-system-for-woocommerce.php:458
 msgid "N/A"
 msgstr ""
 
-#: includes/class-invoice-system-for-woocommerce.php:475
+#: includes/class-invoice-system-for-woocommerce.php:476
 msgid "N/A (gethostname function does not exist)"
 msgstr ""
 
-#: includes/class-invoice-system-for-woocommerce.php:481
+#: includes/class-invoice-system-for-woocommerce.php:482
 msgid "N/A (make sure exec is enabled)"
 msgstr ""
 
-#: includes/class-invoice-system-for-woocommerce.php:790
+#: includes/class-invoice-system-for-woocommerce.php:784
 msgid "max=10 min=0"
 msgstr ""
 
-#: includes/class-invoice-system-for-woocommerce.php:820
+#: includes/class-invoice-system-for-woocommerce.php:814
 msgid "max="
 msgstr ""
 
@@ -623,19 +616,12 @@ msgstr ""
 msgid "Woocommerce"
 msgstr ""
 
-#: invoice-system-for-woocommerce.php:73
-#, php-format
-msgid ""
-"%1$s requires %2$s to function correctly. Please activate %2$s before "
-"activating %1$s. For now, the plugin has been deactivated."
-msgstr ""
-
-#: invoice-system-for-woocommerce.php:130
-#: invoice-system-for-woocommerce.php:136
+#: invoice-system-for-woocommerce.php:131
+#: invoice-system-for-woocommerce.php:137
 msgid "invoice-system-for-woocommerce"
 msgstr ""
 
-#: invoice-system-for-woocommerce.php:192
+#: invoice-system-for-woocommerce.php:193
 msgid "Settings"
 msgstr ""
 
