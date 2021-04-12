@@ -2,3 +2,17 @@
  * All of the CSS for your public-facing functionality should be
  * included in this file.
  */
+ #isfw_guest_download_invoice a img{
+    display: inline-block;
+ }
+ div#isfw_guest_download_invoice a {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+}
+ #isfw_guest_download_invoice a span{
+     margin-left: 10px;
+ }
+ div#isfw_guest_download_invoice > a:focus {
+    outline: none;
+}

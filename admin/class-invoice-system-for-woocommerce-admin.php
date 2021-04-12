@@ -9,12 +9,12 @@
  * @subpackage Invoice_system_for_woocommerce/admin
  */
 
-use Dompdf\Dompdf;
 /**
  * The admin-specific functionality of the plugin.
  *
  * Defines the plugin name, version, and two examples hooks for how to
- * enqueue the admin-specific stylesheet and JavaScript.
+ * enqueue the admin-specific stylesheet and JavaScript plugin enable key :isfw_mwb_plugin_enable & setting data: mwb_isfw_pdf_general_settings
+ * order details shortcode [isfw_fetch_order order_id ='' ].
  *
  * @package    Invoice_system_for_woocommerce
  * @subpackage Invoice_system_for_woocommerce/admin
@@ -77,6 +77,8 @@ class Invoice_System_For_Woocommerce_Admin {
 			wp_enqueue_style( $this->plugin_name, INVOICE_SYSTEM_FOR_WOOCOMMERCE_DIR_URL . 'admin/src/scss/invoice-system-for-woocommerce-admin.scss', array(), $this->version, 'all' );
 		}
 		wp_enqueue_style( 'mwb-isfw-admin-custom-css', INVOICE_SYSTEM_FOR_WOOCOMMERCE_DIR_URL . 'admin/src/scss/invoice-system-for-woocommerce-admin-custom.css', array(), $this->version, 'all' );
+		wp_enqueue_style( 'date-picker-css', INVOICE_SYSTEM_FOR_WOOCOMMERCE_DIR_URL . 'admin/src/scss/date-picker.css', array(), $this->version, 'all' );
+		wp_enqueue_style( 'colorpicker-jquery-css', INVOICE_SYSTEM_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/colorpicker-js/jquery.minicolors.css', array(), $this->version, 'all' );
 	}
 
 	/**
@@ -109,7 +111,10 @@ class Invoice_System_For_Woocommerce_Admin {
 
 			wp_enqueue_script( $this->plugin_name . 'admin-js' );
 		}
+		wp_enqueue_script( 'jquery-ui-core' );
+		wp_enqueue_script( 'jquery-ui-datepicker' );
 		wp_enqueue_script( 'mwb-isfw-pdf-general-settings', INVOICE_SYSTEM_FOR_WOOCOMMERCE_DIR_URL . 'admin/src/js/invoice-system-for-woocommerce-admin-pdfsettings.js', array( 'jquery' ), $this->version, true );
+		wp_enqueue_script( 'mwb-isfw-colorpicker-js-jquery', INVOICE_SYSTEM_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/colorpicker-js/jquery.minicolors.js', array( 'jquery' ), $this->version, true );
 		wp_enqueue_media();
 		wp_localize_script(
 			'mwb-isfw-pdf-general-settings',
@@ -118,12 +123,23 @@ class Invoice_System_For_Woocommerce_Admin {
 				'ajaxurl'                 => admin_url( 'admin-ajax.php' ),
 				'isfw_setting_page_nonce' => wp_create_nonce( 'isfw_general_setting_nonce' ),
 				'insert_image'            => __( 'Choose Image', 'invoice-system-for-woocommerce' ),
-				'digit_limit'             => __( 'Please enter the digit in the digit field less then 10', 'invoice-system-for-woocommerce' ),
-				'suffix_limit'            => __( 'Please Enter Characters, Numbers and "-" only in prefix and suffix field', 'invoice-system-for-woocommerce' ),
+				'remove_image'            => __( 'Remove Image', 'invoice-system-for-woocommerce' ),
+				'digit_limit'             => '<div class="notice notice-error is-dismissible">
+												<p>' . __( 'Please choose digits greater then 0 and less then 10', 'invoice-system-for-woocommerce' ) . '</p>
+											</div>',
+				'suffix_limit'            => '<div class="notice notice-error is-dismissible">
+												<p>' . __( 'Please Enter Characters, Numbers and - only, in prefix and suffix field', 'invoice-system-for-woocommerce' ) . '</p>
+											</div>',
 				'btn_load'                => INVOICE_SYSTEM_FOR_WOOCOMMERCE_DIR_URL . 'admin/src/images/loader.gif',
 				'btn_success'             => __( 'Saved', 'invoice-system-for-woocommerce' ),
 				'btn_resubmit'            => __( 'Resubmit', 'invoice-system-for-woocommerce' ),
-				'saving_error'            => __( 'there might be some error in saving the settings please try again', 'invoice-system-for-woocommerce' ),
+				'saving_error'            => '<div class="notice notice-error is-dismissible">
+												<p>' . __( 'Error,Please reload the page and try again.', 'invoice-system-for-woocommerce' ) . '</p>
+											</div>',
+				'invalid_date'            => '<div class="notice notice-error is-dismissible">
+												<p>' . __( 'Date can be either current year or next year. Please choose again!', 'invoice-system-for-woocommerce' ) . '</p>
+											</div>',
+				'calender_image'          => INVOICE_SYSTEM_FOR_WOOCOMMERCE_DIR_URL . 'admin/src/images/calender.png',
 			)
 		);
 	}
@@ -136,7 +152,7 @@ class Invoice_System_For_Woocommerce_Admin {
 	public function isfw_options_page() {
 		global $submenu;
 		if ( empty( $GLOBALS['admin_page_hooks']['mwb-plugins'] ) ) {
-			add_menu_page( __( 'MakeWebBetter', 'invoice-system-for-woocommerce' ), __( 'MakeWebBetter', 'invoice-system-for-woocommerce' ), 'manage_options', 'mwb-plugins', array( $this, 'mwb_plugins_listing_page' ), INVOICE_SYSTEM_FOR_WOOCOMMERCE_DIR_URL . 'admin/src/images/mwb-logo.png', 15 );
+			add_menu_page( 'MakeWebBetter', 'MakeWebBetter', 'manage_options', 'mwb-plugins', array( $this, 'mwb_plugins_listing_page' ), INVOICE_SYSTEM_FOR_WOOCOMMERCE_DIR_URL . 'admin/src/images/MWB_Grey-01.svg', 15 );
 			$isfw_menus = apply_filters( 'mwb_add_plugins_menus_array', array() );
 			if ( is_array( $isfw_menus ) && ! empty( $isfw_menus ) ) {
 				foreach ( $isfw_menus as $isfw_key => $isfw_value ) {
@@ -169,7 +185,7 @@ class Invoice_System_For_Woocommerce_Admin {
 	 */
 	public function isfw_admin_submenu_page( $menus = array() ) {
 		$menus[] = array(
-			'name'      => __( 'invoice-system-for-woocommerce', 'invoice-system-for-woocommerce' ),
+			'name'      => 'Invoice System for WooCommerce',
 			'slug'      => 'invoice_system_for_woocommerce_menu',
 			'menu_link' => 'invoice_system_for_woocommerce_menu',
 			'instance'  => $this,
@@ -231,7 +247,7 @@ class Invoice_System_For_Woocommerce_Admin {
 			$prefix             = '';
 			$suffix             = '';
 			$digit              = '';
-			$date               = date( 'Y-m-d' );
+			$date               = gmdate( 'd-m-Y' );
 			$disclaimer         = '';
 			$color              = '#000000';
 			$logo               = '';
@@ -389,11 +405,13 @@ class Invoice_System_For_Woocommerce_Admin {
 			),
 			array(
 				'title'       => __( 'Invoice Number Renew date', 'invoice-system-for-woocommere' ),
-				'type'        => 'date',
+				'type'        => 'text',
 				'description' => __( 'Please choose the invoice number renew date', 'invoice-system-for-woocommere' ),
 				'id'          => 'isfw_invoice_renew_date',
 				'class'       => 'isfw_invoice_renew_date',
 				'value'       => $date,
+				'name'        => 'isfw_invoice_renew_date',
+				'placeholder' => '',
 			),
 			array(
 				'title'       => __( 'Disclaimer', 'invoice-system-for-woocommere' ),
@@ -407,11 +425,12 @@ class Invoice_System_For_Woocommerce_Admin {
 			),
 			array(
 				'title'       => __( 'Color', 'invoice-system-for-woocommere' ),
-				'type'        => 'color',
+				'type'        => 'text',
 				'class'       => 'isfw_invoice_color',
 				'id'          => 'isfw_invoice_color',
 				'description' => __( 'Choose color of your choice', 'invoice-system-for-woocommere' ),
 				'value'       => $color,
+				'name'        => 'isfw_invoice_color',
 			),
 			array(
 				'title'       => __( 'Choose logo', 'invoice-system-for-woocommere' ),
@@ -424,6 +443,14 @@ class Invoice_System_For_Woocommerce_Admin {
 					'img-id'    => 'mwb-isfw-logo-image',
 					'img-style' => ( $logo ) ? 'margin:10px;' : 'display:none;margin:10px;',
 					'img-src'   => $logo,
+				),
+				'img-remove'  => array(
+					'btn-class' => 'mwb-isfw-logo-remove-image',
+					'btn-id'    => 'mwb-isfw-logo-remove-image',
+					'btn-text'  => __( 'Remove image', 'invoice-system-for-woocommerce' ),
+					'btn-title' => __( 'Remove image', 'invoice-system-for-woocommerce' ),
+					'btn-name'  => 'mwb-isfw-logo-remove-image',
+					'btn-style' => ! ( $logo ) ? 'display:none' : '',
 				),
 			),
 			array(
@@ -453,10 +480,10 @@ class Invoice_System_For_Woocommerce_Admin {
 						'type'  => 'checkbox',
 						'id'    => 'isfw_invoice_template1',
 						'class' => 'isfw_invoice_template1',
-						'src'   => INVOICE_SYSTEM_FOR_WOOCOMMERCE_DIR_URL . 'admin/src/images/email-icon.png',
+						'src'   => INVOICE_SYSTEM_FOR_WOOCOMMERCE_DIR_URL . 'admin/src/images/template1.png',
 						'name'  => 'isfw_invoice_template1',
 						'alt'   => 'Template1',
-						'style' => 'style=max-height:500px;max-width:200px;padding:0px;',
+						'style' => 'style=max-height:100%;max-width:100%;padding:0px;',
 						'value' => ( 'one' === $template ) ? 'isfw_invoice_template1' : '',
 					),
 					array(
@@ -464,10 +491,10 @@ class Invoice_System_For_Woocommerce_Admin {
 						'type'  => 'checkbox',
 						'id'    => 'isfw_invoice_template2',
 						'class' => 'isfw_invoice_template2',
-						'src'   => INVOICE_SYSTEM_FOR_WOOCOMMERCE_DIR_URL . 'admin/src/images/email-icon.png',
+						'src'   => INVOICE_SYSTEM_FOR_WOOCOMMERCE_DIR_URL . 'admin/src/images/template2.png',
 						'name'  => 'isfw_invoice_template2',
 						'alt'   => 'Template2',
-						'style' => 'style=max-height:500px;max-width:200px;padding:0px;',
+						'style' => 'style=max-height:100%;max-width:100%;padding:0px;',
 						'value' => ( 'two' === $template ) ? 'isfw_invoice_template2' : '',
 					),
 				),
@@ -498,133 +525,16 @@ class Invoice_System_For_Woocommerce_Admin {
 	 */
 	public function isfw_save_general_pdf_settings() {
 		check_ajax_referer( 'isfw_general_setting_nonce', 'nonce' );
-		$settings_data      = array_key_exists( 'settings_data', $_POST ) ? $_POST['settings_data'] : ''; // phpcs:ignore
-		$isfw_enable_plugin = array_key_exists( 'isfw_enable_plugin', $_POST ) ? $_POST['isfw_enable_plugin'] : 'off'; // phpcs:ignore
+		$settings_data      = array_key_exists( 'settings_data', $_POST ) ? $_POST['settings_data'] : ''; // phpcs:ignore WordPress.Security.ValidatedSanitizedInput
+		$isfw_enable_plugin = array_key_exists( 'isfw_enable_plugin', $_POST ) ? sanitize_text_field( wp_unslash( $_POST['isfw_enable_plugin'] ) ) : 'off';
 		update_option( 'mwb_isfw_pdf_general_settings', $settings_data );
 		update_option( 'isfw_mwb_plugin_enable', $isfw_enable_plugin );
-		esc_html_e( 'updated successfully', 'invoice-system-for-woocommere' );
+		?>
+		<div class="notice notice-success is-dismissible">
+			<p><?php esc_html_e( 'Settings saved successfully', 'invoice-system-for-woocommerce' ); ?></p>
+		</div>
+		<?php
 		wp_die();
-	}
-	/**
-	 * Adding shortcodes for fetching order details.
-	 *
-	 * @return void
-	 */
-	public function isfw_fetch_order_details_shortcode() {
-		add_shortcode( 'isfw_fetch_order', array( $this, 'isfw_fetch_order_details' ) );
-	}
-	/**
-	 * Fetching all order details and storing in array.
-	 *
-	 * @param array $atts attributes which are passed while using shortcode.
-	 * @return array
-	 */
-	public function isfw_fetch_order_details( $atts = array() ) {
-		$atts  = shortcode_atts(
-			array(
-				'order_id' => '',
-			),
-			$atts
-		);
-		$order = wc_get_order( $atts['order_id'] );
-		if ( $order ) {
-			$billing_email         = $order->get_billing_email();
-			$billing_phone         = $order->get_billing_phone();
-			$customer_id           = $order->get_customer_id();
-			$billing_first_name    = $order->get_billing_first_name();
-			$billing_last_name     = $order->get_billing_last_name();
-			$billing_company       = $order->get_billing_company();
-			$billing_address_1     = $order->get_billing_address_1();
-			$billing_address_2     = $order->get_billing_address_2();
-			$billing_city          = $order->get_billing_city();
-			$billing_state         = $order->get_billing_state();
-			$billing_postcode      = $order->get_billing_postcode();
-			$billing_country       = $order->get_billing_country();
-			$payment_method        = $order->get_payment_method();
-			$order_status          = $order->get_status();
-			$order_subtotal        = preg_replace( '/[^0-9,.]/', '', $order->get_subtotal() );
-			$decimal_separator     = wc_get_price_decimal_separator();
-			$thousand_separator    = wc_get_price_thousand_separator();
-			$decimals              = wc_get_price_decimals();
-			$order_product_details = array();
-			foreach ( $order->get_items() as  $item_key => $item_values ) {
-				$_tax                    = new WC_Tax();
-				$item_data               = $item_values->get_data();
-				$product_tax             = $_tax->get_rates( $item_data['tax_class'] );
-				$product_tax             = is_array( $product_tax ) ? array_shift( $product_tax ) : $product_tax;
-				$product_tax             = is_array( $product_tax ) ? array_shift( $product_tax ) : $product_tax;
-				$product_tax             = ( $product_tax ) ? $product_tax : 0;
-				$order_product_details[] = array(
-					'product_id'       => get_post_meta( $item_data['product_id'], '_sku', true ),
-					'id'               => $item_data['product_id'],
-					'product_name'     => $item_data['name'],
-					'product_quantity' => $item_data['quantity'],
-					'product_price'    => number_format( ( preg_replace( '/,/', '.', $item_data['total'] ) / $item_data['quantity'] ), $decimals, $decimal_separator, $thousand_separator ),
-					'product_tax'      => number_format( preg_replace( '/,/', '.', $item_data['total_tax'] ), $decimals, $decimal_separator, $thousand_separator ),
-					'product_total'    => number_format( ( preg_replace( '/,/', '.', $item_data['total'] ) + preg_replace( '/,/', '.', $item_data['total_tax'] ) ), $decimals, $decimal_separator, $thousand_separator ),
-					'tax_percent'      => number_format( $product_tax, $decimals, $decimal_separator, $thousand_separator ),
-				);
-			}
-			$shipping_first_name     = $order->get_shipping_first_name();
-			$shipping_last_name      = $order->get_shipping_last_name();
-			$shipping_company        = $order->get_shipping_company();
-			$shipping_address_1      = $order->get_shipping_address_1();
-			$shipping_address_2      = $order->get_shipping_address_2();
-			$shipping_city           = $order->get_shipping_city();
-			$shipping_state          = $order->get_shipping_state();
-			$shipping_postcode       = $order->get_shipping_postcode();
-			$shipping_country        = $order->get_shipping_country();
-			$shipping_method         = $order->get_shipping_method();
-			$shipping_total          = preg_replace( '/[^0-9,.]/', '', $order->get_shipping_total() );
-			$shipping_total_format   = ( $shipping_total ) ? number_format( $shipping_total, $decimals, $decimal_separator, $thousand_separator ) : 0;
-			$shipping_tax            = preg_replace( '/[^0-9,.]/', '', $order->get_shipping_tax() );
-			$shipping_total_with_tax = ( $shipping_total ) ? number_format( ( $shipping_total + $shipping_tax ), $decimals, $decimal_separator, $thousand_separator ) : number_format( $shipping_tax, $decimals, $decimal_separator, $thousand_separator );
-			$shipping_details        = array(
-				'shipping_first_name'     => $shipping_first_name,
-				'shipping_last_name'      => $shipping_last_name,
-				'shipping_address_1'      => $shipping_address_1,
-				'shipping_address_2'      => $shipping_address_2,
-				'shipping_city'           => $shipping_city,
-				'shipping_company'        => $shipping_company,
-				'shipping_state'          => $shipping_state,
-				'shipping_postcode'       => $shipping_postcode,
-				'shipping_country'        => $shipping_country,
-				'shipping_method'         => $shipping_method,
-				'shipping_total'          => $shipping_total_format,
-				'shipping_tax'            => $shipping_tax,
-				'shipping_total_with_tax' => $shipping_total_with_tax,
-				'order_status'            => $order_status,
-			);
-			$cart_total              = preg_replace( '/[^0-9,.]/', '', $order->get_total() );
-			$tax_total               = preg_replace( '/[^0-9,.]/', '', $order->get_total_tax() );
-			$billing_details         = array(
-				'customer_id'        => $customer_id,
-				'billing_email'      => $billing_email,
-				'billing_phone'      => $billing_phone,
-				'billing_first_name' => $billing_first_name,
-				'billing_last_name'  => $billing_last_name,
-				'billing_company'    => $billing_company,
-				'billing_address_1'  => $billing_address_1,
-				'billing_address_2'  => $billing_address_2,
-				'billing_city'       => $billing_city,
-				'billing_state'      => $billing_state,
-				'billing_postcode'   => $billing_postcode,
-				'billing_country'    => $billing_country,
-				'payment_method'     => $payment_method,
-				'order_subtotal'     => number_format( $order_subtotal, $decimals, $decimal_separator, $thousand_separator ),
-				'order_currency'     => get_woocommerce_currency_symbol(),
-				'cart_total'         => number_format( $cart_total, $decimals, $decimal_separator, $thousand_separator ),
-				'tax_totals'         => ( $tax_total ) ? number_format( $tax_total, $decimals, $decimal_separator, $thousand_separator ) : 0,
-				'order_created_date' => $order->get_date_created()->format( 'd-m-y' ),
-			);
-			$order_details_arr       = array(
-				'shipping_details' => $shipping_details,
-				'billing_details'  => $billing_details,
-				'product_details'  => $order_product_details,
-			);
-			return wp_json_encode( $order_details_arr );
-		}
-		return false;
 	}
 	/**
 	 * Populating field for custom column on order listing page.
@@ -634,8 +544,11 @@ class Invoice_System_For_Woocommerce_Admin {
 	 */
 	public function isfw_populating_field_for_custom_tab( $column ) {
 		global $post;
+		$post_page = admin_url( 'post.php' );
 		if ( 'order_number' === $column ) {
-			_e( '<div id="mwb_isfw_pdf_admin_order_icon"><span style="margin-left:20px;"><a href="/wp-admin/post.php?orderid='. $post->ID . '&action=generateinvoice" style="margin-left:5px;" id="isfw-print-invoice-order-listing-page" data-order-id="' . $post->ID . '"><img src="' . INVOICE_SYSTEM_FOR_WOOCOMMERCE_DIR_URL . 'admin/src/images/invoice_pdf.svg" width="20" height="20" title="'. __( "Generate invoice", "invoice-system-for-woocommerce" ) .'"></a><a href="/wp-admin/post.php?orderid='. $post->ID . '&action=generateslip" style="margin-left:5px;" id="isfw-print-invoice-order-listing-page" data-order-id="' . $post->ID . '"><img src="' . INVOICE_SYSTEM_FOR_WOOCOMMERCE_DIR_URL . 'admin/src/images/packing_slip.svg" width="20" height="20" title="' . __( "Generate packing slip", "invoice-system-for-woocommerce"  ) . '"></a></span></div>' ); // phpcs:ignore
+			?>
+			<div id="mwb_isfw_pdf_admin_order_icon"><a href="<?php echo esc_attr( $post_page ); ?>?orderid=<?php echo esc_html( $post->ID ); ?>&action=generateinvoice" style="margin-left:5px;box-shadow: none;display: inline-block;" id="isfw-print-invoice-order-listing-page" data-order-id="<?php echo esc_html( $post->ID ); ?>"><img src="<?php echo esc_attr( INVOICE_SYSTEM_FOR_WOOCOMMERCE_DIR_URL ); ?>admin/src/images/invoice_pdf.svg" width="20" height="20" title="<?php esc_html_e( 'Generate invoice', 'invoice-system-for-woocommerce' ); ?>"></a><a href="<?php echo esc_attr( $post_page ); ?>?orderid=<?php echo esc_html( $post->ID ); ?>&action=generateslip" style="margin-left:5px;box-shadow: none;display: inline-block;" id="isfw-print-invoice-order-listing-page" data-order-id="<?php echo esc_html( $post->ID ); ?>"><img src="<?php echo esc_attr( INVOICE_SYSTEM_FOR_WOOCOMMERCE_DIR_URL ); ?>admin/src/images/packing_slip.svg" width="20" height="20" title="<?php esc_html_e( 'Generate packing slip', 'invoice-system-for-woocommerce' ); ?>"></a></div>
+			<?php
 		}
 	}
 	/**
@@ -667,48 +580,9 @@ class Invoice_System_For_Woocommerce_Admin {
 	 * @return void
 	 */
 	public function isfw_generating_pdf( $order_id, $type, $action ) {
-		require_once INVOICE_SYSTEM_FOR_WOOCOMMERCE_DIR_PATH . 'package/lib/dompdf/vendor/autoload.php';
-		$isfw_pdf_settings = get_option( 'mwb_isfw_pdf_general_settings' );
-		if ( $isfw_pdf_settings ) {
-			$template = ( array_key_exists( 'template', $isfw_pdf_settings ) ) ? $isfw_pdf_settings['template'] : '';
-		} else {
-			$template = 'one';
-		}
-		if ( 'one' === $template ) {
-			require_once INVOICE_SYSTEM_FOR_WOOCOMMERCE_DIR_PATH . 'admin/partials/templates/invoice-system-for-woocommerce-pdflayout1.php';
-		} else {
-			require_once INVOICE_SYSTEM_FOR_WOOCOMMERCE_DIR_PATH . 'admin/partials/templates/invoice-system-for-woocommerce-pdflayout2.php';
-		}
-		$html   = (string) return_ob_value( $order_id, $type );
-		$dompdf = new Dompdf( array( 'enable_remote' => true ) );
-		$dompdf->loadHtml( $html );
-		$dompdf->setPaper( 'A4' );
-		$dompdf->render();
-		if ( 'download_locally' === $action ) {
-			$output         = $dompdf->output();
-			$upload_dir     = wp_upload_dir();
-			$upload_basedir = $upload_dir['basedir'] . '/invoices/';
-			if ( ! file_exists( $upload_basedir ) ) {
-				wp_mkdir_p( $upload_basedir );
-			}
-			$path = $upload_basedir . $type . '_' . $order_id . '.pdf';
-			if ( ! file_exists( $path ) ) {
-				@file_put_contents( $path, $output ); // phpcs:ignore
-			}
-			$dompdf->stream( $type . '_' . $order_id . '.pdf', array( 'Attachment' => 1 ) );
-		}
-		if ( 'download_on_server' === $action ) {
-			$output         = $dompdf->output();
-			$upload_dir     = wp_upload_dir();
-			$upload_basedir = $upload_dir['basedir'] . '/invoices/';
-			if ( ! file_exists( $upload_basedir ) ) {
-				wp_mkdir_p( $upload_basedir );
-			}
-			$path = $upload_basedir . $type . '_' . $order_id . '.pdf';
-			if ( ! file_exists( $path ) ) {
-				@file_put_contents( $path, $output ); // phpcs:ignore
-			}
-		}
+		require_once INVOICE_SYSTEM_FOR_WOOCOMMERCE_DIR_PATH . 'common/class-invoice-system-for-woocommerce-common.php';
+		$common_class = new Invoice_System_For_Woocommerce_Common( $this->plugin_name, $this->version );
+		$common_class->isfw_common_generate_pdf( $order_id, $type, $action );
 	}
 	/**
 	 * Attaching pdf to the email.
@@ -726,7 +600,6 @@ class Invoice_System_For_Woocommerce_Admin {
 			if ( $order_status ) {
 				$order_statuses = preg_replace( '/wc-/', 'customer_', $order_status ) . '_order';
 				if ( $email_id === $order_statuses ) {
-					$this->isfw_generating_pdf( $order->get_id(), 'invoice', 'download_on_server' );
 					$upload_dir     = wp_upload_dir();
 					$upload_basedir = $upload_dir['basedir'] . '/invoices/';
 					$file           = $upload_basedir . 'invoice_' . $order->get_id() . '.pdf';
@@ -778,16 +651,17 @@ class Invoice_System_For_Woocommerce_Admin {
 				if ( ! file_exists( $file_pdf_path ) ) {
 					$this->isfw_generating_pdf( $order_id, 'invoice', 'download_on_server' );
 				}
-				$zip->addFile( $file_pdf_path );
+				$zip->addFile( $file_pdf_path, 'invoices/invoice_' . $order_id . '.pdf' );
 			}
-			$zip->close();
-			return $redirect_to = add_query_arg( // phpcs:ignore
+			@$zip->close(); // phpcs:ignore
+			$redirect_to = add_query_arg(
 				array(
 					'write_downloads' => '1',
 					'processed_count' => count( $processed_ids ),
 				),
 				$redirect_to
 			);
+			return $redirect_to;
 		}
 		if ( 'isfw_download_packing_slip' === $action ) {
 			foreach ( $post_ids as $order_id ) {
@@ -798,16 +672,17 @@ class Invoice_System_For_Woocommerce_Admin {
 				if ( ! file_exists( $file_pdf_path ) ) {
 					$this->isfw_generating_pdf( $order_id, 'packing_slip', 'download_on_server' );
 				}
-				$zip->addFile( $file_pdf_path );
+				$zip->addFile( $file_pdf_path, 'packing_slip/packing_slip_' . $order_id . '.pdf' );
 			}
-			$zip->close();
-			return $redirect_to = add_query_arg( // phpcs:ignore
+			@$zip->close(); // phpcs:ignore
+			$redirect_to = add_query_arg(
 				array(
 					'write_downloads' => '1',
 					'processed_count' => count( $processed_ids ),
 				),
 				$redirect_to
 			);
+			return $redirect_to;
 		}
 		return $redirect_to;
 	}
@@ -820,33 +695,13 @@ class Invoice_System_For_Woocommerce_Admin {
 		if ( empty( $_REQUEST['write_downloads'] ) ) { // phpcs:ignore
 			return;  // Exit.
 		}
-		$processed_count = sanitize_text_field( wp_unslash( $_REQUEST['processed_count'] ) ); // phpcs:ignore
-		add_thickbox();
+		$upload_dir     = wp_upload_dir();
+		$upload_baseurl = $upload_dir['baseurl'] . '/invoices/';
+		$file_url       = $upload_baseurl . 'document.zip';
 		?>
-		<div class="updated">
-		<div><?php esc_html_e( 'Files has been processed and are ready to download in zip.', 'invoice-system-for-woocommerce' ); ?></div>
-		<a href="#TB_inline?width=100&height=100&inlineId=modal-window-id" class="thickbox"><?php esc_html_e( 'Click here to open panel to download', 'invoice-system-for-woocommerce' ); ?></a>
-			<div id="modal-window-id" style="display:none;">
-			<?php
-				$upload_dir     = wp_upload_dir();
-				$upload_baseurl = $upload_dir['baseurl'] . '/invoices/';
-				$file_url       = $upload_baseurl . 'document.zip';
-			?>
-				<div>
-					<?php printf( _n( '%s file has been processed', '%s files has been procesed', $processed_count, 'invoice-system-for-woocommerce' ), $processed_count ); // phpcs:ignore?>
-					<a href='<?php echo esc_attr( $file_url ); ?>' id="isfw_download_zip_pdf"><?php esc_html_e( 'Download zip', 'invoice-system-for-woocommerce' ); ?></a>
-				</div>
-			</div>
+		<div id="isfw_download_zip_pdf_hidden_button" style="display:none;">
+			<a href='<?php echo esc_attr( $file_url ); ?>' id="isfw_download_zip_pdf"><?php esc_html_e( 'Download zip', 'invoice-system-for-woocommerce' ); ?></a>
 		</div>
-		<script type='text/javascript'>
-			jQuery(document).ready(function($){
-				setTimeout(function(){
-					$(document).find('a.thickbox').trigger('click');
-					$(document).find('a#isfw_download_zip_pdf').css('color', 'green');
-					$(document).find('a#isfw_download_zip_pdf').trigger('click');
-				}, 2000);
-			});
-		</script>
 		<?php
 	}
 }

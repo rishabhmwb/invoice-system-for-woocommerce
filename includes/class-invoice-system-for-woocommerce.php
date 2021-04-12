@@ -93,7 +93,7 @@ class Invoice_System_For_Woocommerce {
 		} else {
 			$this->invoice_system_for_woocommerce_public_hooks();
 		}
-
+		$this->invoice_system_for_woocommerce_common_hooks();
 		$this->invoice_system_for_woocommerce_api_hooks();
 
 	}
@@ -132,7 +132,6 @@ class Invoice_System_For_Woocommerce {
 
 			// The class responsible for defining all actions that occur in the admin area.
 			require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/class-invoice-system-for-woocommerce-admin.php';
-
 			// The class responsible for on-boarding steps for plugin.
 			if ( is_dir( plugin_dir_path( dirname( __FILE__ ) ) . 'onboarding' ) && ! class_exists( 'Invoice_System_For_Woocommerce_Onboarding_Steps' ) ) {
 				require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-invoice-system-for-woocommerce-onboarding-steps.php';
@@ -145,8 +144,9 @@ class Invoice_System_For_Woocommerce {
 
 			// The class responsible for defining all actions that occur in the public-facing side of the site.
 			require_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/class-invoice-system-for-woocommerce-public.php';
-
 		}
+		// The class responsible for defining all actions that occur in the common-facing side of the site.
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'common/class-invoice-system-for-woocommerce-common.php';
 
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'package/rest-api/class-invoice-system-for-woocommerce-rest-api.php';
 
@@ -196,8 +196,6 @@ class Invoice_System_For_Woocommerce {
 		$this->loader->add_filter( 'isfw_template_pdf_settings_array', $isfw_plugin_admin, 'isfw_template_pdf_settings_page', 10 );
 		// handling ajax requests for saving settings of isfw pdf.
 		$this->loader->add_action( 'wp_ajax_isfw_save_general_pdf_settings', $isfw_plugin_admin, 'isfw_save_general_pdf_settings' );
-		// adding shortcodes to fetch all order detials [isfw_fetch_order].
-		$this->loader->add_action( 'init', $isfw_plugin_admin, 'isfw_fetch_order_details_shortcode' );
 		// adding custom link to the order listing page.
 		$this->loader->add_action( 'manage_shop_order_posts_custom_column', $isfw_plugin_admin, 'isfw_populating_field_for_custom_tab', 15 );
 		$this->loader->add_action( 'init', $isfw_plugin_admin, 'isfw_create_pdf' );
@@ -231,8 +229,23 @@ class Invoice_System_For_Woocommerce {
 		if ( 'on' === $isfw_enable_plugin ) {
 			$this->loader->add_filter( 'woocommerce_my_account_my_orders_columns', $isfw_plugin_public, 'isfw_add_content_to_orders_listing_page', 20, 1 );
 			$this->loader->add_action( 'woocommerce_my_account_my_orders_column_isfw_invoice_download', $isfw_plugin_public, 'isfw_add_data_to_custom_column', 10, 1 );
+			$this->loader->add_action( 'init', $isfw_plugin_public, 'isfw_generate_pdf_for_user' );
+			$this->loader->add_filter( 'woocommerce_thankyou_order_received_text', $isfw_plugin_public, 'isfw_pdf_generation_link_for_guest_user', 20, 2 );
+			// add icon at the order details page for user my account.
+			$this->loader->add_action( 'woocommerce_order_details_before_order_table_items', $isfw_plugin_public, 'isfw_show_download_invoice_button_on_order_description_page' );
 		}
-
+	}
+	/**
+	 * Register all of the hooks related to the common-facing functionality
+	 * of the plugin.
+	 *
+	 * @since    1.0.0
+	 * @access   private
+	 */
+	private function invoice_system_for_woocommerce_common_hooks() {
+		$isfw_plugin_common = new Invoice_System_For_Woocommerce_Common( $this->isfw_get_plugin_name(), $this->isfw_get_version() );
+		// adding shortcodes to fetch all order detials [isfw_fetch_order].
+		$this->loader->add_action( 'plugins_loaded', $isfw_plugin_common, 'isfw_fetch_order_details_shortcode' );
 	}
 
 
@@ -245,7 +258,7 @@ class Invoice_System_For_Woocommerce {
 	 */
 	private function invoice_system_for_woocommerce_api_hooks() {
 
-		$isfw_plugin_api = new Invoice_system_for_woocommerce_Rest_Api( $this->isfw_get_plugin_name(), $this->isfw_get_version() );
+		$isfw_plugin_api = new Invoice_System_For_Woocommerce_Rest_Api( $this->isfw_get_plugin_name(), $this->isfw_get_version() );
 
 		$this->loader->add_action( 'rest_api_init', $isfw_plugin_api, 'mwb_isfw_add_endpoint' );
 
@@ -321,6 +334,10 @@ class Invoice_System_For_Woocommerce {
 		$isfw_default_tabs['invoice-system-for-woocommerce-system-status'] = array(
 			'title' => esc_html__( 'System Status', 'invoice-system-for-woocommerce' ),
 			'name'  => 'invoice-system-for-woocommerce-system-status',
+		);
+		$isfw_default_tabs['invoice-system-for-woocommerce-overview']      = array(
+			'title' => esc_html__( 'Overview', 'invoice-system-for-woocommerce' ),
+			'name'  => 'invoice-system-for-woocommerce-overview',
 		);
 		return $isfw_default_tabs;
 	}
@@ -433,11 +450,6 @@ class Invoice_System_For_Woocommerce {
 		// See if WP Cache is enabled.
 		$isfw_wordpress_status['wp_cache_enabled'] = defined( 'WP_CACHE' ) ? __( 'Yes', 'invoice-system-for-woocommerce' ) : __( 'No', 'invoice-system-for-woocommerce' );
 
-		// Get the total number of WordPress users on the site.
-		$isfw_wordpress_status['wp_users'] = function_exists( 'count_users' ) ? count_users() : __( 'N/A (count_users function does not exist)', 'invoice-system-for-woocommerce' );
-
-		// Get the number of published WordPress posts.
-		$isfw_wordpress_status['wp_posts'] = wp_count_posts()->publish >= 1 ? wp_count_posts()->publish : __( '0', 'invoice-system-for-woocommerce' );
 
 		// Get PHP memory limit.
 		$isfw_system_status['php_memory_limit'] = function_exists( 'ini_get' ) ? (int) ini_get( 'memory_limit' ) : __( 'N/A (ini_get function does not exist)', 'invoice-system-for-woocommerce' );
@@ -463,16 +475,10 @@ class Invoice_System_For_Woocommerce {
 		// Get server host name.
 		$isfw_system_status['server_hostname'] = function_exists( 'gethostname' ) ? gethostname() : __( 'N/A (gethostname function does not exist)', 'invoice-system-for-woocommerce' );
 
-		// Show the number of processes currently running on the server.
-		$isfw_system_status['processes'] = function_exists( 'exec' ) ? @exec( 'ps aux | wc -l' ) : __( 'N/A (make sure exec is enabled)', 'invoice-system-for-woocommerce' );
-
-		// Get the memory usage.
-		$isfw_system_status['memory_usage'] = function_exists( 'memory_get_peak_usage' ) ? round( memory_get_peak_usage( true ) / 1024 / 1024, 2 ) : 0;
-
 		// Get CPU usage.
 		// Check to see if system is Windows, if so then use an alternative since sys_getloadavg() won't work.
 		if ( stristr( PHP_OS, 'win' ) ) {
-			$isfw_system_status['is_windows'] = true;
+			$isfw_system_status['is_windows']        = true;
 			$isfw_system_status['windows_cpu_usage'] = function_exists( 'exec' ) ? @exec( 'wmic cpu get loadpercentage /all' ) : __( 'N/A (make sure exec is enabled)', 'invoice-system-for-woocommerce' );
 		}
 
@@ -481,9 +487,6 @@ class Invoice_System_For_Woocommerce {
 
 		// Get the PHP maximum execution time.
 		$isfw_system_status['php_max_execution_time'] = function_exists( 'ini_get' ) ? ini_get( 'max_execution_time' ) : __( 'N/A (ini_get function does not exist)', 'invoice-system-for-woocommerce' );
-
-		// Get outgoing IP address.
-		$isfw_system_status['outgoing_ip'] = function_exists( 'file_get_contents' ) ? file_get_contents( 'http://ipecho.net/plain' ) : __( 'N/A (file_get_contents function does not exist)', 'invoice-system-for-woocommerce' );
 
 		$isfw_system_data['php'] = $isfw_system_status;
 		$isfw_system_data['wp']  = $isfw_wordpress_status;
@@ -510,12 +513,12 @@ class Invoice_System_For_Woocommerce {
 							<label for="<?php echo esc_attr( $isfw_component['id'] ); ?>" class="mwb-form-label"><?php echo esc_html( array_key_exists( 'title', $isfw_component ) ? $isfw_component['title'] : '' ); // WPCS: XSS ok. ?></label>
 						</div>
 						<div class="mwb-form-group__control">
-							<label class="mdc-text-field mdc-text-field--outlined">
+							<label class="mdc-text-field mdc-text-field--outlined <?php echo esc_attr( $isfw_component['id'] ); ?>">
 								<span class="mdc-notched-outline">
 									<span class="mdc-notched-outline__leading"></span>
 									<span class="mdc-notched-outline__notch">
-										<?php if ( 'number' != $isfw_component['type'] ) { ?>
-											<span class="mdc-floating-label" id="my-label-id" style=""><?php echo esc_attr( $isfw_component['placeholder'] ); ?></span>
+										<?php if ( 'number' !== $isfw_component['type'] ) { ?>
+											<span class="mdc-floating-label" id="my-label-id" style=""><?php echo esc_attr( array_key_exists( 'placeholder', $isfw_component ) ? $isfw_component['placeholder'] : '' ); ?></span>
 										<?php } ?>
 									</span>
 									<span class="mdc-notched-outline__trailing"></span>
@@ -802,16 +805,14 @@ class Invoice_System_For_Woocommerce {
 									<label for="<?php echo esc_attr( array_key_exists( 'id', $isfw_component ) ? $isfw_component['id'] : '' ); ?>" class="mwb-form-label"><?php echo esc_html( array_key_exists( 'title', $isfw_component ) ? $isfw_component['title'] : '' ); // WPCS: XSS ok. ?></label>
 								</div>
 								<div class="mwb-form-group__control">
-									<!-- <label class="mdc-text-field--outlined"> -->
-										<input 
-										class="<?php echo esc_attr( array_key_exists( 'class', $isfw_component ) ? $isfw_component['class'] : '' ); ?>" 
-										name="<?php echo esc_attr( array_key_exists( 'namre', $isfw_component ) ? $isfw_component['name'] : '' ); ?>"
-										id="<?php echo esc_attr( array_key_exists( 'id', $isfw_component ) ? $isfw_component['id'] : '' ); ?>"
-										type="<?php echo esc_attr( array_key_exists( 'type', $isfw_component ) ? $isfw_component['type'] : '' ); ?>"
-										value="<?php echo esc_attr( array_key_exists( 'value', $isfw_component ) ? $isfw_component['value'] : '' ); ?>"
-										<?php echo esc_html( ( 'date' === $isfw_component['type'] ) ? 'max='. date( 'Y-m-d', strtotime( date( "Y-m-d", time() ) . " + 365 day" ) ) .' ' . 'min=' . date( "Y-m-d" ) . '' : '' ); ?>
-										>
-									<!-- </label> -->
+									<input 
+									class="<?php echo esc_attr( array_key_exists( 'class', $isfw_component ) ? $isfw_component['class'] : '' ); ?>" 
+									name="<?php echo esc_attr( array_key_exists( 'namre', $isfw_component ) ? $isfw_component['name'] : '' ); ?>"
+									id="<?php echo esc_attr( array_key_exists( 'id', $isfw_component ) ? $isfw_component['id'] : '' ); ?>"
+									type="<?php echo esc_attr( array_key_exists( 'type', $isfw_component ) ? $isfw_component['type'] : '' ); ?>"
+									value="<?php echo esc_attr( array_key_exists( 'value', $isfw_component ) ? $isfw_component['value'] : '' ); ?>"
+									<?php echo esc_html( ( 'date' === $isfw_component['type'] ) ? 'max='. date( 'Y-m-d', strtotime( date( "Y-m-d", time() ) . " + 365 day" ) ) .' ' . 'min=' . date( "Y-m-d" ) . '' : '' ); ?>
+									>
 									<div class="mdc-text-field-helper-line">
 										<div class="mdc-text-field-helper-text--persistent mwb-helper-text" id="" aria-hidden="true"><?php echo esc_attr( $isfw_component['description'] ); ?></div>
 									</div>
@@ -835,6 +836,13 @@ class Invoice_System_For_Woocommerce {
 							<button class="mdc-button--raised" name="<?php echo esc_attr( array_key_exists( 'name', $isfw_component ) ? $isfw_component['name'] : '' ); ?>"
 								id="<?php echo esc_attr( array_key_exists( 'id', $isfw_component ) ? $isfw_component['id'] : '' ); ?>"> <span class="mdc-button__ripple"></span>
 								<span class="mdc-button__label"><?php echo esc_attr( array_key_exists( 'button_text', $isfw_component ) ? $isfw_component['button_text'] : '' ); ?></span>
+							</button>
+							<button class="mdc-button--raised" name="<?php echo esc_attr( $isfw_component['img-remove']['btn-name'] ); ?>"
+								id="<?php echo esc_attr( $isfw_component['img-remove']['btn-id'] ); ?>"
+								style="<?php echo esc_attr( $isfw_component['img-remove']['btn-style'] ); ?>"
+								> <span class="mdc-button__ripple"
+								></span>
+								<span class="mdc-button__label"><?php echo esc_attr( $isfw_component['img-remove']['btn-title'] ); ?></span>
 							</button>
 						</div>
 					</div>

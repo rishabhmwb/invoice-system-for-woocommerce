@@ -25,7 +25,7 @@
  * @subpackage Invoice_system_for_woocommerce/package/rest-api/version1
  * @author     makewebbetter <webmaster@makewebbetter.com>
  */
-class Invoice_system_for_woocommerce_Rest_Api {
+class Invoice_System_For_Woocommerce_Rest_Api {
 
 	/**
 	 * The unique identifier of this plugin.
@@ -58,7 +58,7 @@ class Invoice_system_for_woocommerce_Rest_Api {
 	public function __construct( $plugin_name, $version ) {
 
 		$this->plugin_name = $plugin_name;
-		$this->version = $version;
+		$this->version     = $version;
 
 	}
 
@@ -66,7 +66,7 @@ class Invoice_system_for_woocommerce_Rest_Api {
 	/**
 	 * Define endpoints for the plugin.
 	 *
-	 * Uses the Invoice_system_for_woocommerce_Rest_Api class in order to create the endpoint
+	 * Uses the Invoice_System_For_Woocommerce_Rest_Api class in order to create the endpoint
 	 * with WordPress.
 	 *
 	 * @since    1.0.0
@@ -77,9 +77,8 @@ class Invoice_system_for_woocommerce_Rest_Api {
 			'isfw-route/v1',
 			'/isfw-dummy-data/',
 			array(
-				// 'methods'  => 'POST',
-				'methods'  => WP_REST_Server::CREATABLE,
-				'callback' => array( $this, 'mwb_isfw_default_callback' ),
+				'methods'             => WP_REST_Server::CREATABLE,
+				'callback'            => array( $this, 'mwb_isfw_default_callback' ),
 				'permission_callback' => array( $this, 'mwb_isfw_default_permission_check' ),
 			)
 		);
@@ -111,9 +110,9 @@ class Invoice_system_for_woocommerce_Rest_Api {
 	public function mwb_isfw_default_callback( $request ) {
 
 		require_once INVOICE_SYSTEM_FOR_WOOCOMMERCE_DIR_PATH . 'package/rest-api/version1/class-invoice-system-for-woocommerce-api-process.php';
-		$mwb_isfw_api_obj = new Invoice_system_for_woocommerce_Api_Process();
+		$mwb_isfw_api_obj     = new Invoice_System_For_Woocommerce_Api_Process();
 		$mwb_isfw_resultsdata = $mwb_isfw_api_obj->mwb_isfw_default_process( $request );
-		if ( is_array( $mwb_isfw_resultsdata ) && isset( $mwb_isfw_resultsdata['status'] ) && 200 == $mwb_isfw_resultsdata['status'] ) {
+		if ( is_array( $mwb_isfw_resultsdata ) && isset( $mwb_isfw_resultsdata['status'] ) && 200 === $mwb_isfw_resultsdata['status'] ) {
 			unset( $mwb_isfw_resultsdata['status'] );
 			$mwb_isfw_response = new WP_REST_Response( $mwb_isfw_resultsdata, 200 );
 		} else {

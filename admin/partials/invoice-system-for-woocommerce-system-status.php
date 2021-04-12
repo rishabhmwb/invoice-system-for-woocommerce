@@ -16,9 +16,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 // Template for showing information about system status.
 global $isfw_mwb_isfw_obj;
-$isfw_default_status = $isfw_mwb_isfw_obj->mwb_isfw_plug_system_status();
+$isfw_default_status    = $isfw_mwb_isfw_obj->mwb_isfw_plug_system_status();
 $isfw_wordpress_details = is_array( $isfw_default_status['wp'] ) && ! empty( $isfw_default_status['wp'] ) ? $isfw_default_status['wp'] : array();
-$isfw_php_details = is_array( $isfw_default_status['php'] ) && ! empty( $isfw_default_status['php'] ) ? $isfw_default_status['php'] : array();
+$isfw_php_details       = is_array( $isfw_default_status['php'] ) && ! empty( $isfw_default_status['php'] ) ? $isfw_default_status['php'] : array();
 ?>
 <div class="mwb-isfw-table-wrap">
 	<div class="mwb-col-wrap">
@@ -34,7 +34,7 @@ $isfw_php_details = is_array( $isfw_default_status['php'] ) && ! empty( $isfw_de
 					<tbody class="mdc-data-table__content">
 						<?php if ( is_array( $isfw_wordpress_details ) && ! empty( $isfw_wordpress_details ) ) { ?>
 							<?php foreach ( $isfw_wordpress_details as $wp_key => $wp_value ) { ?>
-								<?php if ( isset( $wp_key ) && 'wp_users' != $wp_key ) { ?>
+								<?php if ( isset( $wp_key ) && 'wp_users' !== $wp_key ) { ?>
 									<tr class="mdc-data-table__row">
 										<td class="mdc-data-table__cell"><?php echo esc_html( $wp_key ); ?></td>
 										<td class="mdc-data-table__cell"><?php echo esc_html( $wp_value ); ?></td>
@@ -53,7 +53,7 @@ $isfw_php_details = is_array( $isfw_default_status['php'] ) && ! empty( $isfw_de
 				<table class="mwb-isfw-table mdc-data-table__table mwb-table" id="mwb-isfw-sys">
 					<thead>
 						<tr>
-							<th class="mdc-data-table__header-cell"><?php esc_html_e( 'Sysytem Variables', 'invoice-system-for-woocommerce' ); ?></th>
+							<th class="mdc-data-table__header-cell"><?php esc_html_e( 'System Variables', 'invoice-system-for-woocommerce' ); ?></th>
 							<th class="mdc-data-table__header-cell"><?php esc_html_e( 'System Values', 'invoice-system-for-woocommerce' ); ?></th>
 						</tr>
 					</thead>

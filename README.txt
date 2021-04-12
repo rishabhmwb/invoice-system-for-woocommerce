@@ -1,112 +1,166 @@
-=== invoice-system-for-woocommerce ===
-Contributors: makewebbetter
-Tags: comments, spam
+=== Invoice System for WooCommerce ===
+Contributors: MakeWebBetter
+Donate link:  https://makewebbetter.com/
+Tags: invoice,invoice system,packing slips,invoice and packing slips,WooCommerce invoicing, invoicing
 Requires at least: 4.6
-Tested up to: 4.9.5
+Tested up to: 5.7
+WC requires at least: 4.0.0
+WC tested up to: 5.1
 Stable tag: 1.0.0
+Requires PHP: 7.2
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
-Here is a short description of the plugin.  This should be no more than 150 characters.  No markup here.
+
+Create, download, save & email the invoices & packaging slips to your customers for every WooCommerce order with this Invoice System for WooCommerce plugin.
 
 == Description ==
 
-This is the long description.  No limit, and you can use Markdown (as well as in the following sections).
+***THE INVOICE SYSTEM FOR WOOCOMMERCE OUGHTS TO SOLVE THE PROBLEM OF CURATING TIME-TAKING & BORING INVOICES MANUALLY, FOREVER!***
 
-For backwards compatibility, if this section is missing, the full length of the short description will be used, and
-Markdown parsed.
+Invoice System for WooCommerce plugin is a simple but features-oriented extension for your WooCommerce stores. This plugin automatically generates WooCommerce PDF invoices and attaches them to the relative WooCommerce emails. The problem of time-taking & boring Invoices is solved FOREVER!
 
-A few notes about the sections above:
+The Invoice System for WooCommerce plugin is also useful for the business houses generating bulk invoices. This Invoice System for WooCommerce plugin also offers the choice between multiple templates and additional customization features that lures your interest more in this plugin.
 
-*   "Contributors" is a comma separated list of people who have contributed for this plugin
-*   "Tags" is a comma separated list of tags that apply to the plugin
-*   "Requires at least" is the lowest version that the plugin will work on
-*   "Tested up to" is the highest version that you've *successfully used to test the plugin*. Note that it might work on
-higher versions... this is just the highest one you've verified.
-*   Stable tag should indicate the Subversion "tag" of the latest stable version, or "trunk," if you use `/trunk/` for
-stable.
+[youtube https://youtu.be/n_ramvCpIy0]
 
-    Note that the `readme.txt` of the stable tag is the one that is considered the defining one for the plugin, so
-if the `/trunk/readme.txt` file says that the stable tag is `4.3`, then it is `/tags/4.3/readme.txt` that'll be used
-for displaying information about the plugin.  In this situation, the only thing considered from the trunk `readme.txt`
-is the stable tag pointer.  Thus, if you develop in trunk, you can update the trunk `readme.txt` to reflect changes in
-your in-development version, without having that information incorrectly disclosed about the current stable version
-that lacks those changes -- as long as the trunk's `readme.txt` points to the correct stable tag.
+== USING THE INVOICE SYSTEM FOR WOOCOMMERCE,YOU CAN : ==
+* Generate Invoices and packing slips for your WooCommerce setup
+* Share WooCommerce PDF invoices with customers via email
+* Simplify the billing confusions for your customers 
+* Eliminate manual errors while creating invoices for products
+* Increase brand awareness with custom invoice designs and templates
+* Reduce-costs with automated PDF invoices
 
-    If no stable tag is provided, it is assumed that trunk is stable, but you should specify "trunk" if that's where
-you put the stable version, in order to eliminate any doubt.
+== PLUGIN MEETS YOUR REQUIREMENT, SO ==
+**Download Now !!**
 
-== Installation ==
+Visit [**Invoice System for WooCommerce Documentation**](https://docs.makewebbetter.com/invoice-system-for-woocommerce/?utm_source=MWB-invoice-org&utm_medium=MWB-ORG-Page&utm_campaign=MWB-doc) and learn more about the features and working of the plugin.
 
-This section describes how to install the plugin and get it working.
 
-e.g.
 
-1. Upload the `invoice-system-for-woocommerce` folder to the `/wp-content/plugins/` directory
-2. Activate the plugin through the 'Plugins' menu in WordPress
+== WHAT'S INCLUDED IN OUR FREE INVOICE SYSTEM FOR WOOCOMMERCE PLUGIN : ==
 
-== Frequently Asked Questions ==
+**1)** **Pre-built Invoice Templates**
 
-= A question that someone might have =
+The Invoice System for WooCommerce plugin provides 2 fully customizable invoice templates to enhance brand value for the products.
 
-An answer to that question.
+**2)** **Share Invoices via Email**
 
-= What about foo bar? =
+This invoice plugin allows you to share individual or bulk invoices and packing slips with the concerned customers via WooCommerce email.
 
-Answer to foo bar dilemma.
+**3)** **Customizable Invoice Number**
+
+Admin can add/remove prefixes and suffixes to the invoice number to provide a more personalized perception to customers.
+
+**4)** **Easy Downloading of PDF Invoices**
+
+This Invoice System for WooCommerce plugin gives admin and customers an equal right to download the invoices in PDF format from the Order Admin page and My Account page respectively.
+
+**5)** **Renew Invoice Number Sequence**
+
+Invoice System for WooCommerce plugin also allows the admin to renew the invoice number sequence with every new financial year.
+
+**6)** **Bulk Invoices & Packaging Slips**
+
+Invoice System for WooCommerce plugin allows the admin to generate PDF invoices and packaging slips in bulk.
+
+**Note:** This Invoice System for the WooCommerce plugin is compatible with multiple Payment Gateways.
+
+== THERE'S MORE YOU CAN DO WITH INVOICE SYSTEM FOR WOOCOMMERCE [PREMIUM UPGRADE] : COMING SOON ==
+
+* Merchants can create credit and debit notes to customers involved in refund/return activities
+* WooCommerce invoices can be shared with customers as an email attachment and as a separate PDF file too
+* Merchants can also share the individual or bulk invoices manually
+* Customizable file name format for PDF invoices
+* Enable/disable WooCommerce packaging slip tracking
+* Merchant can select the location to save the PDF invoices either on the same server or dropbox
+* The inbuilt- reporting feature will give an upper hand to merchants by showing each data over a Separate page like all invoices and forms Admin 
+           can also filter invoices by date range. 
+* Merchant can download (single or bulk) filtered invoices
+          And more…
+
+
+**LIVE DEMO OF FREE VERSION**
+
+[**Invoice System for WooCommerce Free demo**](https://demo.makewebbetter.com/invoice-system-for-woocommerce/?utm_source=MWB-invoice-org&utm_medium=MWB-ORG-Page&utm_campaign=MWB-free_demo)
+
+
+== SUPPORT ==
+
+If you need support or have any question then kindly use our online chat window   [here](https://makewebbetter.com/?utm_source=MWB-invoice-org&utm_medium=MWB-ORG-Page&utm_campaign=MWB-support) or  connect with us then [**Generate a Ticket**](https://makewebbetter.com/submit-query/)
+
+
+== INSTALLATION ==
+
+= Automatic installation =
+
+Automatic installation is the easiest option as WordPress handles the file transfers itself and you don't need to leave your web browser. To do an automatic install of Invoice System For WooCommerce, log in to your WordPress dashboard, navigate to the Plugins menu, and click Add New.
+
+In the search field type "Invoice System For Woocommerce" and click Search Plugins. Once you've found our plugin you can view details about it such as the point release, rating, and description. Most importantly, of course, you can install it by simply clicking "Install Now".
+
+= Manual installation =
+
+The manual installation method involves downloading our Invoice System For WooCommerce and uploading it to your webserver via your favourite FTP application. The WordPress contains [instructions on how to do this here](https://wordpress.org/support/article/managing-plugins/#manual-plugin-installation).
+
+= Updating =
+
+Automatic updates should work like a charm; as always though, ensure you backup your site just in case.
+
+
+== FAQ ==
+
+=  Do we require any coding skills to work on Invoice System for WooCommerce? =
+ 
+ No, you do not require any coding skills to work on Invoice System for WooCommerce plugin.
+
+= Can we send the invoice attachment with order details in email? =
+
+Yes, Invoice attachments can be sent with order details in an email by selecting the order status from the backend settings.
+
+=  How can Admin generate bulk invoices? =
+     
+ The Admin can generate invoices in bulk. For this please go to the admin dashboard >> WooCommerce >> Order tab select all the order >> Select download invoice in bulk >> apply.
+
+= Can we customise the invoice templates according to our needs? =
+
+Yes, Admin can customise the invoice according to their need for this Go to the plugin settings where they can change company details, invoice number, disclaimer text, color and choose logo according to their requirement.
+
+= Can Admin select prefix or suffix or both for their invoice number? =
+
+ Yes, Admin can add prefix or suffix or both for their invoice number. For this please go to the plugin settings >>General settings >> Invoice number >> Select prefix or suffix and save changes.
+
+ = My question is not listed =
+
+  Please visit the  [**MakeWebBetter Knowledgebase**](https://support.makewebbetter.com/wordpress-plugins-knowledge-base/category/invoice-system-for-woocommerce-kb/?utm_source=MWB-invoice-org&utm_medium=MWB-ORG-Page&utm_campaign=MWB-doc)  and for more detailed visit [**Invoice System for WooCommerce Documentation**](https://docs.makewebbetter.com/invoice-system-for-woocommerce/?utm_source=MWB-invoice-org&utm_medium=MWB-ORG-Page&utm_campaign=MWB-doc)
 
 == Screenshots ==
 
-1. This screen shot description corresponds to screenshot-1.(png|jpg|jpeg|gif). Note that the screenshot is taken from
-the /assets directory or the directory that contains the stable readme.txt (tags or trunk). Screenshots in the /assets
-directory take precedence. For example, `/assets/screenshot-1.png` would win over `/tags/4.3/screenshot-1.png`
-(or jpg, jpeg, gif).
-2. This is the second screen shot
+1. General Settings
+2. Company details 
+3. Invoice Number 
+4. Invoice Number Renew Date 
+5. Disclaimer For Invoice
+6. Color Selection
+7. Choose Logo 
+8. Choose Template 
+9. Invoice template - 1
+10. Invoice template - 2
+11. Send Invoice For 
+12. Download Invoice 
+13. Download Packing Slip 
+14. Download PDF 
+15. Bulk Actions 
+16. Order Details 
+17. Order Received 
+18. System Status  
 
 == Changelog ==
 
-= 1.0 =
-* A change since the previous version.
-* Another change.
+= 1.0.0 - RELEASED ON 25 MARCH 2021 =
 
-= 0.5 =
-* List versions from most recent at top to oldest at bottom.
+* First version
 
 == Upgrade Notice ==
-
-= 1.0 =
-Upgrade notices describe the reason a user should upgrade.  No more than 300 characters.
-
-= 0.5 =
-This version fixes a security related bug.  Upgrade immediately.
-
-== Arbitrary section ==
-
-You may provide arbitrary sections, in the same format as the ones above.  This may be of use for extremely complicated
-plugins where more information needs to be conveyed that doesn't fit into the categories of "description" or
-"installation."  Arbitrary sections will be shown below the built-in sections outlined above.
-
-== A brief Markdown Example ==
-
-Ordered list:
-
-1. Some feature
-1. Another feature
-1. Something else about the plugin
-
-Unordered list:
-
-* something
-* something else
-* third thing
-
-Here's a link to [WordPress](http://wordpress.org/ "Your favorite software") and one to [Markdown's Syntax Documentation][markdown syntax].
-Titles are optional, naturally.
-
-[markdown syntax]: http://daringfireball.net/projects/markdown/syntax
-            "Markdown is what the parser uses to process much of the readme file"
-
-Markdown uses email style notation for blockquotes and I've been told:
-> Asterisks for *emphasis*. Double it up  for **strong**.
-
-`<?php code(); // goes in backticks ?>`
+= 1.0.0 - RELEASED ON 25 MARCH 2021 =
+* First version

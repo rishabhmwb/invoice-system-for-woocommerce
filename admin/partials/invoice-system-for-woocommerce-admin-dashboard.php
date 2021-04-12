@@ -17,7 +17,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 global $isfw_mwb_isfw_obj;
-$isfw_active_tab   = isset( $_GET['isfw_tab'] ) ? sanitize_key( $_GET['isfw_tab'] ) : 'invoice-system-for-woocommerce-general';
+$isfw_active_tab   = isset( $_GET['isfw_tab'] ) ? sanitize_key( $_GET['isfw_tab'] ) : 'invoice-system-for-woocommerce-general'; // phpcs:ignore
 $isfw_default_tabs = $isfw_mwb_isfw_obj->mwb_isfw_plug_default_tabs();
 ?>
 <header>
@@ -55,19 +55,18 @@ $isfw_default_tabs = $isfw_mwb_isfw_obj->mwb_isfw_plug_default_tabs();
 
 	<section class="mwb-section">
 		<div>
-			<?php 
-				do_action( 'mwb_isfw_before_general_settings_form' );
-						// if submenu is directly clicked on woocommerce.
-				if ( empty( $isfw_active_tab ) ) {
-					$isfw_active_tab = 'mwb_isfw_plug_general';
-				}
+			<?php
+			do_action( 'mwb_isfw_before_general_settings_form' );
+			// if submenu is directly clicked on woocommerce.
+			if ( empty( $isfw_active_tab ) ) {
+				$isfw_active_tab = 'mwb_isfw_plug_general';
+			}
+			// look for the path based on the tab id in the admin templates.
+			$isfw_tab_content_path = 'admin/partials/' . $isfw_active_tab . '.php';
 
-						// look for the path based on the tab id in the admin templates.
-				$isfw_tab_content_path = 'admin/partials/' . $isfw_active_tab . '.php';
+			$isfw_mwb_isfw_obj->mwb_isfw_plug_load_template( $isfw_tab_content_path );
 
-				$isfw_mwb_isfw_obj->mwb_isfw_plug_load_template( $isfw_tab_content_path );
-
-				do_action( 'mwb_isfw_after_general_settings_form' ); 
+			do_action( 'mwb_isfw_after_general_settings_form' );
 			?>
 		</div>
 	</section>
