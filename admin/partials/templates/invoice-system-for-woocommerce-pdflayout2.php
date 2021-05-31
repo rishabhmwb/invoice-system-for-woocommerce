@@ -15,69 +15,32 @@ if ( ! defined( 'ABSPATH' ) ) {
  *
  * @param int    $order_id order id.
  * @param string $type packing slip or the invoice.
+ * @param string $invoice_id current invoice ID.
  * @return string
  */
-function return_ob_value( $order_id, $type ) {
+function return_ob_value( $order_id, $type, $invoice_id ) {
 	$order_details         = do_shortcode( '[isfw_fetch_order order_id ="' . $order_id . '"]' );
 	$order_details         = json_decode( $order_details, true );
 	$shipping_details      = $order_details['shipping_details'];
 	$billing_details       = $order_details['billing_details'];
 	$order_product_details = $order_details['product_details'];
-	$isfw_pdf_settings     = get_option( 'mwb_isfw_pdf_general_settings' );
-	if ( $isfw_pdf_settings ) {
-		$prefix          = array_key_exists( 'prefix', $isfw_pdf_settings ) ? $isfw_pdf_settings['prefix'] : '';
-		$suffix          = array_key_exists( 'suffix', $isfw_pdf_settings ) ? $isfw_pdf_settings['suffix'] : '';
-		$digit           = array_key_exists( 'digit', $isfw_pdf_settings ) ? $isfw_pdf_settings['digit'] : 3;
-		$logo            = array_key_exists( 'logo', $isfw_pdf_settings ) ? $isfw_pdf_settings['logo'] : '';
-		$date            = array_key_exists( 'date', $isfw_pdf_settings ) ? $isfw_pdf_settings['date'] : '';
-		$disclaimer      = array_key_exists( 'disclaimer', $isfw_pdf_settings ) ? $isfw_pdf_settings['disclaimer'] : 'Thank you for shopping with us.';
-		$color           = array_key_exists( 'color', $isfw_pdf_settings ) ? $isfw_pdf_settings['color'] : '#000000';
-		$company_name    = array_key_exists( 'company_name', $isfw_pdf_settings ) ? $isfw_pdf_settings['company_name'] : '';
-		$company_city    = array_key_exists( 'company_city', $isfw_pdf_settings ) ? $isfw_pdf_settings['company_city'] : '';
-		$company_state   = array_key_exists( 'company_state', $isfw_pdf_settings ) ? $isfw_pdf_settings['company_state'] : '';
-		$company_pin     = array_key_exists( 'company_pin', $isfw_pdf_settings ) ? $isfw_pdf_settings['company_pin'] : '';
-		$company_phone   = array_key_exists( 'company_phone', $isfw_pdf_settings ) ? $isfw_pdf_settings['company_phone'] : '';
-		$company_email   = array_key_exists( 'company_email', $isfw_pdf_settings ) ? $isfw_pdf_settings['company_email'] : '';
-		$company_address = array_key_exists( 'company_address', $isfw_pdf_settings ) ? $isfw_pdf_settings['company_address'] : '';
-		$is_add_logo     = array_key_exists( 'is_add_logo', $isfw_pdf_settings ) ? $isfw_pdf_settings['is_add_logo'] : '';
-	} else {
-		$prefix          = '';
-		$suffix          = '';
-		$digit           = 3;
-		$logo            = '';
-		$date            = '';
-		$disclaimer      = 'Thank you for shopping with us.';
-		$color           = '#000000';
-		$company_name    = '';
-		$company_city    = '';
-		$company_state   = '';
-		$company_pin     = '';
-		$company_phone   = '';
-		$company_email   = '';
-		$company_address = '';
-		$is_add_logo     = '';
-	}
-	if ( '' !== $date ) {
-		if ( gmdate( 'Y-m-d', strtotime( $date ) ) <= gmdate( 'Y-m-d' ) ) {
-			update_option( 'isfw_current_invoice_id', 1 );
-		}
-	}
-	$in_id = get_post_meta( $order_id, 'isfw_order_invoice_id', true );
-	if ( $in_id ) {
-		$curr_invoice_id = $in_id;
-	} else {
-		$prev_invoice_id = get_option( 'isfw_current_invoice_id', true );
-		if ( $prev_invoice_id ) {
-			$curr_invoice_id = $prev_invoice_id + 1;
-			update_option( 'isfw_current_invoice_id', $curr_invoice_id );
-		} else {
-			$curr_invoice_id = 1;
-			update_option( 'isfw_current_invoice_id', 1 );
-		}
-		update_post_meta( $order_id, 'isfw_order_invoice_id', $curr_invoice_id );
-	}
-	$invoice_number = str_pad( $curr_invoice_id, $digit, '0', STR_PAD_LEFT );
-	$invoice_id     = $prefix . $invoice_number . $suffix;
+	$company_name          = get_option( 'isfw_company_name' );
+	$company_address       = get_option( 'isfw_company_address' );
+	$company_city          = get_option( 'isfw_company_city' );
+	$company_state         = get_option( 'isfw_company_state' );
+	$company_pin           = get_option( 'isfw_company_pin' );
+	$company_phone         = get_option( 'isfw_company_phone' );
+	$company_email         = get_option( 'isfw_company_email' );
+	$digit                 = get_option( 'isfw_invoice_number_digit' );
+	$prefix                = get_option( 'isfw_invoice_number_prefix' );
+	$suffix                = get_option( 'isfw_invoice_number_suffix' );
+	$date                  = get_option( 'isfw_invoice_renew_date' );
+	$disclaimer            = get_option( 'isfw_invoice_disclaimer' );
+	$color                 = get_option( 'isfw_invoice_color' );
+	$is_add_logo           = get_option( 'isfw_is_add_logo_invoice' );
+	$logo                  = get_option( 'sub_isfw_upload_invoice_company_logo' );
+	$digit                 = ( $digit ) ? $digit : 3;
+	$color                 = ( $color ) ? $color : '#000000';
 	if ( $order_details ) {
 
 		$html = '<!DOCTYPE html>

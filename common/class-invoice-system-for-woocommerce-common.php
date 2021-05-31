@@ -8,6 +8,7 @@
  * @package    Invoice_system_for_woocommerce
  * @subpackage Invoice_system_for_woocommerce/common
  */
+
 use Dompdf\Dompdf;
 /**
  * The common-facing functionality of the plugin.
@@ -48,10 +49,44 @@ class Invoice_System_For_Woocommerce_Common {
 	 * @param      string $version    The version of this plugin.
 	 */
 	public function __construct( $plugin_name, $version ) {
-
 		$this->plugin_name = $plugin_name;
 		$this->version     = $version;
 
+	}
+	/**
+	 * Generate Invoice Number.
+	 *
+	 * @param int $order_id order ID to generate invoice number for.
+	 * @since 1.0.0
+	 * @return string
+	 */
+	public function isfw_invoice_number( $order_id ) {
+		$date   = get_option( 'isfw_invoice_renew_date' );
+		$digit  = get_option( 'isfw_invoice_number_digit' );
+		$prefix = get_option( 'isfw_invoice_number_prefix' );
+		$suffix = get_option( 'isfw_invoice_number_suffix' );
+		$date   = get_option( 'isfw_invoice_renew_date' );
+		if ( '' !== $date ) {
+			if ( gmdate( 'm-d', strtotime( $date ) ) <= gmdate( 'm-d' ) ) {
+				update_option( 'isfw_current_invoice_id', 1 );
+			}
+		}
+		$prev_invoice_id = get_option( 'isfw_current_invoice_id' );
+		if ( $prev_invoice_id ) {
+			$curr_invoice_id = $prev_invoice_id + 1;
+		} else {
+			$curr_invoice_id = 1;
+		}
+		$in_id = get_post_meta( $order_id, 'isfw_order_invoice_id', true );
+		if ( $in_id ) {
+			$curr_invoice_id = $in_id;
+		} else {
+			update_option( 'isfw_current_invoice_id', $curr_invoice_id );
+			update_post_meta( $order_id, 'isfw_order_invoice_id', $curr_invoice_id );
+		}
+		$invoice_number = str_pad( $curr_invoice_id, $digit, '0', STR_PAD_LEFT );
+		$invoice_id     = $prefix . $invoice_number . $suffix;
+		return $invoice_id;
 	}
 	/**
 	 * Common method for generating pdf.
@@ -63,48 +98,65 @@ class Invoice_System_For_Woocommerce_Common {
 	 */
 	public function isfw_common_generate_pdf( $order_id, $type, $action ) {
 		require_once INVOICE_SYSTEM_FOR_WOOCOMMERCE_DIR_PATH . 'package/lib/dompdf/vendor/autoload.php';
-		$isfw_pdf_settings = get_option( 'mwb_isfw_pdf_general_settings' );
-		if ( $isfw_pdf_settings ) {
-			$template = ( array_key_exists( 'template', $isfw_pdf_settings ) ) ? $isfw_pdf_settings['template'] : '';
+		$isfw_invoice_template = get_option( 'isfw_invoice_template' );
+		$invoice_name_option   = get_option( 'mwb_wpiwps_invoice_name' );
+		$invoice_id            = $this->isfw_invoice_number( $order_id );
+		if ( 'invoice' === $type ) {
+			if ( 'custom' === $invoice_name_option ) {
+				$custom_invoice_name = get_option( 'mwb_wpiwps_custom_invoice_name' );
+				$invoice_name        = $custom_invoice_name . '_' . $order_id;
+			} elseif ( 'invoice_orderid' === $invoice_name_option ) {
+				$invoice_name = 'invoice_' . $order_id;
+			} elseif ( 'invoice_id' === $invoice_name_option ) {
+				$invoice_name = $invoice_id;
+			} else {
+				$invoice_name = $type . '_' . $order_id;
+			}
+		} else {
+			$invoice_name = $type . '_' . $order_id;
+		}
+		if ( $isfw_invoice_template ) {
+			$template = $isfw_invoice_template;
 		} else {
 			$template = 'one';
 		}
 		if ( 'one' === $template ) {
-			require_once INVOICE_SYSTEM_FOR_WOOCOMMERCE_DIR_PATH . 'admin/partials/templates/invoice-system-for-woocommerce-pdflayout1.php';
+			$template_path = INVOICE_SYSTEM_FOR_WOOCOMMERCE_DIR_PATH . 'admin/partials/templates/invoice-system-for-woocommerce-pdflayout1.php';
 		} else {
-			require_once INVOICE_SYSTEM_FOR_WOOCOMMERCE_DIR_PATH . 'admin/partials/templates/invoice-system-for-woocommerce-pdflayout2.php';
+			$template_path = INVOICE_SYSTEM_FOR_WOOCOMMERCE_DIR_PATH . 'admin/partials/templates/invoice-system-for-woocommerce-pdflayout2.php';
 		}
-		$html   = (string) return_ob_value( $order_id, $type );
+		$template_path = apply_filters( 'isfw_load_template_for_invoice_generation', $template_path );
+		require_once $template_path;
+		$html   = (string) return_ob_value( $order_id, $type, $invoice_id );
 		$dompdf = new Dompdf( array( 'enable_remote' => true ) );
 		$dompdf->loadHtml( $html );
 		$dompdf->setPaper( 'A4' );
 		@ob_end_clean(); // phpcs:ignore
 		$dompdf->render();
+		$upload_dir     = wp_upload_dir();
+		$upload_basedir = $upload_dir['basedir'] . '/invoices/';
+		$path           = $upload_basedir . $invoice_name . '.pdf';
+		$file_url       = $upload_dir['baseurl'] . '/invoices/' . $invoice_name . '.pdf';
 		if ( 'download_locally' === $action ) {
-			$output         = $dompdf->output();
-			$upload_dir     = wp_upload_dir();
-			$upload_basedir = $upload_dir['basedir'] . '/invoices/';
+			$output = $dompdf->output();
 			if ( ! file_exists( $upload_basedir ) ) {
 				wp_mkdir_p( $upload_basedir );
 			}
-			$path = $upload_basedir . $type . '_' . $order_id . '.pdf';
 			if ( ! file_exists( $path ) ) {
 				@file_put_contents( $path, $output ); // phpcs:ignore
 			}
-			$dompdf->stream( $type . '_' . $order_id . '.pdf', array( 'Attachment' => 1 ) );
+			$dompdf->stream( $invoice_name . '.pdf', array( 'Attachment' => 1 ) );
 		}
 		if ( 'download_on_server' === $action ) {
-			$output         = $dompdf->output();
-			$upload_dir     = wp_upload_dir();
-			$upload_basedir = $upload_dir['basedir'] . '/invoices/';
+			$output = $dompdf->output();
 			if ( ! file_exists( $upload_basedir ) ) {
 				wp_mkdir_p( $upload_basedir );
 			}
-			$path = $upload_basedir . $type . '_' . $order_id . '.pdf';
 			if ( ! file_exists( $path ) ) {
 				@file_put_contents( $path, $output ); // phpcs:ignore
 			}
 		}
+		do_action( 'isfw_update_invoice_details_in_db', $order_id, $file_url );
 	}
 	/**
 	 * Adding shortcodes for fetching order details.

@@ -7,6 +7,7 @@ Tested up to: 5.7
 WC requires at least: 4.0.0
 WC tested up to: 5.1
 Stable tag: 1.0.0
+Requires PHP: 7.2
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -21,7 +22,7 @@ Invoice System for WooCommerce plugin is a simple but features-oriented extensio
 
 The Invoice System for WooCommerce plugin is also useful for the business houses generating bulk invoices. This Invoice System for WooCommerce plugin also offers the choice between multiple templates and additional customization features that lures your interest more in this plugin.
 
-[youtube https://youtu.be/n_ramvCpIy0]
+[youtube https://youtu.be/n_ramvCpIy0&w=560&h=315&rel=0]
 
 == USING THE INVOICE SYSTEM FOR WOOCOMMERCE,YOU CAN : ==
 * Generate Invoices and packing slips for your WooCommerce setup
@@ -32,7 +33,7 @@ The Invoice System for WooCommerce plugin is also useful for the business houses
 * Reduce-costs with automated PDF invoices
 
 == PLUGIN MEETS YOUR REQUIREMENT, SO ==
-**Download Now !!**
+[**Download Now !!**](https://downloads.wordpress.org/plugin/invoice-system-for-woocommerce.1.0.0.zip)
 
 Visit [**Invoice System for WooCommerce Documentation**](https://docs.makewebbetter.com/invoice-system-for-woocommerce/?utm_source=MWB-invoice-org&utm_medium=MWB-ORG-Page&utm_campaign=MWB-doc) and learn more about the features and working of the plugin.
 
@@ -64,7 +65,7 @@ Invoice System for WooCommerce plugin also allows the admin to renew the invoice
 
 Invoice System for WooCommerce plugin allows the admin to generate PDF invoices and packaging slips in bulk.
 
-**Note:** This Invoice System for the WooCommerce plugin is compatible with multiple Payment Gateways.
+> Note:  This Invoice System for the WooCommerce plugin is compatible with multiple Payment Gateways.
 
 == THERE'S MORE YOU CAN DO WITH INVOICE SYSTEM FOR WOOCOMMERCE [PREMIUM UPGRADE] : COMING SOON ==
 
@@ -156,10 +157,10 @@ Yes, Admin can customise the invoice according to their need for this Go to the 
 
 == Changelog ==
 
-= 1.0.0 - RELEASED ON 25 MARCH 2021 =
+= 1.0.0 - RELEASED ON 26 MARCH 2021 =
 
 * First version
 
 == Upgrade Notice ==
-= 1.0.0 - RELEASED ON 25 MARCH 2021 =
+= 1.0.0 - RELEASED ON 26 MARCH 2021 =
 * First version
