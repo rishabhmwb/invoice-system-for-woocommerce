@@ -197,19 +197,19 @@ class Invoice_System_For_Woocommerce {
 		// handling ajax requests for saving settings of isfw pdf.
 		$this->loader->add_action( 'wp_ajax_isfw_save_general_pdf_settings', $isfw_plugin_admin, 'isfw_save_general_pdf_settings' );
 		// adding custom link to the order listing page.
-		$this->loader->add_action( 'manage_shop_order_posts_custom_column', $isfw_plugin_admin, 'isfw_populating_field_for_custom_tab', 15 );
-		$this->loader->add_action( 'init', $isfw_plugin_admin, 'isfw_create_pdf' );
 		$isfw_enable_plugin = get_option( 'isfw_enable_plugin' );
 		if ( 'yes' === $isfw_enable_plugin ) {
+			$this->loader->add_action( 'init', $isfw_plugin_admin, 'isfw_create_pdf' );
+			$this->loader->add_action( 'manage_shop_order_posts_custom_column', $isfw_plugin_admin, 'isfw_populating_field_for_custom_tab', 15 );
 			// adding attachment to the email.
 			$this->loader->add_filter( 'woocommerce_email_attachments', $isfw_plugin_admin, 'isfw_send_attachment_with_email', 10, 4 );
+			// adding bulk action to order listing page for bulk pdf download.
+			$this->loader->add_filter( 'bulk_actions-edit-shop_order', $isfw_plugin_admin, 'isfw_bulk_pdf_download_order_listing_page', 15, 1 );
+			// handling bulk action for generating invoice and packing slip pdf.
+			$this->loader->add_filter( 'handle_bulk_actions-edit-shop_order', $isfw_plugin_admin, 'isfw_handling_bulk_action_for_pdf_generation', 10, 3 );
+			// showing notification for the processed downloads.
+			$this->loader->add_action( 'admin_notices', $isfw_plugin_admin, 'isfw_pdf_downloads_bulk_action_admin_notice' );
 		}
-		// adding bulk action to order listing page for bulk pdf download.
-		$this->loader->add_filter( 'bulk_actions-edit-shop_order', $isfw_plugin_admin, 'isfw_bulk_pdf_download_order_listing_page', 15, 1 );
-		// handling bulk action for generating invoice and packing slip pdf.
-		$this->loader->add_filter( 'handle_bulk_actions-edit-shop_order', $isfw_plugin_admin, 'isfw_handling_bulk_action_for_pdf_generation', 10, 3 );
-		// showing notification for the processed downloads.
-		$this->loader->add_action( 'admin_notices', $isfw_plugin_admin, 'isfw_pdf_downloads_bulk_action_admin_notice' );
 		$this->loader->add_action( 'isfw_template_invoice_settings_array', $isfw_plugin_admin, 'isfw_template_invoice_setting_html_fields' );
 		$this->loader->add_action( 'isfw_template_packing_slip_settings_array', $isfw_plugin_admin, 'isfw_packing_slip_settings_arr' );
 		$this->loader->add_action( 'admin_init', $isfw_plugin_admin, 'isfw_admin_save_tab_settings' );
@@ -247,7 +247,7 @@ class Invoice_System_For_Woocommerce {
 	 */
 	private function invoice_system_for_woocommerce_common_hooks() {
 		$isfw_plugin_common = new Invoice_System_For_Woocommerce_Common( $this->isfw_get_plugin_name(), $this->isfw_get_version() );
-		// adding shortcodes to fetch all order detials [isfw_fetch_order].
+		// adding shortcodes to fetch all order detials [ISFW_FETCH_ORDER].
 		$this->loader->add_action( 'plugins_loaded', $isfw_plugin_common, 'isfw_fetch_order_details_shortcode' );
 	}
 
@@ -549,7 +549,7 @@ class Invoice_System_For_Woocommerce {
 						break;
 					case 'password':
 						?>
-					<div class="mwb-form-group">
+					<div class="mwb-form-group <?php echo esc_attr( isset( $isfw_component['hidden-class'] ) ? $isfw_component['hidden-class'] : '' ); ?>" <?php echo esc_attr( isset( $isfw_component['style'] ) ? 'style=' . $isfw_component['style'] : '' ); ?>>
 						<div class="mwb-form-group__label">
 							<label for="<?php echo esc_attr( array_key_exists( 'id', $isfw_component ) ? $isfw_component['id'] : '' ); ?>" class="mwb-form-label"><?php echo esc_html( array_key_exists( 'title', $isfw_component ) ? $isfw_component['title'] : '' ); ?></label>
 						</div>

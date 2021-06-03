@@ -19,7 +19,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  * @return string
  */
 function return_ob_value( $order_id, $type, $invoice_id ) {
-	$order_details         = do_shortcode( '[isfw_fetch_order order_id ="' . $order_id . '"]' );
+	$order_details         = do_shortcode( '[ISFW_FETCH_ORDER order_id ="' . $order_id . '"]' );
 	$order_details         = json_decode( $order_details, true );
 	$shipping_details      = $order_details['shipping_details'];
 	$billing_details       = $order_details['billing_details'];

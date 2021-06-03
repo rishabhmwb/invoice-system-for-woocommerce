@@ -14,7 +14,7 @@
  *
  * Defines the plugin name, version, and two examples hooks for how to
  * enqueue the admin-specific stylesheet and JavaScript plugin enable key :isfw_mwb_plugin_enable & setting data: mwb_isfw_pdf_general_settings
- * order details shortcode [isfw_fetch_order order_id ='' ].
+ * order details shortcode [ISFW_FETCH_ORDER order_id ='' ].
  *
  * @package    Invoice_system_for_woocommerce
  * @subpackage Invoice_system_for_woocommerce/admin
@@ -302,10 +302,10 @@ class Invoice_System_For_Woocommerce_Admin {
 	 * @return array
 	 */
 	public function isfw_template_pdf_settings_page( $isfw_template_pdf_settings ) {
-		$isfw_enable_plugin                       = get_option( 'isfw_enable_plugin' );
 		$isfw_send_invoice_automatically          = get_option( 'isfw_send_invoice_automatically' );
 		$isfw_send_invoice_for                    = get_option( 'isfw_send_invoice_for' );
 		$isfw_allow_invoice_generation_for_orders = get_option( 'isfw_allow_invoice_generation_for_orders' );
+		$isfw_generate_invoice_from_cache         = get_option( 'isfw_generate_invoice_from_cache' );
 		$order_stat                               = wc_get_order_statuses();
 		$temp                                     = array(
 			'wc-never' => __( 'Never', 'invoice-system-for-woocommerce' ),
@@ -319,7 +319,7 @@ class Invoice_System_For_Woocommerce_Admin {
 				'type'        => 'radio-switch',
 				'description' => __( 'Enable this to start the plugin functionality for users.', 'invoice-system-for-woocommerce' ),
 				'id'          => 'isfw_enable_plugin',
-				'value'       => $isfw_enable_plugin,
+				'value'       => get_option( 'isfw_enable_plugin' ),
 				'class'       => 'isfw_enable_plugin',
 				'name'        => 'isfw_enable_plugin',
 			),
@@ -353,6 +353,15 @@ class Invoice_System_For_Woocommerce_Admin {
 				'class'       => 'isfw_allow_invoice_generation_for_orders',
 				'placeholder' => '',
 				'options'     => ( $order_statuses ) ? $order_statuses : array(),
+			),
+			array(
+				'title'       => __( 'Generate invoice from cache', 'invoice-system-for-woocommerce' ),
+				'type'        => 'radio-switch',
+				'description' => __( 'Enable this to generate invoices from cache( invoices once downloaded will be stored in the preferred location and will be used later ), please note that once this is enabled changes after invoice generation will not reflect for earlier invoices, however changes will work for new order invoice downloads.', 'invoice-system-for-woocommerce' ),
+				'id'          => 'isfw_generate_invoice_from_cache',
+				'value'       => $isfw_generate_invoice_from_cache,
+				'class'       => 'isfw_generate_invoice_from_cache',
+				'name'        => 'isfw_generate_invoice_from_cache',
 			),
 		);
 		$isfw_template_pdf_settings   = apply_filters( 'isfw_template_pdf_settings_array_filter', $isfw_template_pdf_settings );
