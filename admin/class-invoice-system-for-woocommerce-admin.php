@@ -653,34 +653,6 @@ class Invoice_System_For_Woocommerce_Admin {
 		return $invoice_settings_arr;
 	}
 	/**
-	 * Packing slip html fields.
-	 *
-	 * @param array $packing_slip_html_arr packing slip  html array.
-	 * @since 1.0.0
-	 * @return array
-	 */
-	public function isfw_packing_slip_settings_arr( $packing_slip_html_arr ) {
-		return $packing_slip_html_arr;
-	}
-	/**
-	 * Aajax request handling for saving general settings for isfw pdf.
-	 *
-	 * @return void
-	 */
-	public function isfw_save_general_pdf_settings() {
-		check_ajax_referer( 'isfw_general_setting_nonce', 'nonce' );
-		$settings_data      = array_key_exists( 'settings_data', $_POST ) ? $_POST['settings_data'] : ''; // phpcs:ignore WordPress.Security.ValidatedSanitizedInput
-		$isfw_enable_plugin = array_key_exists( 'isfw_enable_plugin', $_POST ) ? sanitize_text_field( wp_unslash( $_POST['isfw_enable_plugin'] ) ) : 'off';
-		update_option( 'mwb_isfw_pdf_general_settings', $settings_data );
-		update_option( 'isfw_mwb_plugin_enable', $isfw_enable_plugin );
-		?>
-		<div class="notice notice-success is-dismissible">
-			<p><?php esc_html_e( 'Settings saved successfully', 'invoice-system-for-woocommerce' ); ?></p>
-		</div>
-		<?php
-		wp_die();
-	}
-	/**
 	 * Populating field for custom column on order listing page.
 	 *
 	 * @param string $column columns.
@@ -690,9 +662,7 @@ class Invoice_System_For_Woocommerce_Admin {
 		global $post;
 		$post_page = admin_url( 'post.php' );
 		if ( 'order_number' === $column ) {
-			?>
-			<div id="mwb_isfw_pdf_admin_order_icon"><a href="<?php echo esc_attr( $post_page ); ?>?orderid=<?php echo esc_html( $post->ID ); ?>&action=generateinvoice" style="margin-left:5px;box-shadow: none;display: inline-block;" id="isfw-print-invoice-order-listing-page" data-order-id="<?php echo esc_html( $post->ID ); ?>"><img src="<?php echo esc_attr( INVOICE_SYSTEM_FOR_WOOCOMMERCE_DIR_URL ); ?>admin/src/images/invoice_pdf.svg" width="20" height="20" title="<?php esc_html_e( 'Generate invoice', 'invoice-system-for-woocommerce' ); ?>"></a><a href="<?php echo esc_attr( $post_page ); ?>?orderid=<?php echo esc_html( $post->ID ); ?>&action=generateslip" style="margin-left:5px;box-shadow: none;display: inline-block;" id="isfw-print-invoice-order-listing-page" data-order-id="<?php echo esc_html( $post->ID ); ?>"><img src="<?php echo esc_attr( INVOICE_SYSTEM_FOR_WOOCOMMERCE_DIR_URL ); ?>admin/src/images/packing_slip.svg" width="20" height="20" title="<?php esc_html_e( 'Generate packing slip', 'invoice-system-for-woocommerce' ); ?>"></a></div>
-			<?php
+			require INVOICE_SYSTEM_FOR_WOOCOMMERCE_DIR_PATH . 'admin/templates/invoice-system-for-woocommerce-admin-admin-invoice-icon.php';
 		}
 	}
 	/**
@@ -703,13 +673,13 @@ class Invoice_System_For_Woocommerce_Admin {
 	public function isfw_create_pdf() {
 		global $pagenow;
 		if ( 'post.php' === $pagenow ) {
-			if ( isset( $_GET['orderid'] ) && isset( $_GET['action'] ) ) { // phpcs:ignore
-				if ( 'generateinvoice' === $_GET['action'] ) { // phpcs:ignore
-					$order_id = sanitize_text_field( wp_unslash( $_GET['orderid'] ) ); // phpcs:ignore
+			if ( isset( $_GET['orderid'] ) && isset( $_GET['action'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification
+				if ( 'generateinvoice' === $_GET['action'] ) { // phpcs:ignore WordPress.Security.NonceVerification
+					$order_id = sanitize_text_field( wp_unslash( $_GET['orderid'] ) ); // phpcs:ignore WordPress.Security.NonceVerification
 					$this->isfw_generating_pdf( $order_id, 'invoice', 'download_locally' );
 				}
-				if ( 'generateslip' === $_GET['action'] ) { // phpcs:ignore
-					$order_id = sanitize_text_field( wp_unslash( $_GET['orderid'] ) ); // phpcs:ignore
+				if ( 'generateslip' === $_GET['action'] ) { // phpcs:ignore WordPress.Security.NonceVerification
+					$order_id = sanitize_text_field( wp_unslash( $_GET['orderid'] ) ); // phpcs:ignore WordPress.Security.NonceVerification
 					$this->isfw_generating_pdf( $order_id, 'packing_slip', 'download_locally' );
 				}
 			}
@@ -838,16 +808,12 @@ class Invoice_System_For_Woocommerce_Admin {
 	 * @return void
 	 */
 	public function isfw_pdf_downloads_bulk_action_admin_notice() {
-		if ( empty( $_REQUEST['write_downloads'] ) ) { // phpcs:ignore
+		if ( empty( $_REQUEST['write_downloads'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification
 			return;  // Exit.
 		}
 		$upload_dir     = wp_upload_dir();
 		$upload_baseurl = $upload_dir['baseurl'] . '/invoices/';
 		$file_url       = $upload_baseurl . 'document.zip';
-		?>
-		<div id="isfw_download_zip_pdf_hidden_button" style="display:none;">
-			<a href='<?php echo esc_attr( $file_url ); ?>' id="isfw_download_zip_pdf"><?php esc_html_e( 'Download zip', 'invoice-system-for-woocommerce' ); ?></a>
-		</div>
-		<?php
+		require_once INVOICE_SYSTEM_FOR_WOOCOMMERCE_DIR_PATH . 'admin/templates/invoice-system-for-woocommerce-admin-download-zip-button.php';
 	}
 }

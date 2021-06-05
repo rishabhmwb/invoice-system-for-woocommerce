@@ -48,10 +48,8 @@ class Invoice_System_For_Woocommerce_Public {
 	 * @param      string $version    The version of this plugin.
 	 */
 	public function __construct( $plugin_name, $version ) {
-
 		$this->plugin_name = $plugin_name;
 		$this->version     = $version;
-
 	}
 
 	/**
@@ -60,9 +58,7 @@ class Invoice_System_For_Woocommerce_Public {
 	 * @since    1.0.0
 	 */
 	public function isfw_public_enqueue_styles() {
-
 		wp_enqueue_style( $this->plugin_name, INVOICE_SYSTEM_FOR_WOOCOMMERCE_DIR_URL . 'public/src/scss/invoice-system-for-woocommerce-public.css', array(), $this->version, 'all' );
-
 	}
 
 	/**
@@ -103,9 +99,7 @@ class Invoice_System_For_Woocommerce_Public {
 			$order_status_show_invoice = preg_replace( '/wc-/', '', $isfw_allow_invoice_generation_for_orders );
 			if ( is_object( $order ) ) {
 				if ( $order_status_show_invoice === $order->get_status() ) {
-					?>
-					<a href="<?php echo esc_url( $url_here ); ?>/?order_id=<?php echo esc_html( $order->get_id() ); ?>&user_id=<?php echo esc_html( $order->get_customer_id() ); ?>&action=userpdfdownload"><img src="<?php echo esc_url( INVOICE_SYSTEM_FOR_WOOCOMMERCE_DIR_URL ); ?>admin/src/images/isfw_download_icon.svg" style="max-width: 35px;" title="<?php esc_html_e( 'Download Invoice', 'invoice-system-for-woocommerce' ); ?>"></a>
-					<?php
+					require INVOICE_SYSTEM_FOR_WOOCOMMERCE_DIR_PATH . 'public/templates/invoice-system-for-woocommerce-public-add-column.php';
 				}
 			}
 		}
@@ -121,7 +115,7 @@ class Invoice_System_For_Woocommerce_Public {
 		$isfw_allow_invoice_generation_for_orders = get_option( 'isfw_allow_invoice_generation_for_orders' );
 		if ( isset( $_GET['order_id'] ) && isset( $_GET['action'] ) ) { // phpcs:ignore
 			$user_id = get_current_user_id();
-			if ( 'userpdfdownload' === $_GET['action'] || 'generateinvoiceguest' === $_GET['action'] ) { // phpcs:ignore
+			if ( 'userpdfdownload' === $_GET['action'] ) { // phpcs:ignore
 				$order_id = sanitize_text_field( wp_unslash( $_GET['order_id'] ) ); // phpcs:ignore
 				if ( $isfw_allow_invoice_generation_for_orders ) {
 					$order_status_show_invoice = preg_replace( '/wc-/', '', $isfw_allow_invoice_generation_for_orders );
@@ -148,7 +142,7 @@ class Invoice_System_For_Woocommerce_Public {
 		$download_url                             = add_query_arg(
 			array(
 				'order_id' => $order->get_id(),
-				'action'   => 'generateinvoiceguest',
+				'action'   => 'userpdfdownload',
 			),
 			$url_here
 		);
@@ -156,7 +150,8 @@ class Invoice_System_For_Woocommerce_Public {
 		if ( $isfw_allow_invoice_generation_for_orders ) {
 			$order_status_show_invoice = preg_replace( '/wc-/', '', $isfw_allow_invoice_generation_for_orders );
 			if ( $order_status_show_invoice === $order->get_status() ) {
-				$download_button = '<div id="isfw_guest_download_invoice"><a href="' . $download_url . '"><img src="' . INVOICE_SYSTEM_FOR_WOOCOMMERCE_DIR_URL . 'admin/src/images/isfw_download_icon.svg" style="max-width: 35px;" title="' . __( 'Download Invoice', 'invoice-system-for-woocommerce' ) . '"><span>' . __( 'Download Invoice', 'invoice-system-for-woocommerce' ) . '</span></a></div>';
+				require_once INVOICE_SYSTEM_FOR_WOOCOMMERCE_DIR_PATH . 'public/templates/invice-system-for-woocommerce-public-add-invoice-download-link.php';
+				$download_button = return_invoice_download_button( $download_url );
 				return $thanks_msg . $download_button;
 			}
 		}
@@ -183,9 +178,9 @@ class Invoice_System_For_Woocommerce_Public {
 			$order_status_show_invoice = preg_replace( '/wc-/', '', $isfw_allow_invoice_generation_for_orders );
 			if ( is_object( $order ) ) {
 				if ( $order_status_show_invoice === $order->get_status() ) {
-					?>
-					<div id="isfw_guest_download_invoice"><a href="<?php echo esc_url( $download_url ); ?>"><img src="<?php echo esc_url( INVOICE_SYSTEM_FOR_WOOCOMMERCE_DIR_URL ); ?>admin/src/images/isfw_download_icon.svg" style="max-width: 35px;" title="<?php esc_html_e( 'Download Invoice', 'invoice-system-for-woocommerce' ); ?>"><span><?php esc_html_e( 'Download Invoice', 'invoice-system-for-woocommerce' ); ?></span></a></div>
-					<?php
+					require_once INVOICE_SYSTEM_FOR_WOOCOMMERCE_DIR_PATH . 'public/templates/invice-system-for-woocommerce-public-add-invoice-download-link.php';
+					$download_button = return_invoice_download_button( $download_url );
+					echo $download_button; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 				}
 			}
 		}

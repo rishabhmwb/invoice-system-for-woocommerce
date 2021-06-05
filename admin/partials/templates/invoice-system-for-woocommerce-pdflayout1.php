@@ -38,102 +38,118 @@ function return_ob_value( $order_id, $type, $invoice_id ) {
 	$color                 = ( $color ) ? $color : '#000000';
 	if ( $order_details ) {
 		$html = '<!DOCTYPE html>
-							<html lang="en">
-							<head>
-								<style>
-									.isfw-invoice-background-color{
-										background-color: #f5f5f5;
-									}
-									.isfw-invoice-color{
-										color: ' . $color . ';
-									}
-									#mwb-pdf-form{
-										font-family: DejaVu Sans !important;
-									}
-								</style>
-							</head>
-							<body>
-								<div id="mwb-pdf-form">
-									<form action="" method="post">';
+					<html lang="en">
+					<head>
+						<style>
+							.isfw-invoice-background-color{
+								background-color: #f5f5f5;
+							}
+							.isfw-invoice-color{
+								color: ' . $color . ';
+							}
+							#mwb-pdf-form{
+								font-family: DejaVu Sans !important;
+							}
+						</style>
+					</head>
+					<body>
+						<div id="mwb-pdf-form">
+							<form action="" method="post">';
 		if ( 'yes' === $is_add_logo && '' !== $logo ) {
 			$html .= '<div style="text-align:center;margin-bottom: 30px;"><img src="' . $logo . '" height="120" width="120"></div>';
 		}
-				$html .= '<table border = "0" cellpadding = "0" cellspacing = "0" style="width: 100%; vertical-align: top; margin-bottom: 30px;">
-											<tbody>
-												<tr>
-													<td valign="top">
-														<table border = "0" cellpadding = "0" cellspacing = "0" style="width: 100%;"> 
-															<tbody>
-																<tr>
-																	<td class="isfw-invoice-background-color" style="padding: 10px;">
-																		<h3 class="isfw-invoice-color" style="margin: 0;font-size: 24px;">' . $company_name . '</h3>
-																	</td>
-																</tr>
-																<tr>
-																	<td style="padding: 5px 10px;">' . ucfirst( $company_address ) . '</td>
-																</tr>
-																<tr>
-																	<td style="padding: 5px 10px;">' . ucfirst( $company_city ) . ',<br/> ' . ucfirst( $company_state ) . ',<br/> ' . $company_pin . '</td>
-																</tr>
-																<tr>
-																	<td style="padding: 5px 10px;">Phone : ' . $company_phone . '</td>
-																</tr>
-																<tr>
-																	<td style="padding: 5px 10px;">Email : ' . $company_email . '</td>
-																</tr>
-															</tbody>
-														</table>
-													</td>
-													<td valign="top">
-														<table border = "0" cellpadding = "0" cellspacing = "0" class="" style="width: 100%;table-layout: auto;">
-															<thead>
-																<tr>
-																	<th colspan="2" class="isfw-invoice-background-color" style="padding: 10px;">
-																		<h3 class="isfw-invoice-color" style="margin: 0;text-align:right;font-size:24px;">
-																			' . __( 'Invoice', 'invoice-system-for-woocommerce' ) . '
-																		</h3>
-																	</th>
-																</tr>
-																<tr>
-																	<th style="width: 70%;text-align: right;padding: 10px;">
-																		' . __( 'Invoice', 'invoice-system-for-woocommerce' ) . '
-																	</th>
-																	<th style="width: 30%;text-align: right;padding: 10px;">
-																		' . __( 'Date', 'invoice-system-for-woocommerce' ) . '
-																	</th>
-																</tr>
-															</thead>
-															<tbody>
-																<tr>
-																	<td style="width: 30%;text-align: right;padding: 0 10px;">' . $invoice_id . '</td>
-																	<td style="width: 30%;text-align: right;padding: 0 10px;">' . $billing_details['order_created_date'] . '</td>
-																</tr>
-															</tbody>
-														</table>
-														<table border = "0" class="" style="width: 100%;table-layout: auto;">
-															<thead>
-																<tr>
-																	<th style="width: 70%;text-align: right;padding: 10px;">
-																		' . __( 'Customer ID', 'invoice-system-for-woocommerce' ) . '
-																	</th>
-																	<th style="width: 30%;text-align: right;padding: 10px;">
-																		' . __( 'Status', 'invoice-system-for-woocommerce' ) . '
-																	</th>
-																</tr>
-															</thead>
-															<tbody>
-																<tr>
-																	<td class="" style="width: 70%;text-align: right;padding: 0 10px;">
-																		' . $billing_details['customer_id'] . '
-																	</td>
-																	<td class="" style="width: 30%;text-align: right;padding: 0 10px;">
-																		' . $shipping_details['order_status'] . '
-																	</td>
-																</tr>
-															</tbody>
-														</table>
-													</td>
-												</tr>';
+		$html .= '<table border = "0" cellpadding = "0" cellspacing = "0" style="width: 100%; vertical-align: top; margin-bottom: 30px;">
+					<tbody>
+						<tr>
+							<td valign="top">
+								<table border = "0" cellpadding = "0" cellspacing = "0" style="width: 100%;"> 
+									<tbody>
+										<tr>
+											<td class="isfw-invoice-background-color" style="padding: 10px;">
+												<h3 class="isfw-invoice-color" style="margin: 0;font-size: 24px;">' . $company_name . '</h3>
+											</td>
+										</tr>';
+		if ( $company_address ) {
+			$html .= '<tr>
+				<td style="padding: 5px 10px;">' . ucfirst( $company_address ) . '</td>
+			</tr>';
+		}
+		$html .= '<tr>
+					<td style="padding: 5px 10px;">';
+		if ( $company_city ) {
+			$html .= ucfirst( $company_city );
+		}
+		if ( $company_state ) {
+			$html .= '<br/> ' . ucfirst( $company_state );
+		}
+		if ( $company_pin ) {
+			$html .= '<br/> ' . $company_pin;
+		}
+		$html = '</td>
+				</tr>';
+		if ( $company_phone ) {
+			$html .= '<tr>
+						<td style="padding: 5px 10px;">Phone : ' . $company_phone . '</td>
+					</tr>';
+		}
+		if ( $company_email ) {
+			$html .= '<tr>
+						<td style="padding: 5px 10px;">Email : ' . $company_email . '</td>
+					</tr>';
+		}
+		$html .= '</tbody>
+				</table>
+			</td>
+			<td valign="top">
+				<table border = "0" cellpadding = "0" cellspacing = "0" class="" style="width: 100%;table-layout: auto;">
+					<thead>
+						<tr>
+							<th colspan="2" class="isfw-invoice-background-color" style="padding: 10px;">
+								<h3 class="isfw-invoice-color" style="margin: 0;text-align:right;font-size:24px;">
+									' . __( 'Invoice', 'invoice-system-for-woocommerce' ) . '
+								</h3>
+							</th>
+						</tr>
+						<tr>
+							<th style="width: 70%;text-align: right;padding: 10px;">
+								' . __( 'Invoice', 'invoice-system-for-woocommerce' ) . '
+							</th>
+							<th style="width: 30%;text-align: right;padding: 10px;">
+								' . __( 'Date', 'invoice-system-for-woocommerce' ) . '
+							</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td style="width: 30%;text-align: right;padding: 0 10px;">' . $invoice_id . '</td>
+							<td style="width: 30%;text-align: right;padding: 0 10px;">' . $billing_details['order_created_date'] . '</td>
+						</tr>
+					</tbody>
+				</table>
+				<table border = "0" class="" style="width: 100%;table-layout: auto;">
+					<thead>
+						<tr>
+							<th style="width: 70%;text-align: right;padding: 10px;">
+								' . __( 'Customer ID', 'invoice-system-for-woocommerce' ) . '
+							</th>
+							<th style="width: 30%;text-align: right;padding: 10px;">
+								' . __( 'Status', 'invoice-system-for-woocommerce' ) . '
+							</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td class="" style="width: 70%;text-align: right;padding: 0 10px;">
+								' . $billing_details['customer_id'] . '
+							</td>
+							<td class="" style="width: 30%;text-align: right;padding: 0 10px;">
+								' . $shipping_details['order_status'] . '
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</td>
+		</tr>';
 		if ( 'invoice' === $type ) {
 			$html .= '<tr>
 					<td colspan="2">
@@ -148,58 +164,84 @@ function return_ob_value( $order_id, $type, $invoice_id ) {
 							<tbody>
 								<tr>
 									<td style="padding: 2px 10px;font-weight: bold;font-size: 18px;">' . ucfirst( $billing_details['billing_first_name'] ) . ' ' . ucfirst( $billing_details['billing_last_name'] ) . '</td>
-								</tr>
-								<tr>
-									<td style="padding: 2px 10px;font-size: 16px;">' . ucfirst( $billing_details['billing_address_1'] ) . ' ' . ucfirst( $billing_details['billing_address_2'] ) . '</td>
-								</tr>
-								<tr>
-									<td style="padding: 2px 10px;font-size: 16px;">' . ucfirst( $billing_details['billing_city'] ) . ', ' . ucfirst( $billing_details['billing_state'] ) . ', ' . $billing_details['billing_postcode'] . '</td>
-								</tr>
-								<tr>
-									<td style="padding: 2px 10px;font-size: 16px;">' . $billing_details['billing_phone'] . '</td>
-								</tr>
-								<tr>
-									<td style="padding: 2px 10px;font-size: 16px;">' . $billing_details['billing_email'] . '</td>
-								</tr>
-							</tbody>
-						</table>
-					</td>
-				</tr>
-			</tbody>
-		</table>';
+								</tr>';
+			if ( $billing_details['billing_company'] ) {
+				$html .= '<tr>
+							<td style="padding: 2px 10px;font-size: 16px;">' . ucfirst( $billing_details['billing_company'] ) . '</td>
+						</tr>';
+			}
+			if ( $billing_details['billing_address_1'] ) {
+				$html .= '<tr>
+							<td style="padding: 2px 10px;font-size: 16px;">' . ucfirst( $billing_details['billing_address_1'] ) . ' ' . ucfirst( $billing_details['billing_address_2'] ) . '</td>
+						</tr>';
+			}
+			if ( $billing_details['billing_city'] ) {
+				$html .= '<tr>
+							<td style="padding: 2px 10px;font-size: 16px;">' . ucfirst( $billing_details['billing_city'] ) . ', ' . ucfirst( $billing_details['billing_state'] ) . ', ' . $billing_details['billing_postcode'] . '</td>
+						</tr>';
+			}
+			if ( $billing_details['billing_phone'] ) {
+				$html .= '<tr>
+							<td style="padding: 2px 10px;font-size: 16px;">' . $billing_details['billing_phone'] . '</td>
+						</tr>';
+			}
+			if ( $billing_details['billing_email'] ) {
+				$html .= '<tr>
+							<td style="padding: 2px 10px;font-size: 16px;">' . $billing_details['billing_email'] . '</td>
+						</tr>';
+			}
+			$html .= '</tbody>
+							</table>
+						</td>
+					</tr>
+				</tbody>
+			</table>';
 		} else {
 			$html .= '<tr>
-					<td colspan="2">
-						<table border = "0" cellpadding="0" cellpadding="0" style="width: 100%;margin-top: 20px;">
-							<thead>
-								<tr>
-									<th class="isfw-invoice-background-color isfw-invoice-color" style="text-align:left;padding:10px;font-size:20px;">
-										' . __( 'SHIP TO', 'invoice-system-for-woocommerce' ) . '
-									</th>
-								</tr>
-							</thead>
-							<tbody>
-								<tr>
-									<td style="padding: 2px 10px;font-weight: bold;font-size: 18px;">' . ucfirst( $shipping_details['shipping_first_name'] ) . ' ' . ucfirst( $shipping_details['shipping_last_name'] ) . '</td>
-								</tr>
-								<tr>
-									<td style="padding: 2px 10px;font-size: 16px;">' . ucfirst( $shipping_details['shipping_address_1'] ) . ' ' . ucfirst( $shipping_details['shipping_address_2'] ) . '</td>
-								</tr>
-								<tr>
-									<td style="padding: 2px 10px;font-size: 16px;">' . ucfirst( $shipping_details['shipping_city'] ) . ', ' . ucfirst( $shipping_details['shipping_state'] ) . ', ' . $shipping_details['shipping_postcode'] . '</td>
-								</tr>
-								<tr>
-									<td style="padding: 2px 10px;font-size: 16px;">' . $billing_details['billing_phone'] . '</td>
-								</tr>
-								<tr>
-									<td style="padding: 2px 10px;font-size: 16px;">' . $billing_details['billing_email'] . '</td>
-								</tr>
-							</tbody>
+						<td colspan="2">
+							<table border = "0" cellpadding="0" cellpadding="0" style="width: 100%;margin-top: 20px;">
+								<thead>
+									<tr>
+										<th class="isfw-invoice-background-color isfw-invoice-color" style="text-align:left;padding:10px;font-size:20px;">
+											' . __( 'SHIP TO', 'invoice-system-for-woocommerce' ) . '
+										</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr>
+										<td style="padding: 2px 10px;font-weight: bold;font-size: 18px;">' . ucfirst( $shipping_details['shipping_first_name'] ) . ' ' . ucfirst( $shipping_details['shipping_last_name'] ) . '</td>
+									</tr>';
+			if ( $billing_details['billing_company'] ) {
+				$html .= '<tr>
+							<td style="padding: 2px 10px;font-size: 16px;">' . ucfirst( $billing_details['billing_company'] ) . '</td>
+						</tr>';
+			}
+			if ( $shipping_details['shipping_address_1'] ) {
+				$html .= '<tr>
+							<td style="padding: 2px 10px;font-size: 16px;">' . ucfirst( $shipping_details['shipping_address_1'] ) . ' ' . ucfirst( $shipping_details['shipping_address_2'] ) . '</td>
+						</tr>';
+			}
+			if ( $shipping_details['shipping_city'] ) {
+				$html .= '<tr>
+							<td style="padding: 2px 10px;font-size: 16px;">' . ucfirst( $shipping_details['shipping_city'] ) . ', ' . ucfirst( $shipping_details['shipping_state'] ) . ', ' . $shipping_details['shipping_postcode'] . '</td>
+						</tr>';
+			}
+			if ( $billing_details['billing_phone'] ) {
+				$html .= '<tr>
+							<td style="padding: 2px 10px;font-size: 16px;">' . $billing_details['billing_phone'] . '</td>
+						</tr>';
+			}
+			if ( $billing_details['billing_email'] ) {
+				$html .= '<tr>
+							<td style="padding: 2px 10px;font-size: 16px;">' . $billing_details['billing_email'] . '</td>
+						</tr>';
+			}
+			$html .= '</tbody>
 						</table>
-					</td>
-				</tr>
-			</tbody>
-		</table>';
+						</td>
+					</tr>
+				</tbody>
+			</table>';
 		}
 		if ( 'invoice' === $type ) {
 			$html .= '<table border = "0" cellpadding = "0" cellspacing = "0" style="width: 100%; vertical-align: top;text-align: left;" id="my-table-mwb-prod-listing">

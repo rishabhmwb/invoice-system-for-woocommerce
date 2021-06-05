@@ -194,8 +194,6 @@ class Invoice_System_For_Woocommerce {
 
 		// generating custom setting page for pdf settings.
 		$this->loader->add_filter( 'isfw_template_pdf_settings_array', $isfw_plugin_admin, 'isfw_template_pdf_settings_page', 10 );
-		// handling ajax requests for saving settings of isfw pdf.
-		$this->loader->add_action( 'wp_ajax_isfw_save_general_pdf_settings', $isfw_plugin_admin, 'isfw_save_general_pdf_settings' );
 		// adding custom link to the order listing page.
 		$isfw_enable_plugin = get_option( 'isfw_enable_plugin' );
 		if ( 'yes' === $isfw_enable_plugin ) {
@@ -211,7 +209,6 @@ class Invoice_System_For_Woocommerce {
 			$this->loader->add_action( 'admin_notices', $isfw_plugin_admin, 'isfw_pdf_downloads_bulk_action_admin_notice' );
 		}
 		$this->loader->add_action( 'isfw_template_invoice_settings_array', $isfw_plugin_admin, 'isfw_template_invoice_setting_html_fields' );
-		$this->loader->add_action( 'isfw_template_packing_slip_settings_array', $isfw_plugin_admin, 'isfw_packing_slip_settings_arr' );
 		$this->loader->add_action( 'admin_init', $isfw_plugin_admin, 'isfw_admin_save_tab_settings' );
 	}
 
