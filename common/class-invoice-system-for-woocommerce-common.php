@@ -54,6 +54,32 @@ class Invoice_System_For_Woocommerce_Common {
 
 	}
 	/**
+	 * Schedular for resetting invoice number.
+	 *
+	 * @since 1.0.1
+	 * @return void
+	 */
+	public function isfw_reset_invoice_number_schedular() {
+		if ( ! as_next_scheduled_action( 'isfw_reset_invoice_number_hook' ) ) {
+			as_schedule_recurring_action( strtotime( 'tomorrow' ), DAY_IN_SECONDS, 'isfw_reset_invoice_number_hook' );
+		}
+	}
+	/**
+	 * Reset invoice number.
+	 *
+	 * @since 1.0.1
+	 * @return void
+	 */
+	public function isfw_reset_invoice_number() {
+		$month = get_option( 'isfw_invoice_number_renew_month' );
+		$date  = get_option( 'isfw_invoice_number_renew_date' );
+		if ( '' !== $month && 'never' !== $month ) {
+			if ( ( (int) current_time( 'm' ) === (int) $month ) && ( (int) current_time( 'd' ) === (int) $date ) ) {
+				update_option( 'isfw_current_invoice_id', 1 );
+			}
+		}
+	}
+	/**
 	 * Generate Invoice Number.
 	 *
 	 * @param int $order_id order ID to generate invoice number for.
@@ -61,27 +87,20 @@ class Invoice_System_For_Woocommerce_Common {
 	 * @return string
 	 */
 	public function isfw_invoice_number( $order_id ) {
-		$date   = get_option( 'isfw_invoice_renew_date' );
 		$digit  = get_option( 'isfw_invoice_number_digit' );
 		$prefix = get_option( 'isfw_invoice_number_prefix' );
 		$suffix = get_option( 'isfw_invoice_number_suffix' );
-		$date   = get_option( 'isfw_invoice_renew_date' );
 		$digit  = ( $digit ) ? $digit : 4;
-		if ( '' !== $date ) {
-			if ( gmdate( 'm-d', strtotime( $date ) ) <= gmdate( 'm-d' ) ) {
-				update_option( 'isfw_current_invoice_id', 1 );
-			}
-		}
-		$prev_invoice_id = get_option( 'isfw_current_invoice_id' );
-		if ( $prev_invoice_id ) {
-			$curr_invoice_id = $prev_invoice_id + 1;
-		} else {
-			$curr_invoice_id = 1;
-		}
-		$in_id = get_post_meta( $order_id, 'isfw_order_invoice_id', true );
+		$in_id  = get_post_meta( $order_id, 'isfw_order_invoice_id', true );
 		if ( $in_id ) {
 			$invoice_id = $in_id;
 		} else {
+			$prev_invoice_id = get_option( 'isfw_current_invoice_id' );
+			if ( $prev_invoice_id ) {
+				$curr_invoice_id = $prev_invoice_id + 1;
+			} else {
+				$curr_invoice_id = 1;
+			}
 			update_option( 'isfw_current_invoice_id', $curr_invoice_id );
 			$invoice_number = str_pad( $curr_invoice_id, $digit, '0', STR_PAD_LEFT );
 			$invoice_id     = $prefix . $invoice_number . $suffix;
@@ -184,7 +203,9 @@ class Invoice_System_For_Woocommerce_Common {
 				if ( ! file_exists( $path ) ) {
 					@file_put_contents( $path, $output ); // phpcs:ignore
 				}
-				do_action( 'mwb_isfw_upload_invoice_in_storage', $path, $file_url, $order_id );
+				if ( 'invoice' === $type ) {
+					do_action( 'mwb_isfw_upload_invoice_in_storage', $path, $file_url, $order_id, $invoice_name );
+				}
 				$dompdf->stream( $invoice_name . '.pdf', array( 'Attachment' => 1 ) );
 			}
 			if ( 'download_on_server' === $action ) {
@@ -195,7 +216,9 @@ class Invoice_System_For_Woocommerce_Common {
 				if ( ! file_exists( $path ) ) {
 					@file_put_contents( $path, $output ); // phpcs:ignore
 				}
-				do_action( 'mwb_isfw_upload_invoice_in_storage', $path, $file_url, $order_id );
+				if ( 'invoice' === $type ) {
+					do_action( 'mwb_isfw_upload_invoice_in_storage', $path, $file_url, $order_id, $invoice_name );
+				}
 				return $path;
 			}
 		}

@@ -246,6 +246,8 @@ class Invoice_System_For_Woocommerce {
 		$isfw_plugin_common = new Invoice_System_For_Woocommerce_Common( $this->isfw_get_plugin_name(), $this->isfw_get_version() );
 		// adding shortcodes to fetch all order detials [ISFW_FETCH_ORDER].
 		$this->loader->add_action( 'plugins_loaded', $isfw_plugin_common, 'isfw_fetch_order_details_shortcode' );
+		$this->loader->add_action( 'init', $isfw_plugin_common, 'isfw_reset_invoice_number_schedular' );
+		$this->loader->add_action( 'isfw_reset_invoice_number_hook', $isfw_plugin_common, 'isfw_reset_invoice_number' );
 	}
 
 
@@ -948,42 +950,33 @@ class Invoice_System_For_Woocommerce {
 								<label class="mwb-form-label" for="<?php echo esc_attr( array_key_exists( 'id', $isfw_component ) ? $isfw_component['id'] : '' ); ?>"><?php echo esc_attr( array_key_exists( 'title', $isfw_component ) ? $isfw_component['title'] : '' ); ?></label>
 							</div>
 							<div class="mwb-form-group__control">
-								<!-- <label class="mdc-text-field mdc-text-field--outlined mdc-text-field--textarea"  	for="text-field-hero-input"> -->
-									<!-- <span class="mdc-notched-outline"> -->
-										<!-- <span class="mdc-notched-outline__leading"></span> -->
-										<!-- <span class="mdc-notched-outline__notch"> -->
-											<!-- <span class="mdc-floating-label"><?php// echo esc_attr( array_key_exists( 'placeholder', $isfw_component ) ? $isfw_component['placeholder'] : '' ); ?></span> -->
-										<!-- </span> -->
-										<!-- <span class="mdc-notched-outline__trailing"></span> -->
-									<!-- </span> -->
+								<?php
+								$sub_isfw_component_value = $isfw_component['value'];
+								?>
+								<div>
+									<span><?php echo esc_attr( $sub_isfw_component_value['month']['title'] ); ?></span>
+									<select name="<?php echo esc_attr( $sub_isfw_component_value['month']['name'] ); ?>" id="<?php echo esc_attr( $sub_isfw_component_value['month']['id'] ); ?>" class="<?php echo esc_attr( $sub_isfw_component_value['month']['class'] ); ?>">
 										<?php
-										$sub_isfw_component_value = $isfw_component['value'];
+										$month_options = $sub_isfw_component_value['month']['options'];
+										foreach ( $month_options as $key => $value ) {
+											?>
+											<option value="<?php echo esc_attr( $key ); ?>" <?php selected( $sub_isfw_component_value['month']['value'], $key ); ?>><?php echo esc_attr( $value ); ?></option>
+											<?php
+										}
 										?>
-										<div>
-											<span><?php echo esc_attr( $sub_isfw_component_value['month']['title'] ); ?></span>
-											<select name="<?php echo esc_attr( $sub_isfw_component_value['month']['name'] ); ?>" id="<?php echo esc_attr( $sub_isfw_component_value['month']['id'] ); ?>" class="<?php echo esc_attr( $sub_isfw_component_value['month']['class'] ); ?>">
-												<?php
-												$month_options = $sub_isfw_component_value['month']['options'];
-												foreach ( $month_options as $key => $value ) {
-													?>
-													<option value="<?php echo esc_attr( $key ); ?>" <?php selected( $sub_isfw_component_value['month']['value'], $key ); ?>><?php echo esc_attr( $value ); ?></option>
-													<?php
-												}
-												?>
-											</select>
-											<span><?php echo esc_attr( $sub_isfw_component_value['date']['title'] ); ?></span>
-											<select name="<?php echo esc_attr( $sub_isfw_component_value['date']['name'] ); ?>" id="<?php echo esc_attr( $sub_isfw_component_value['date']['id'] ); ?>" class="<?php echo esc_attr( $sub_isfw_component_value['date']['class'] ); ?>">
-												<?php
-												$date_options = $sub_isfw_component_value['date']['options'];
-												foreach ( $date_options as $key => $value ) {
-													?>
-													<option value="<?php echo esc_attr( $key ); ?>" <?php selected( $sub_isfw_component_value['date']['value'], $key ); ?>><?php echo esc_attr( $value ); ?></option>
-													<?php
-												}
-												?>
-											</select>
-										</div>
-								<!-- </label> -->
+									</select>
+									<span><?php echo esc_attr( $sub_isfw_component_value['date']['title'] ); ?></span>
+									<select name="<?php echo esc_attr( $sub_isfw_component_value['date']['name'] ); ?>" id="<?php echo esc_attr( $sub_isfw_component_value['date']['id'] ); ?>" class="<?php echo esc_attr( $sub_isfw_component_value['date']['class'] ); ?>">
+										<?php
+										$date_options = $sub_isfw_component_value['date']['options'];
+										foreach ( $date_options as $key => $value ) {
+											?>
+											<option value="<?php echo esc_attr( $key ); ?>" <?php selected( $sub_isfw_component_value['date']['value'], $key ); ?>><?php echo esc_attr( $value ); ?></option>
+											<?php
+										}
+										?>
+									</select>
+								</div>
 							</div>
 						</div>
 						<?php

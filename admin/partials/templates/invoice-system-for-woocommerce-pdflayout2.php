@@ -161,7 +161,7 @@ function return_ob_value( $order_id, $type, $invoice_id ) {
 						<div>
 							' . ucfirst( $billing_details['billing_first_name'] ) . ' ' . ucfirst( $billing_details['billing_last_name'] ) . '<br/>';
 			if ( $billing_details['billing_company'] ) {
-				$html .= ucfirst( $billing_details['billing_company'] ) . '<br/>';
+				$html .= $billing_details['billing_company'] . '<br/>';
 			}
 			if ( $billing_details['billing_address_1'] ) {
 				$html .= ucfirst( $billing_details['billing_address_1'] ) . ' ' . ucfirst( $billing_details['billing_address_2'] ) . '<br/>';
@@ -188,8 +188,8 @@ function return_ob_value( $order_id, $type, $invoice_id ) {
 						<b>' . __( 'SHIP TO', 'invoice-system-for-woocommerce' ) . '</b><br/>
 						<div>
 							' . ucfirst( $shipping_details['shipping_first_name'] ) . ' ' . ucfirst( $shipping_details['shipping_last_name'] ) . '<br/>';
-			if ( $billing_details['billing_company'] ) {
-				$html .= ucfirst( $billing_details['billing_company'] ) . '<br/>';
+			if ( $shipping_details['shipping_company'] ) {
+				$html .= $shipping_details['shipping_company'] . '<br/>';
 			}
 			if ( $shipping_details['shipping_address_1'] ) {
 				$html .= ucfirst( $shipping_details['shipping_address_1'] ) . ' ' . ucfirst( $shipping_details['shipping_address_2'] ) . '<br/>';

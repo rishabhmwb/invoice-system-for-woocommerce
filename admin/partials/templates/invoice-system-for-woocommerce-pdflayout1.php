@@ -85,7 +85,7 @@ function return_ob_value( $order_id, $type, $invoice_id ) {
 		if ( $company_pin ) {
 			$html .= '<br/> ' . $company_pin;
 		}
-		$html = '</td>
+		$html .= '</td>
 				</tr>';
 		if ( $company_phone ) {
 			$html .= '<tr>
@@ -167,7 +167,7 @@ function return_ob_value( $order_id, $type, $invoice_id ) {
 								</tr>';
 			if ( $billing_details['billing_company'] ) {
 				$html .= '<tr>
-							<td style="padding: 2px 10px;font-size: 16px;">' . ucfirst( $billing_details['billing_company'] ) . '</td>
+							<td style="padding: 2px 10px;font-size: 16px;">' . $billing_details['billing_company'] . '</td>
 						</tr>';
 			}
 			if ( $billing_details['billing_address_1'] ) {
@@ -211,9 +211,9 @@ function return_ob_value( $order_id, $type, $invoice_id ) {
 									<tr>
 										<td style="padding: 2px 10px;font-weight: bold;font-size: 18px;">' . ucfirst( $shipping_details['shipping_first_name'] ) . ' ' . ucfirst( $shipping_details['shipping_last_name'] ) . '</td>
 									</tr>';
-			if ( $billing_details['billing_company'] ) {
+			if ( $shipping_details['shipping_company'] ) {
 				$html .= '<tr>
-							<td style="padding: 2px 10px;font-size: 16px;">' . ucfirst( $billing_details['billing_company'] ) . '</td>
+							<td style="padding: 2px 10px;font-size: 16px;">' . $shipping_details['shipping_company'] . '</td>
 						</tr>';
 			}
 			if ( $shipping_details['shipping_address_1'] ) {

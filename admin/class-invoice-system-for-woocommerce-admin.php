@@ -283,7 +283,8 @@ class Invoice_System_For_Woocommerce_Admin {
 									}
 								} else {
 									if ( isset( $_POST[ $isfw_genaral_setting['id'] ] ) ) {
-										update_option( $isfw_genaral_setting['id'], sanitize_text_field( wp_unslash( $_POST[ $isfw_genaral_setting['id'] ] ) ) );
+										$value = is_array( $_POST[ $isfw_genaral_setting['id'] ] ) ? map_deep( wp_unslash( $_POST[ $isfw_genaral_setting['id'] ] ), 'sanitize_text_field' ) : sanitize_text_field( wp_unslash( $_POST[ $isfw_genaral_setting['id'] ] ) );
+										update_option( $isfw_genaral_setting['id'], $value );
 									} else {
 										update_option( $isfw_genaral_setting['id'], '' );
 									}
@@ -304,7 +305,7 @@ class Invoice_System_For_Woocommerce_Admin {
 	public function isfw_template_pdf_settings_page( $isfw_template_pdf_settings ) {
 		$isfw_send_invoice_automatically          = get_option( 'isfw_send_invoice_automatically' );
 		$isfw_send_invoice_for                    = get_option( 'isfw_send_invoice_for' );
-		$isfw_allow_invoice_generation_for_orders = get_option( 'isfw_allow_invoice_generation_for_orders' );
+		$isfw_allow_invoice_generation_for_orders = get_option( 'isfw_allow_invoice_generation_for_orders', array() );
 		$isfw_generate_invoice_from_cache         = get_option( 'isfw_generate_invoice_from_cache' );
 		$order_stat                               = wc_get_order_statuses();
 		$temp                                     = array(
@@ -341,18 +342,18 @@ class Invoice_System_For_Woocommerce_Admin {
 				'name'        => 'isfw_send_invoice_for',
 				'class'       => 'isfw_send_invoice_for',
 				'placeholder' => '',
-				'options'     => ( $order_statuses ) ? $order_statuses : array(),
+				'options'     => $order_statuses,
 			),
 			array(
 				'title'       => __( 'Download invoice for users at Order Status', 'invoice-system-for-woocommere' ),
-				'type'        => 'select',
+				'type'        => 'multiselect',
 				'description' => __( 'Please choose the status of orders to allow invoice download for users.', 'invoice-system-for-woocommere' ),
 				'id'          => 'isfw_allow_invoice_generation_for_orders',
 				'value'       => $isfw_allow_invoice_generation_for_orders,
 				'name'        => 'isfw_allow_invoice_generation_for_orders',
-				'class'       => 'isfw_allow_invoice_generation_for_orders',
+				'class'       => 'isfw_allow_invoice_generation_for_orders isfw-multiselect-class mwb-defaut-multiselect',
 				'placeholder' => '',
-				'options'     => ( $order_statuses ) ? $order_statuses : array(),
+				'options'     => $order_statuses,
 			),
 			array(
 				'title'       => __( 'Generate invoice from cache', 'invoice-system-for-woocommerce' ),
@@ -691,12 +692,13 @@ class Invoice_System_For_Woocommerce_Admin {
 	 * @param int    $order_id order id to print invoice for.
 	 * @param string $type either to generate invoice or packing slip.
 	 * @param string $action what action to take values can be : 'download_locally', 'open_window', 'download_on_server'.
-	 * @return void
+	 * @return string
 	 */
 	public function isfw_generating_pdf( $order_id, $type, $action ) {
 		require_once INVOICE_SYSTEM_FOR_WOOCOMMERCE_DIR_PATH . 'common/class-invoice-system-for-woocommerce-common.php';
 		$common_class = new Invoice_System_For_Woocommerce_Common( $this->plugin_name, $this->version );
-		$common_class->isfw_common_generate_pdf( $order_id, $type, $action );
+		$file_path    = $common_class->isfw_common_generate_pdf( $order_id, $type, $action );
+		return $file_path;
 	}
 	/**
 	 * Attaching pdf to the email.
@@ -714,13 +716,8 @@ class Invoice_System_For_Woocommerce_Admin {
 			if ( $order_status ) {
 				$order_statuses = preg_replace( '/wc-/', 'customer_', $order_status ) . '_order';
 				if ( $email_id === $order_statuses ) {
-					$upload_dir     = wp_upload_dir();
-					$upload_basedir = $upload_dir['basedir'] . '/invoices/';
-					$file           = $upload_basedir . 'invoice_' . $order->get_id() . '.pdf';
-					if ( ! file_exists( $file ) ) {
-						$this->isfw_generating_pdf( $order->get_id(), 'invoice', 'download_on_server' );
-					}
-					$attachments[] = $file;
+					$path          = $this->isfw_generating_pdf( $order->get_id(), 'invoice', 'download_on_server' );
+					$attachments[] = $path;
 				}
 			}
 		}
@@ -761,20 +758,13 @@ class Invoice_System_For_Woocommerce_Admin {
 		$zip->open( $zip_path, ZipArchive::CREATE );
 		if ( 'isfw_download_invoice' === $action ) {
 			foreach ( $post_ids as $order_id ) {
-				$processed_ids[] = $order_id;
-				$upload_dir      = wp_upload_dir();
-				$upload_basedir  = $upload_dir['basedir'] . '/invoices/';
-				$file_pdf_path   = $upload_basedir . 'invoice_' . $order_id . '.pdf';
-				if ( ! file_exists( $file_pdf_path ) ) {
-					$this->isfw_generating_pdf( $order_id, 'invoice', 'download_on_server' );
-				}
-				$zip->addFile( $file_pdf_path, 'invoices/invoice_' . $order_id . '.pdf' );
+				$file_path = $this->isfw_generating_pdf( $order_id, 'invoice', 'download_on_server' );
+				$zip->addFile( $file_path, str_replace( $upload_dir['basedir'], '', $file_path ) );
 			}
 			@$zip->close(); // phpcs:ignore
 			$redirect_to = add_query_arg(
 				array(
-					'write_downloads' => '1',
-					'processed_count' => count( $processed_ids ),
+					'write_downloads' => true,
 				),
 				$redirect_to
 			);
@@ -782,14 +772,8 @@ class Invoice_System_For_Woocommerce_Admin {
 		}
 		if ( 'isfw_download_packing_slip' === $action ) {
 			foreach ( $post_ids as $order_id ) {
-				$processed_ids[] = $order_id;
-				$upload_dir      = wp_upload_dir();
-				$upload_basedir  = $upload_dir['basedir'] . '/invoices/';
-				$file_pdf_path   = $upload_basedir . 'packing_slip_' . $order_id . '.pdf';
-				if ( ! file_exists( $file_pdf_path ) ) {
-					$this->isfw_generating_pdf( $order_id, 'packing_slip', 'download_on_server' );
-				}
-				$zip->addFile( $file_pdf_path, 'packing_slip/packing_slip_' . $order_id . '.pdf' );
+				$file_path = $this->isfw_generating_pdf( $order_id, 'packing_slip', 'download_on_server' );
+				$zip->addFile( $file_path, str_replace( $upload_dir['basedir'], '', $file_path ) );
 			}
 			@$zip->close(); // phpcs:ignore
 			$redirect_to = add_query_arg(
