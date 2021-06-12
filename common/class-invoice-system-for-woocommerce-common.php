@@ -333,7 +333,7 @@ class Invoice_System_For_Woocommerce_Common {
 				'order_currency'     => get_woocommerce_currency_symbol(),
 				'cart_total'         => number_format( $cart_total, $decimals, $decimal_separator, $thousand_separator ),
 				'tax_totals'         => ( $tax_total ) ? number_format( $tax_total, $decimals, $decimal_separator, $thousand_separator ) : 0,
-				'order_created_date' => $order->get_date_created()->format( 'd-m-y' ),
+				'order_created_date' => $order->get_date_created()->format( get_option( 'date_format', 'd-m-Y' ) ),
 			);
 			$order_details_arr       = array(
 				'shipping_details' => $shipping_details,

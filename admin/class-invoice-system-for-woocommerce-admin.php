@@ -499,7 +499,7 @@ class Invoice_System_For_Woocommerce_Admin {
 				'title'       => __( 'Invoice Number', 'invoice-system-for-woocommere' ),
 				'type'        => 'multi',
 				'id'          => 'isfw_invoice_number',
-				'description' => __( 'This combination will be used as the invoice number', 'invoice-system-for-woocommere' ),
+				'description' => __( 'This combination will be used as the invoice ID : prefix + number of digits + suffix.', 'invoice-system-for-woocommere' ),
 				'value'       => array(
 					array(
 						'title'       => __( 'Prefix', 'invoice-system-for-woocommerce' ),
