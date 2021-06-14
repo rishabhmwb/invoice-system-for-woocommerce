@@ -68,14 +68,11 @@ class Invoice_System_For_Woocommerce_Admin {
 			wp_enqueue_style( 'mwb-isfw-meterial-css2', INVOICE_SYSTEM_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/material-design/material-components-v5.0-web.min.css', array(), time(), 'all' );
 			wp_enqueue_style( 'mwb-isfw-meterial-lite', INVOICE_SYSTEM_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/material-design/material-lite.min.css', array(), time(), 'all' );
 			wp_enqueue_style( 'mwb-isfw-meterial-icons-css', INVOICE_SYSTEM_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/material-design/icon.css', array(), time(), 'all' );
-			wp_enqueue_style( $this->plugin_name . '-admin-global', INVOICE_SYSTEM_FOR_WOOCOMMERCE_DIR_URL . 'admin/src/scss/invoice-system-for-woocommerce-admin-global.css', array( 'mwb-isfw-meterial-icons-css' ), time(), 'all' );
-			wp_enqueue_style( $this->plugin_name, INVOICE_SYSTEM_FOR_WOOCOMMERCE_DIR_URL . 'admin/src/scss/invoice-system-for-woocommerce-admin.scss', array(), $this->version, 'all' );
+			wp_enqueue_style( $this->plugin_name . '-admin-global', INVOICE_SYSTEM_FOR_WOOCOMMERCE_DIR_URL . 'admin/css/mwb-admin.min.css', array( 'mwb-isfw-meterial-icons-css' ), time(), 'all' );
 			wp_enqueue_style( 'wp-color-picker' );
-			wp_enqueue_style( 'mwb-isfw-admin-custom-css', INVOICE_SYSTEM_FOR_WOOCOMMERCE_DIR_URL . 'admin/src/scss/invoice-system-for-woocommerce-admin-custom.css', array(), $this->version, 'all' );
-			wp_enqueue_style( 'date-picker-css', INVOICE_SYSTEM_FOR_WOOCOMMERCE_DIR_URL . 'admin/src/scss/date-picker.css', array(), $this->version, 'all' );
 			wp_enqueue_style( 'jquery-ui' );
 		}
-		wp_enqueue_style( 'mwb-isfw-global-css-for-all', INVOICE_SYSTEM_FOR_WOOCOMMERCE_DIR_URL . 'admin/src/scss/invoice-system-for-woocommerce-admin-global-for-all.css', array(), $this->version, 'all' );
+		wp_enqueue_style( 'mwb-isfw-global-css-for-all', INVOICE_SYSTEM_FOR_WOOCOMMERCE_DIR_URL . 'admin/css/mwb-admin-global.min.css', array(), $this->version, 'all' );
 	}
 
 	/**
@@ -85,31 +82,15 @@ class Invoice_System_For_Woocommerce_Admin {
 	 * @param    string $hook      The plugin page slug.
 	 */
 	public function isfw_admin_enqueue_scripts( $hook ) {
-
 		$screen = get_current_screen();
 		if ( isset( $screen->id ) && 'makewebbetter_page_invoice_system_for_woocommerce_menu' === $screen->id ) {
 			wp_enqueue_script( 'mwb-isfw-select2', INVOICE_SYSTEM_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/select-2/invoice-system-for-woocommerce-select2.js', array( 'jquery' ), time(), false );
 			wp_enqueue_script( 'mwb-isfw-metarial-js', INVOICE_SYSTEM_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/material-design/material-components-web.min.js', array(), time(), false );
 			wp_enqueue_script( 'mwb-isfw-metarial-js2', INVOICE_SYSTEM_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/material-design/material-components-v5.0-web.min.js', array(), time(), false );
 			wp_enqueue_script( 'mwb-isfw-metarial-lite', INVOICE_SYSTEM_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/material-design/material-lite.min.js', array(), time(), false );
-			wp_register_script( $this->plugin_name . 'admin-js', INVOICE_SYSTEM_FOR_WOOCOMMERCE_DIR_URL . 'admin/src/js/invoice-system-for-woocommerce-admin.js', array( 'jquery', 'mwb-isfw-select2', 'mwb-isfw-metarial-js', 'mwb-isfw-metarial-js2', 'mwb-isfw-metarial-lite' ), $this->version, false );
+			wp_register_script( $this->plugin_name . 'admin-js', INVOICE_SYSTEM_FOR_WOOCOMMERCE_DIR_URL . 'admin/js/mwb-admin.min.js', array( 'jquery', 'mwb-isfw-select2', 'mwb-isfw-metarial-js', 'mwb-isfw-metarial-js2', 'mwb-isfw-metarial-lite', 'wp-color-picker' ), $this->version, true );
 			wp_localize_script(
 				$this->plugin_name . 'admin-js',
-				'isfw_admin_param',
-				array(
-					'ajaxurl'             => admin_url( 'admin-ajax.php' ),
-					'reloadurl'           => admin_url( 'admin.php?page=invoice_system_for_woocommerce_menu' ),
-					'isfw_gen_tab_enable' => get_option( 'isfw_radio_switch_demo' ),
-				)
-			);
-			wp_enqueue_script( $this->plugin_name . 'admin-js' );
-			wp_enqueue_media();
-			wp_enqueue_script( 'mwb-isfw-pdf-general-settings', INVOICE_SYSTEM_FOR_WOOCOMMERCE_DIR_URL . 'admin/src/js/invoice-system-for-woocommerce-admin-pdfsettings.js', array( 'jquery', 'wp-color-picker' ), $this->version, true );
-			wp_enqueue_script( 'jquery-ui-core' );
-			wp_enqueue_script( 'jquery-ui-datepicker' );
-			wp_enqueue_media();
-			wp_localize_script(
-				'mwb-isfw-pdf-general-settings',
 				'isfw_general_settings',
 				array(
 					'ajaxurl'                 => admin_url( 'admin-ajax.php' ),
@@ -122,7 +103,7 @@ class Invoice_System_For_Woocommerce_Admin {
 					'suffix_limit'            => '<div class="notice notice-error is-dismissible">
 													<p>' . __( 'Please Enter Characters, Numbers and - only, in prefix and suffix field', 'invoice-system-for-woocommerce' ) . '</p>
 												</div>',
-					'btn_load'                => INVOICE_SYSTEM_FOR_WOOCOMMERCE_DIR_URL . 'admin/src/images/loader.gif',
+					'btn_load'                => INVOICE_SYSTEM_FOR_WOOCOMMERCE_DIR_URL . 'admin/image/loader.gif',
 					'btn_success'             => __( 'Saved', 'invoice-system-for-woocommerce' ),
 					'btn_resubmit'            => __( 'Resubmit', 'invoice-system-for-woocommerce' ),
 					'saving_error'            => '<div class="notice notice-error is-dismissible">
@@ -131,11 +112,15 @@ class Invoice_System_For_Woocommerce_Admin {
 					'invalid_date'            => '<div class="notice notice-error is-dismissible">
 													<p>' . __( 'Date can be either current year or next year. Please choose again!', 'invoice-system-for-woocommerce' ) . '</p>
 												</div>',
-					'calender_image'          => INVOICE_SYSTEM_FOR_WOOCOMMERCE_DIR_URL . 'admin/src/images/calender.png',
+					'calender_image'          => INVOICE_SYSTEM_FOR_WOOCOMMERCE_DIR_URL . 'admin/image/calender.png',
 				)
 			);
+			wp_enqueue_script( $this->plugin_name . 'admin-js' );
+			wp_enqueue_media();
+			wp_enqueue_script( 'jquery-ui-core' );
+			wp_enqueue_script( 'jquery-ui-datepicker' );
 		}
-		wp_enqueue_script( 'isfw_zip-download-js', INVOICE_SYSTEM_FOR_WOOCOMMERCE_DIR_URL . 'admin/src/js/invoice-system-for-woocommerce-zip-download.js', array( 'jquery' ), $this->version, true );
+		wp_enqueue_script( 'isfw_zip-download-js', INVOICE_SYSTEM_FOR_WOOCOMMERCE_DIR_URL . 'admin/js/mwb-invoice-zip-download.min.js', array( 'jquery' ), $this->version, true );
 	}
 
 	/**
@@ -146,7 +131,7 @@ class Invoice_System_For_Woocommerce_Admin {
 	public function isfw_options_page() {
 		global $submenu;
 		if ( empty( $GLOBALS['admin_page_hooks']['mwb-plugins'] ) ) {
-			add_menu_page( 'MakeWebBetter', 'MakeWebBetter', 'manage_options', 'mwb-plugins', array( $this, 'mwb_plugins_listing_page' ), INVOICE_SYSTEM_FOR_WOOCOMMERCE_DIR_URL . 'admin/src/images/MWB_Grey-01.svg', 15 );
+			add_menu_page( 'MakeWebBetter', 'MakeWebBetter', 'manage_options', 'mwb-plugins', array( $this, 'mwb_plugins_listing_page' ), INVOICE_SYSTEM_FOR_WOOCOMMERCE_DIR_URL . 'admin/image/MWB_Grey-01.svg', 15 );
 			$isfw_menus = apply_filters( 'mwb_add_plugins_menus_array', array() );
 			if ( is_array( $isfw_menus ) && ! empty( $isfw_menus ) ) {
 				foreach ( $isfw_menus as $isfw_key => $isfw_value ) {
@@ -629,14 +614,14 @@ class Invoice_System_For_Woocommerce_Admin {
 						'class' => 'isfw_invoice_template_one',
 						'name'  => 'isfw_invoice_template',
 						'value' => 'one',
-						'src'   => INVOICE_SYSTEM_FOR_WOOCOMMERCE_DIR_URL . 'admin/src/images/template1.png',
+						'src'   => INVOICE_SYSTEM_FOR_WOOCOMMERCE_DIR_URL . 'admin/image/template1.png',
 					),
 					array(
 						'title' => __( 'Template2', 'invoice-system-for-woocommerce' ),
 						'type'  => 'radio',
 						'id'    => 'isfw_invoice_template_two',
 						'class' => 'isfw_invoice_template_two',
-						'src'   => INVOICE_SYSTEM_FOR_WOOCOMMERCE_DIR_URL . 'admin/src/images/template2.png',
+						'src'   => INVOICE_SYSTEM_FOR_WOOCOMMERCE_DIR_URL . 'admin/image/template2.png',
 						'name'  => 'isfw_invoice_template',
 						'value' => 'two',
 					),

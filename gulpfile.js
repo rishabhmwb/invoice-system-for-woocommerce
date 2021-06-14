@@ -1,163 +1,262 @@
-var gulp          = require('gulp');
-var gutil         = require('gulp-util');
-var newer         = require('gulp-newer');
-var imagemin      = require('gulp-imagemin');
-var sass          = require('gulp-sass');
-var postcss       = require('gulp-postcss');
-var deporder      = require('gulp-deporder');
-var concat        = require('gulp-concat');
-var stripdebug    = require('gulp-strip-debug');
-var uglify        = require('gulp-uglify');
-var wpPot         = require('gulp-wp-pot');
-var browsersync   = require('browser-sync');
+'use strict';
 
-var admin_config = {
-  src: './admin/src/*',
-  dist: './admin/dist/*',
-  js_src : './admin/src/js/*.js',
-  js_dist: './admin/dist/js/',
-  filename : 'admin_script.js',
-  css_src : './admin/src/scss/*.scss',
-  css_dist: './admin/dist/css/',
-  image_src : './admin/src/image/*',
-  image_dist: './admin/dist/image/'
-}
-var public_config = {
-  src: './public/src/*',
-  dist: './public/dist/*',
-  js_src : './public/src/js/*.js',
-  js_dist: './public/dist/js/',
-  filename : 'public_script.js',
-  css_src : './public/src/scss/*.scss',
-  css_dist: './public/dist/css/',
-  image_src : './public/src/image/*',
-  image_dist: './public/dist/image/'
-}
+// Load plugins
+const autoprefixer = require('autoprefixer');
+const browsersync = require('browser-sync').create();
+const cp = require('child_process');
+const cssnano = require('cssnano');
+const del = require('del');
+const gulp = require('gulp');
+const imagemin = require('gulp-imagemin');
+const newer = require('gulp-newer');
+const plumber = require('gulp-plumber');
+const postcss = require('gulp-postcss');
+const rename = require('gulp-rename');
+const sass = require('gulp-sass');
+const uglify = require('gulp-uglify');
+const concat = require('gulp-concat');
+const terser = require('gulp-terser');
+const combineMediaQuery = require('postcss-combine-media-query');
 
-// CSS admin settings
-var css_admin = {
-  src         : admin_config.css_src,
-  watch       : admin_config.css_src,
-  build       : admin_config.css_dist,
-  sassOpts: {
-    outputStyle     : 'nested',
-    imagePath       : admin_config.image_dist,
-    precision       : 3,
-    errLogToConsole : true
-  },
-  processors: [
-    require('autoprefixer')({
-      browsers: ['last 2 versions', '> 2%']
-    }),
-    require('css-mqpacker'),
-    require('cssnano')
-  ]
-};
-// CSS admin processing
-gulp.task('admin-css', async () => {
-  return gulp.src(css_admin.src)
-    .pipe(sass(css_admin.sassOpts))
-    .pipe(postcss(css_admin.processors))
-    .pipe(gulp.dest(css_admin.build))
-    .pipe(browsersync ? browsersync.reload({ stream: true }) : gutil.noop());
-});
-
-// CSS public settings
-var css_public = {
-  src         : public_config.css_src,
-  watch       : public_config.css_src,
-  build       : public_config.css_dist,
-  sassOpts: {
-    outputStyle     : 'nested',
-    imagePath       : public_config.image_dist,
-    precision       : 3,
-    errLogToConsole : true
-  },
-  processors: [
-    require('autoprefixer')({
-      browsers: ['last 2 versions', '> 2%']
-    }),
-    require('css-mqpacker'),
-    require('cssnano')
-  ]
-};
-// CSS public processing
-gulp.task('public-css', async () => {
-  return gulp.src(css_public.src)
-    .pipe(sass(css_public.sassOpts))
-    .pipe(postcss(css_public.processors))
-    .pipe(gulp.dest(css_public.build))
-    .pipe(browsersync ? browsersync.reload({ stream: true }) : gutil.noop());
-});
-
-// JavaScript admin processing
-gulp.task('admin-js', () => {
-  return gulp.src(admin_config.js_src)
-    .pipe(deporder())
-    .pipe(concat(admin_config.filename))
-    .pipe(stripdebug())
-    .pipe(uglify())
-    .pipe(gulp.dest(admin_config.js_dist))
-    .pipe(browsersync ? browsersync.reload({ stream: true }) : gutil.noop());
-});
-
-// JavaScript public processing
-gulp.task('public-js', () => {
-  return gulp.src(public_config.js_src)
-    .pipe(deporder())
-    .pipe(concat(public_config.filename))
-    .pipe(stripdebug())
-    .pipe(uglify())
-    .pipe(gulp.dest(public_config.js_dist))
-    .pipe(browsersync ? browsersync.reload({ stream: true }) : gutil.noop());
-});
-
-//Optimise images
-gulp.task('admin-imagemin', async () => {
-    gulp.src(admin_config.image_src)
-    .pipe(newer(admin_config.image_dist))
-    .pipe(imagemin())
-    .pipe(gulp.dest(admin_config.image_dist))
-});
-gulp.task('public-imagemin', async () => {
-    gulp.src(public_config.image_src)
-    .pipe(newer(public_config.image_dist))
-    .pipe(imagemin())
-    .pipe(gulp.dest(public_config.image_dist))
-});
-
-//create pot file
-var info = require('./package.json');
-gulp.task('pot-task', function () {
-
-    return gulp.src('**/*.php')
-        .pipe(wpPot( {
-            domain: info.name,
-            package: info.name
-       } ))
-        .pipe(gulp.dest('languages/'+info.name+'.pot'));
-});
-
-//browser sync
-var reload = browsersync.reload;
-gulp.task('browser-sync', function() {
+// BrowserSync
+function browserSync(done)
+{
   browsersync.init({
-    proxy: 'http://makewebbetter.local/', //change it to your local environment base url,
-    files: [admin_config.dist, public_config.dist]
+    open: false,
+    //proxy: 'http://pluginsetup.chandresh.php/', // replace it with yours
+    port: 3000,
+    server: {
+      baseDir: './'
+    }
   });
-});
+  done();
+}
+// html
+function html()
+{
+  return gulp
+  .src([
+    './*.html',
+  ])
+  .pipe(browsersync.stream());
+}
+// clean
+function clean()
+{
+  return del(['./assets/dist/']);
+}
 
-gulp.task('reload', function () {
-  browsersync.reload();
-});
-gulp.task('build', gulp.series(['admin-css', 'admin-js', 'admin-imagemin','public-css', 'public-js', 'public-imagemin', 'pot-task']));
+// Images Frontend
+function images()
+{
+  return gulp
+  .src('assets/src/front-end/image/**/*')
+  .pipe(newer('public/image'))
+  .pipe(
+    imagemin([
+    imagemin.gifsicle({ interlaced: true }),
+    imagemin.jpegtran({ progressive: true }),
+    imagemin.optipng({ optimizationLevel: 5 }),
+    imagemin.svgo({
+      plugins: [
+      {
+        removeViewBox: false,
+        collapseGroups: true
+      }
+      ]
+    })
+    ])
+  )
+  .pipe(gulp.dest('public/image'));
+}
 
-//watch for file changes
-gulp.task('watch', gulp.series(['browser-sync']), function() {
-  // check changes
-  gulp.watch(admin_config.src, ['admin-imagemin', 'admin-css', 'admin-js']);
-  gulp.watch(public_config.src, ['public-imagemin', 'public-css', 'public-js']);
-});
+// Images Dashboard
+function imagesBackend()
+{
+  return gulp
+  .src('assets/src/back-end/image/**/*')
+  .pipe(newer('admin/image'))
+  .pipe(
+    imagemin([
+    imagemin.gifsicle({ interlaced: true }),
+    imagemin.jpegtran({ progressive: true }),
+    imagemin.optipng({ optimizationLevel: 5 }),
+    imagemin.svgo({
+      plugins: [
+      {
+        removeViewBox: false,
+        collapseGroups: true
+      }
+      ]
+    })
+    ])
+  )
+  .pipe(gulp.dest('admin/image'));
+}
 
-// default task
-gulp.task('default', gulp.series(['build', 'watch']));
+
+function css()
+{
+  return gulp
+  .src([
+    './assets/src/front-end/css/invoice-system-for-woocommerce-public.css',
+  ])
+  .pipe(plumber())
+  .pipe(concat('mwb-public.css'))
+  .pipe(sass({ outputStyle: "expanded" }))
+  .pipe(gulp.dest("public/css"))
+  .pipe(postcss([autoprefixer(), combineMediaQuery()]))
+  .pipe(gulp.dest("public/css"))
+  .pipe(rename({ suffix: ".min" }))
+  .pipe(postcss([cssnano()]))
+  .pipe(gulp.dest("public/css"))
+  .pipe(browsersync.stream());
+}
+
+// CSS Dashboard
+function cssBackend()
+{
+  return gulp
+  .src([
+    'assets/src/back-end/css/invoice-system-for-woocommerce-admin.css',
+  ])
+  .pipe(plumber())
+  .pipe(concat('mwb-admin.css'))
+  .pipe(sass({ outputStyle: "expanded" }))
+  .pipe(gulp.dest("admin/css"))
+  .pipe(postcss([autoprefixer(), combineMediaQuery()]))
+  .pipe(gulp.dest("admin/css"))
+  .pipe(rename({ suffix: ".min" }))
+  .pipe(postcss([cssnano()]))
+  .pipe(gulp.dest("admin/css"))
+  .pipe(browsersync.stream());
+}
+// CSS Dashboard
+function cssBackendGlobal()
+{
+  return gulp
+  .src([
+    'assets/src/back-end/css/invoice-system-for-woocommerce-admin-global-for-all.css',
+  ])
+  .pipe(plumber())
+  .pipe(concat('mwb-admin-global.css'))
+  .pipe(sass({ outputStyle: "expanded" }))
+  .pipe(gulp.dest("admin/css"))
+  .pipe(postcss([autoprefixer(), combineMediaQuery()]))
+  .pipe(gulp.dest("admin/css"))
+  .pipe(rename({ suffix: ".min" }))
+  .pipe(postcss([cssnano()]))
+  .pipe(gulp.dest("admin/css"))
+  .pipe(browsersync.stream());
+}
+
+// Scripts
+function scripts()
+{
+  return (
+  gulp
+    .src([
+
+    'assets/src/front-end/js/**/*',
+    ])
+    .pipe(plumber())
+    .pipe(concat('mwb-public.js'))
+    .pipe(gulp.dest('public/js'))
+    .pipe(terser())
+    .pipe(rename({ suffix: '.min' }))
+    .pipe(gulp.dest('public/js'))
+    .pipe(browsersync.stream())
+  );
+}
+
+// Scripts Backend
+function scriptsBackend()
+{
+  return (
+  gulp
+    .src([
+    'assets/src/back-end/js/invoice-system-for-woocommerce-admin*.js'
+    ])
+    .pipe(plumber())
+    .pipe(concat('mwb-admin.js'))
+    .pipe(gulp.dest('admin/js'))
+    .pipe(terser())
+    .pipe(rename({ suffix: '.min' }))
+    .pipe(gulp.dest('admin/js'))
+    .pipe(browsersync.stream())
+  );
+}
+// Scripts Backend
+function scriptsBackendGlobal()
+{
+  return (
+  gulp
+    .src([
+    'assets/src/back-end/js/invoice-system-for-woocommerce-zip-download.js'
+    ])
+    .pipe(plumber())
+    .pipe(concat('mwb-invoice-zip-download.js'))
+    .pipe(gulp.dest('admin/js'))
+    .pipe(terser())
+    .pipe(rename({ suffix: '.min' }))
+    .pipe(gulp.dest('admin/js'))
+    .pipe(browsersync.stream())
+  );
+}
+
+// Fonts
+function fonts()
+{
+  return (
+  gulp
+    .src('assets/src/front-end/fonts/**/*')
+    .pipe(plumber())
+    .pipe(gulp.dest('public/fonts'))
+    .pipe(browsersync.stream())
+  );
+}
+
+// Fonts Backend
+function fontsBackend()
+{
+  return (
+  gulp
+    .src('assets/src/back-end/fonts/**/*')
+    .pipe(plumber())
+    .pipe(gulp.dest('admin/fonts'))
+    .pipe(browsersync.stream())
+  );
+}
+
+// watch changes
+function watchFiles()
+{
+  gulp.watch('./assets/src/front-end/css/**/*', css);
+  gulp.watch('assets/src/front-end/js/**/*', scripts);
+  gulp.watch('assets/src/front-end/image/**/*', images);
+  gulp.watch('assets/src/front-end/fonts/**/*', fonts);
+  gulp.watch('./*.html', html);
+  gulp.watch('assets/src/back-end/image/**/*', imagesBackend);
+  gulp.watch('assets/src/back-end/css/**/*', cssBackend);
+  gulp.watch('assets/src/back-end/css/**/*', cssBackendGlobal);
+  gulp.watch('assets/src/back-end/js/**/*', scriptsBackend);
+  gulp.watch('assets/src/back-end/js/**/*', scriptsBackendGlobal);
+  gulp.watch('assets/src/front-end/fonts/**/*', fontsBackend);
+}
+
+const start = gulp.series(clean, images, fonts, css, scripts, html, imagesBackend, cssBackend, cssBackendGlobal, scriptsBackend, scriptsBackendGlobal,fontsBackend);
+const watch = gulp.parallel(watchFiles, browserSync);
+
+// export tasks
+exports.images = images;
+exports.css = css;
+exports.scripts = scripts;
+exports.clean = clean;
+exports.imagesBackend = imagesBackend;
+exports.cssBackend = cssBackend;
+exports.cssBackendGlobal = cssBackendGlobal;
+exports.scriptsBackend = scriptsBackend;
+exports.scriptsBackendGlobal=scriptsBackendGlobal;
+exports.fontsBackend = fontsBackend;
+exports.watch = watch;
+exports.default = gulp.series(start, watch);

@@ -58,7 +58,7 @@ class Invoice_System_For_Woocommerce_Public {
 	 * @since    1.0.0
 	 */
 	public function isfw_public_enqueue_styles() {
-		wp_enqueue_style( $this->plugin_name, INVOICE_SYSTEM_FOR_WOOCOMMERCE_DIR_URL . 'public/src/scss/invoice-system-for-woocommerce-public.css', array(), $this->version, 'all' );
+		wp_enqueue_style( $this->plugin_name . 'public-css', INVOICE_SYSTEM_FOR_WOOCOMMERCE_DIR_URL . 'public/css/mwb-public.min.css', array(), $this->version, 'all' );
 	}
 
 	/**
@@ -68,8 +68,14 @@ class Invoice_System_For_Woocommerce_Public {
 	 */
 	public function isfw_public_enqueue_scripts() {
 
-		wp_register_script( $this->plugin_name, INVOICE_SYSTEM_FOR_WOOCOMMERCE_DIR_URL . 'public/src/js/invoice-system-for-woocommerce-public.js', array( 'jquery' ), $this->version, false );
-		wp_localize_script( $this->plugin_name, 'isfw_public_param', array( 'ajaxurl' => admin_url( 'admin-ajax.php' ) ) );
+		wp_register_script( $this->plugin_name, INVOICE_SYSTEM_FOR_WOOCOMMERCE_DIR_URL . 'public/js/mwb-public.min.js', array( 'jquery' ), $this->version, false );
+		wp_localize_script(
+			$this->plugin_name,
+			'isfw_public_param',
+			array(
+				'ajaxurl' => admin_url( 'admin-ajax.php' )
+			)
+		);
 		wp_enqueue_script( $this->plugin_name );
 
 	}

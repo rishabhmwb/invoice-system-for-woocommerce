@@ -1,0 +1,9 @@
+.mwb_isfw_plugin_extra_custom_tab, .mwb-info-img {
+  width: 16px;
+  height: 20px;
+}
+
+.toplevel_page_mwb-plugins a div.wp-menu-image img {
+  width: 25px;
+  height: 25px;
+}
