@@ -277,7 +277,7 @@ class Invoice_System_For_Woocommerce_Common {
 					'id'               => $item_data['product_id'],
 					'product_name'     => $item_data['name'],
 					'product_quantity' => $item_data['quantity'],
-					'product_price'    => number_format( ( preg_replace( '/,/', '.', $item_data['total'] ) / $item_data['quantity'] ), $decimals, $decimal_separator, $thousand_separator ),
+					'product_price'    => ( 0 !== (int) $item_data['quantity'] ) ? number_format( ( preg_replace( '/,/', '.', $item_data['total'] ) / $item_data['quantity'] ), $decimals, $decimal_separator, $thousand_separator ) : 0,
 					'product_tax'      => number_format( preg_replace( '/,/', '.', $item_data['total_tax'] ), $decimals, $decimal_separator, $thousand_separator ),
 					'product_total'    => number_format( ( preg_replace( '/,/', '.', $item_data['total'] ) + preg_replace( '/,/', '.', $item_data['total_tax'] ) ), $decimals, $decimal_separator, $thousand_separator ),
 					'tax_percent'      => number_format( $product_tax, $decimals, $decimal_separator, $thousand_separator ),

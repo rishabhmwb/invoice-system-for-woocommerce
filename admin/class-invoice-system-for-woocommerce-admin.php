@@ -13,7 +13,7 @@
  * The admin-specific functionality of the plugin.
  *
  * Defines the plugin name, version, and two examples hooks for how to
- * enqueue the admin-specific stylesheet and JavaScript plugin enable key :isfw_mwb_plugin_enable & setting data: mwb_isfw_pdf_general_settings
+ * enqueue the admin-specific stylesheet and JavaScript
  * order details shortcode [ISFW_FETCH_ORDER order_id ='' ].
  *
  * @package    Invoice_system_for_woocommerce
@@ -654,7 +654,7 @@ class Invoice_System_For_Woocommerce_Admin {
 		return $invoice_settings_arr;
 	}
 	/**
-	 * Populating field for custom column on order listing page.
+	 * Populating field for custom column on order listing page admin.
 	 *
 	 * @param string $column columns.
 	 * @return void
@@ -710,8 +710,7 @@ class Invoice_System_For_Woocommerce_Admin {
 	 * @return array
 	 */
 	public function isfw_send_attachment_with_email( $attachments, $email_id, $order, $email ) {
-		$isfw_send_invoice_automatically = get_option( 'isfw_send_invoice_automatically' );
-		if ( 'yes' === $isfw_send_invoice_automatically ) {
+		if ( 'yes' === get_option( 'isfw_send_invoice_automatically' ) ) {
 			$order_status = get_option( 'isfw_send_invoice_for' );
 			if ( $order_status ) {
 				$order_statuses = preg_replace( '/wc-/', 'customer_', $order_status ) . '_order';
