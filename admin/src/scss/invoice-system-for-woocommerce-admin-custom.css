@@ -9,3 +9,21 @@
     width: 20px;
     padding-right: 5px;
 }
+.mwb-form-group__control #isfw_upload_invoice_company_logo,.mwb-form-group__control #isfw_invoice_company_logo_image_remove {
+    border: none;
+    border-radius: 4px;
+    padding: 5px 10px;
+}
+.mwb-form-group__control #isfw_upload_invoice_company_logo {
+    
+background-color: #5cb85c;
+}
+.mwb-form-group__control #isfw_invoice_company_logo_image_remove {
+background-color: #d9534f;
+}
+.mwb-form-group__control #isfw_upload_invoice_company_logo:hover,.mwb-form-group__control #isfw_invoice_company_logo_image_remove:hover {
+    cursor: pointer;
+}
+.isfw-section-wrap .mwb-isfw-multi .mwb-form-group__control label {
+   margin: 0 10px 10px 0;
+}

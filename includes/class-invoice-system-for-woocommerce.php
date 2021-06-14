@@ -850,7 +850,7 @@ class Invoice_System_For_Woocommerce {
 									?>
 									<img src="<?php echo ( isset( $isfw_subcomponent['src'] ) ? esc_attr( $isfw_subcomponent['src'] ) : '' ); ?>" width="100" height="100" alt="">
 									<input 
-									class="mdc-text-field__input <?php echo esc_attr( array_key_exists( 'class', $isfw_subcomponent ) ? $isfw_subcomponent['class'] : '' ); ?>" 
+									class="<?php echo esc_attr( array_key_exists( 'class', $isfw_subcomponent ) ? $isfw_subcomponent['class'] : '' ); ?>" 
 									name="<?php echo esc_attr( array_key_exists( 'name', $isfw_subcomponent ) ? $isfw_subcomponent['name'] : '' ); ?>"
 									id="<?php echo esc_attr( array_key_exists( 'id', $isfw_subcomponent ) ? $isfw_subcomponent['id'] : '' ); ?>"
 									type="<?php echo esc_attr( array_key_exists( 'type', $isfw_subcomponent ) ? $isfw_subcomponent['type'] : '' ); ?>"
@@ -953,8 +953,8 @@ class Invoice_System_For_Woocommerce {
 								<?php
 								$sub_isfw_component_value = $isfw_component['value'];
 								?>
-								<div>
-									<span><?php echo esc_attr( $sub_isfw_component_value['month']['title'] ); ?></span>
+								<div class="mwb-isfw-date-picker-group">
+									<span class="mwb-isfw-month-selector"><?php echo esc_attr( $sub_isfw_component_value['month']['title'] ); ?></span>
 									<select name="<?php echo esc_attr( $sub_isfw_component_value['month']['name'] ); ?>" id="<?php echo esc_attr( $sub_isfw_component_value['month']['id'] ); ?>" class="<?php echo esc_attr( $sub_isfw_component_value['month']['class'] ); ?>">
 										<?php
 										$month_options = $sub_isfw_component_value['month']['options'];
@@ -965,7 +965,7 @@ class Invoice_System_For_Woocommerce {
 										}
 										?>
 									</select>
-									<span><?php echo esc_attr( $sub_isfw_component_value['date']['title'] ); ?></span>
+									<span class="mwb-isfw-date-selector"><?php echo esc_attr( $sub_isfw_component_value['date']['title'] ); ?></span>
 									<select name="<?php echo esc_attr( $sub_isfw_component_value['date']['name'] ); ?>" id="<?php echo esc_attr( $sub_isfw_component_value['date']['id'] ); ?>" class="<?php echo esc_attr( $sub_isfw_component_value['date']['class'] ); ?>">
 										<?php
 										$date_options = $sub_isfw_component_value['date']['options'];
