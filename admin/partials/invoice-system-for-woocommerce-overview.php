@@ -13,6 +13,7 @@
 
 ?>
 <div class="isfw-overview__wrapper">
+	<?php do_action( 'isfw_overview_content_top' ); ?>
 	<div class="isfw-overview__banner">
 		<img src="<?php echo esc_html( INVOICE_SYSTEM_FOR_WOOCOMMERCE_DIR_URL . 'admin/image/isfw-banner.png' ); ?>" alt="Overview banner image">
 	</div>
@@ -150,4 +151,5 @@
 			</div>
 		</div>
 	</div>
+	<?php do_action( 'isfw_overview_content_bottom' ); ?>
 </div>
