@@ -208,6 +208,10 @@ class Invoice_System_For_Woocommerce_Common {
 				}
 				$dompdf->stream( $invoice_name . '.pdf', array( 'Attachment' => 1 ) );
 			}
+			if ( 'open_window' === $action ) {
+				$output = $dompdf->output();
+				$dompdf->stream( $invoice_name . '.pdf', array( 'Attachment' => 0 ) );
+			}
 			if ( 'download_on_server' === $action ) {
 				$output = $dompdf->output();
 				if ( file_exists( $path ) ) {

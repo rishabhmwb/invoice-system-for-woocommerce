@@ -110,43 +110,39 @@
 				</div>
 			</div>
 			<div class="isfw-overview__keywords-item">
-				<a href="https://makewebbetter.com/contact-us/" title="">
-					<div class="isfw-overview__keywords-card mwb-card-support">
-						<div class="isfw-overview__keywords-image">
-							<img src="<?php echo esc_html( INVOICE_SYSTEM_FOR_WOOCOMMERCE_DIR_URL . 'admin/image/invoice_renew_number_sequence_icon.png' ); ?>" alt="Support image">
-						</div>
-						<div class="isfw-overview__keywords-text">
-							<h3 class="isfw-overview__keywords-heading"><?php echo esc_html_e( 'Renew Invoice Number Sequence', 'invoice-system-for-woocommerce' ); ?></h3>
-							<p class="isfw-overview__keywords-description">
-								<?php
-								esc_html_e(
-									'Invoice System for WooCommerce plugin also allows the admin to renew the invoice number sequence with every new financial year.',
-									'invoice-system-for-woocommerce'
-								);
-								?>
-							</p>
-						</div>
-					</a>
+				<div class="isfw-overview__keywords-card mwb-card-support">
+					<div class="isfw-overview__keywords-image">
+						<img src="<?php echo esc_html( INVOICE_SYSTEM_FOR_WOOCOMMERCE_DIR_URL . 'admin/image/invoice_renew_number_sequence_icon.png' ); ?>" alt="Support image">
+					</div>
+					<div class="isfw-overview__keywords-text">
+						<h3 class="isfw-overview__keywords-heading"><?php echo esc_html_e( 'Renew Invoice Number Sequence', 'invoice-system-for-woocommerce' ); ?></h3>
+						<p class="isfw-overview__keywords-description">
+							<?php
+							esc_html_e(
+								'Invoice System for WooCommerce plugin also allows the admin to renew the invoice number sequence with every new financial year.',
+								'invoice-system-for-woocommerce'
+							);
+							?>
+						</p>
+					</div>
 				</div>
 			</div>
 			<div class="isfw-overview__keywords-item">
-				<a href="https://makewebbetter.com/contact-us/" title="">
-					<div class="isfw-overview__keywords-card mwb-card-support">
-						<div class="isfw-overview__keywords-image">
-							<img src="<?php echo esc_html( INVOICE_SYSTEM_FOR_WOOCOMMERCE_DIR_URL . 'admin/image/invoice_bulk_icon.png' ); ?>" alt="Support image">
-						</div>
-						<div class="isfw-overview__keywords-text">
-							<h3 class="isfw-overview__keywords-heading"><?php echo esc_html_e( 'Bulk Invoices & Packaging Slips', 'invoice-system-for-woocommerce' ); ?></h3>
-							<p class="isfw-overview__keywords-description">
-								<?php
-								esc_html_e(
-									'Invoice System for WooCommerce plugin allows the admin to generate PDF invoices and packaging slips in bulk.',
-									'invoice-system-for-woocommerce'
-								);
-								?>
-							</p>
-						</div>
-					</a>
+				<div class="isfw-overview__keywords-card mwb-card-support">
+					<div class="isfw-overview__keywords-image">
+						<img src="<?php echo esc_html( INVOICE_SYSTEM_FOR_WOOCOMMERCE_DIR_URL . 'admin/image/invoice_bulk_icon.png' ); ?>" alt="Support image">
+					</div>
+					<div class="isfw-overview__keywords-text">
+						<h3 class="isfw-overview__keywords-heading"><?php echo esc_html_e( 'Bulk Invoices & Packaging Slips', 'invoice-system-for-woocommerce' ); ?></h3>
+						<p class="isfw-overview__keywords-description">
+							<?php
+							esc_html_e(
+								'Invoice System for WooCommerce plugin allows the admin to generate PDF invoices and packaging slips in bulk.',
+								'invoice-system-for-woocommerce'
+							);
+							?>
+						</p>
+					</div>
 				</div>
 			</div>
 		</div>

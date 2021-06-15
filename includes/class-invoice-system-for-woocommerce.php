@@ -328,12 +328,12 @@ class Invoice_System_For_Woocommerce {
 		$isfw_default_tabs = array();
 
 		$isfw_default_tabs['invoice-system-for-woocommerce-general'] = array(
-			'title' => esc_html__( 'General Setting', 'invoice-system-for-woocommerce' ),
+			'title' => esc_html__( 'General Settings', 'invoice-system-for-woocommerce' ),
 			'name'  => 'invoice-system-for-woocommerce-general',
 		);
 
 		$isfw_default_tabs['invoice-system-for-woocommerce-invoice-setting'] = array(
-			'title' => esc_html__( 'Invoice Setting', 'invoice-system-for-woocommerce' ),
+			'title' => esc_html__( 'Invoice Settings', 'invoice-system-for-woocommerce' ),
 			'name'  => 'invoice-system-for-woocommerce-invoice-setting',
 		);
 

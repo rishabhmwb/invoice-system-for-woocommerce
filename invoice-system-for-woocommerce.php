@@ -81,7 +81,7 @@ if ( $tmp ) {
 	/**
 	 * Define plugin constants.
 	 *
-	 * @since             1.0.0
+	 * @since 1.0.0
 	 */
 	function define_invoice_system_for_woocommerce_constants() {
 		invoice_system_for_woocommerce_constants( 'INVOICE_SYSTEM_FOR_WOOCOMMERCE_VERSION', '1.0.1' );
@@ -93,9 +93,9 @@ if ( $tmp ) {
 	/**
 	 * Callable function for defining plugin constants.
 	 *
-	 * @param   String $key    Key for contant.
-	 * @param   String $value   value for contant.
-	 * @since             1.0.0
+	 * @param string $key    Key for contant.
+	 * @param string $value   value for contant.
+	 * @since 1.0.0
 	 */
 	function invoice_system_for_woocommerce_constants( $key, $value ) {
 		if ( ! defined( $key ) ) {
