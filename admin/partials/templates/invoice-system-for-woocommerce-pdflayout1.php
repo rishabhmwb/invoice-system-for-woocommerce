@@ -266,8 +266,7 @@ function return_ob_value( $order_id, $type, $invoice_id ) {
 					</thead>
 					<tbody>';
 			foreach ( $order_product_details as $key => $product ) {
-				$style = ( 0 !== $key % 2 ) ? 'class="isfw-invoice-background-color"' : '';
-				$html .= '<tr ' . $style . '>
+				$html .= '<tr>
 								<td style="text-align: left;padding: 10px;">' . $product['product_name'] . '</td>
 								<td style="text-align: left;padding: 10px;">' . $product['product_quantity'] . '</td>
 								<td style="text-align: left;padding: 10px;">' . $product['product_price'] . '</td>
@@ -275,38 +274,61 @@ function return_ob_value( $order_id, $type, $invoice_id ) {
 								<td style="text-align: left;padding: 10px;">' . $product['product_total'] . '</td>
 							</tr>';
 			}
+			$html               .= '<tr>
+									<td colspan="3" style="padding: 2px 10px;font-weight: bold;">
+									</td>
+									<td style="padding: 2px 10px;font-weight: bold;">
+									' . __( 'Payment via', 'invoice-system-for-woocommerce' ) . '</td>
+									<td style="padding: 2px 10px;font-weight: bold;">
+										' . $billing_details['payment_method'] . '
+									</td>
+								</tr>
+								<tr>
+									<td colspan="3" style="padding: 2px 10px;font-weight: bold;">
+									</td>
+									<td style="padding: 2px 10px;font-weight: bold;">
+									' . __( 'Subtotal', 'invoice-system-for-woocommerce' ) . '</td>
+									<td style="padding: 2px 10px;font-weight: bold;">
+										' . $billing_details['order_subtotal'] . '
+									</td>
+								</tr>
+								<tr>
+									<td colspan="3" style="padding: 2px 10px;font-weight: bold;" class="no-border">
+
+									</td>
+									<td style="padding: 2px 10px;font-weight: bold;">
+										' . __( 'Shipping', 'invoice-system-for-woocommerce' ) . '
+									</td>
+									<td style="padding: 2px 10px;font-weight: bold;">
+										' . $shipping_details['shipping_total'] . '
+									</td>
+								</tr>
+								<tr>
+									<td colspan="3" style="padding: 2px 10px;font-weight: bold;" class="no-border">
+
+									</td>
+									<td style="padding: 2px 10px;font-weight: bold;">
+										' . __( 'Total Tax', 'invoice-system-for-woocommerce' ) . '
+									</td>
+									<td style="padding: 2px 10px;font-weight: bold;">
+										' . $billing_details['tax_totals'] . '
+									</td>
+								</tr>';
+			$isfw_coupon_details = $billing_details['coupon_details'];
+			foreach ( $isfw_coupon_details as $key => $price ) {
+				$html .= '<tr>
+					<td colspan="3" style="padding: 2px 10px;font-weight: bold;" class="no-border">
+
+					</td>
+					<td style="padding: 2px 10px;font-weight: bold;">
+						' . $key . '
+					</td>
+					<td style="padding: 2px 10px;font-weight: bold;">
+						' . $price . '
+					</td>
+				</tr>';
+			}
 			$html .= '<tr>
-						<td colspan="3" style="padding: 2px 10px;font-weight: bold;">
-						</td>
-						<td style="padding: 2px 10px;font-weight: bold;">
-						' . __( 'Subtotal', 'invoice-system-for-woocommerce' ) . '</td>
-						<td style="padding: 2px 10px;font-weight: bold;">
-							' . $billing_details['order_subtotal'] . '
-						</td>
-					</tr>
-					<tr>
-						<td colspan="3" style="padding: 2px 10px;font-weight: bold;" class="no-border">
-
-						</td>
-						<td style="padding: 2px 10px;font-weight: bold;">
-							' . __( 'Shipping', 'invoice-system-for-woocommerce' ) . '
-						</td>
-						<td style="padding: 2px 10px;font-weight: bold;">
-							' . $shipping_details['shipping_total'] . '
-						</td>
-					</tr>
-					<tr>
-						<td colspan="3" style="padding: 2px 10px;font-weight: bold;" class="no-border">
-
-						</td>
-						<td style="padding: 2px 10px;font-weight: bold;">
-							' . __( 'Total Tax', 'invoice-system-for-woocommerce' ) . '
-						</td>
-						<td style="padding: 2px 10px;font-weight: bold;">
-							' . $billing_details['tax_totals'] . '
-						</td>
-					</tr>
-					<tr>
 						<td colspan="3" style="padding: 2px 10px;font-weight: bold;" class="no-border">
 
 						</td>
