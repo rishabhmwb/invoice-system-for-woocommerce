@@ -249,6 +249,9 @@ class Invoice_System_For_Woocommerce_Common {
 			$atts
 		);
 		$order = wc_get_order( $atts['order_id'] );
+		if ( is_a( $order, 'WC_Order_Refund' ) ) {
+			$order = wc_get_order( $order->get_parent_id() );
+		}
 		if ( $order ) {
 			$billing_email         = $order->get_billing_email();
 			$billing_phone         = $order->get_billing_phone();

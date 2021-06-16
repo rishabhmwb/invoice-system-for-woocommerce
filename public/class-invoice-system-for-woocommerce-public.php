@@ -127,7 +127,7 @@ class Invoice_System_For_Woocommerce_Public {
 		require_once INVOICE_SYSTEM_FOR_WOOCOMMERCE_DIR_PATH . 'common/class-invoice-system-for-woocommerce-common.php';
 		$common_class                             = new Invoice_System_For_Woocommerce_Common( $this->plugin_name, $this->version );
 		$isfw_allow_invoice_generation_for_orders = get_option( 'isfw_allow_invoice_generation_for_orders', array() );
-		if ( isset( $_GET['order_id'] ) && isset( $_GET['action'] ) ) { // phpcs:ignore
+		if ( ( isset( $_GET['order_id'] ) && isset( $_GET['action'] ) ) && ( isset( $_GET['_nonce'] ) && wp_verify_nonce( sanitize_text_field( wp_unslash( $_GET['_nonce'] ) ), 'user_pdf_nonce' ) ) ) {
 			$user_id = get_current_user_id();
 			if ( 'userpdfdownload' === $_GET['action'] ) { // phpcs:ignore
 				$order_id = sanitize_text_field( wp_unslash( $_GET['order_id'] ) ); // phpcs:ignore
@@ -162,6 +162,7 @@ class Invoice_System_For_Woocommerce_Public {
 			array(
 				'order_id' => $order->get_id(),
 				'action'   => 'userpdfdownload',
+				'_nonce'   => wp_create_nonce( 'user_pdf_nonce' ),
 			),
 			$url_here
 		);
@@ -194,6 +195,7 @@ class Invoice_System_For_Woocommerce_Public {
 			array(
 				'order_id' => $order->get_id(),
 				'action'   => 'userpdfdownload',
+				'_nonce'   => wp_create_nonce( 'user_pdf_nonce' ),
 			),
 			$url_here
 		);

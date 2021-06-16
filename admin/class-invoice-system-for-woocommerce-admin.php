@@ -658,14 +658,15 @@ class Invoice_System_For_Woocommerce_Admin {
 	 */
 	public function isfw_create_pdf() {
 		global $pagenow;
-		if ( 'post.php' === $pagenow ) {
-			if ( isset( $_GET['orderid'] ) && isset( $_GET['action'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification
-				if ( 'generateinvoice' === $_GET['action'] ) { // phpcs:ignore WordPress.Security.NonceVerification
-					$order_id = sanitize_text_field( wp_unslash( $_GET['orderid'] ) ); // phpcs:ignore WordPress.Security.NonceVerification
+		if ( 'post.php' === $pagenow && current_user_can( 'edit_posts' ) ) {
+			if ( ( isset( $_GET['orderid'] ) && isset( $_GET['action'] ) ) && ( isset( $_GET['_nonce'] ) && wp_verify_nonce( sanitize_text_field( wp_unslash( $_GET['_nonce'] ) ), 'invoice_generate_admin' ) ) ) {
+				$action = sanitize_text_field( wp_unslash( $_GET['action'] ) );
+				if ( 'generateinvoice' === $action ) {
+					$order_id = sanitize_text_field( wp_unslash( $_GET['orderid'] ) );
 					$this->isfw_generating_pdf( $order_id, 'invoice', 'download_locally' );
 				}
-				if ( 'generateslip' === $_GET['action'] ) { // phpcs:ignore WordPress.Security.NonceVerification
-					$order_id = sanitize_text_field( wp_unslash( $_GET['orderid'] ) ); // phpcs:ignore WordPress.Security.NonceVerification
+				if ( 'generateslip' === $action ) {
+					$order_id = sanitize_text_field( wp_unslash( $_GET['orderid'] ) );
 					$this->isfw_generating_pdf( $order_id, 'packing_slip', 'download_locally' );
 				}
 			}
@@ -728,45 +729,46 @@ class Invoice_System_For_Woocommerce_Admin {
 	 * @return string
 	 */
 	public function isfw_handling_bulk_action_for_pdf_generation( $redirect_to, $action, $post_ids ) {
-		$processed_ids  = array();
-		$zip            = new ZipArchive();
-		$upload_dir     = wp_upload_dir();
-		$upload_basedir = $upload_dir['basedir'] . '/invoices/';
-		$zip_path       = $upload_basedir . 'document.zip';
-		if ( ! file_exists( $upload_basedir ) ) {
-			wp_mkdir_p( $upload_basedir );
-		}
-		if ( file_exists( $zip_path ) ) {
-			@unlink( $zip_path ); // phpcs:ignore
-		}
-		$zip->open( $zip_path, ZipArchive::CREATE );
-		if ( 'isfw_download_invoice' === $action ) {
-			foreach ( $post_ids as $order_id ) {
-				$file_path = $this->isfw_generating_pdf( $order_id, 'invoice', 'download_on_server' );
-				$zip->addFile( $file_path, str_replace( $upload_dir['basedir'], '', $file_path ) );
+		if ( 'isfw_download_invoice' === $action || 'isfw_download_packing_slip' === $action ) {
+			$zip            = new ZipArchive();
+			$upload_dir     = wp_upload_dir();
+			$upload_basedir = $upload_dir['basedir'] . '/invoices/';
+			$zip_path       = $upload_basedir . 'document.zip';
+			if ( ! file_exists( $upload_basedir ) ) {
+				wp_mkdir_p( $upload_basedir );
 			}
-			@$zip->close(); // phpcs:ignore
-			$redirect_to = add_query_arg(
-				array(
-					'write_downloads' => true,
-				),
-				$redirect_to
-			);
-			return $redirect_to;
-		}
-		if ( 'isfw_download_packing_slip' === $action ) {
-			foreach ( $post_ids as $order_id ) {
-				$file_path = $this->isfw_generating_pdf( $order_id, 'packing_slip', 'download_on_server' );
-				$zip->addFile( $file_path, str_replace( $upload_dir['basedir'], '', $file_path ) );
+			if ( file_exists( $zip_path ) ) {
+				@unlink( $zip_path ); // phpcs:ignore
 			}
-			@$zip->close(); // phpcs:ignore
-			$redirect_to = add_query_arg(
-				array(
-					'write_downloads' => true,
-				),
-				$redirect_to
-			);
-			return $redirect_to;
+			$zip->open( $zip_path, ZipArchive::CREATE );
+			if ( 'isfw_download_invoice' === $action ) {
+				foreach ( $post_ids as $order_id ) {
+					$file_path = $this->isfw_generating_pdf( $order_id, 'invoice', 'download_on_server' );
+					$zip->addFile( $file_path, str_replace( $upload_dir['basedir'], '', $file_path ) );
+				}
+				@$zip->close(); // phpcs:ignore
+				$redirect_to = add_query_arg(
+					array(
+						'write_downloads' => true,
+					),
+					$redirect_to
+				);
+				return $redirect_to;
+			}
+			if ( 'isfw_download_packing_slip' === $action ) {
+				foreach ( $post_ids as $order_id ) {
+					$file_path = $this->isfw_generating_pdf( $order_id, 'packing_slip', 'download_on_server' );
+					$zip->addFile( $file_path, str_replace( $upload_dir['basedir'], '', $file_path ) );
+				}
+				@$zip->close(); // phpcs:ignore
+				$redirect_to = add_query_arg(
+					array(
+						'write_downloads' => true,
+					),
+					$redirect_to
+				);
+				return $redirect_to;
+			}
 		}
 		return $redirect_to;
 	}
