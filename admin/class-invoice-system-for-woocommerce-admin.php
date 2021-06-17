@@ -659,7 +659,10 @@ class Invoice_System_For_Woocommerce_Admin {
 	public function isfw_create_pdf() {
 		global $pagenow;
 		if ( 'post.php' === $pagenow && current_user_can( 'edit_posts' ) ) {
-			if ( ( isset( $_GET['orderid'] ) && isset( $_GET['action'] ) ) && ( isset( $_GET['_nonce'] ) && wp_verify_nonce( sanitize_text_field( wp_unslash( $_GET['_nonce'] ) ), 'invoice_generate_admin' ) ) ) {
+			if ( ! isset( $_GET['_nonce'] ) && ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_GET['_nonce'] ) ), 'invoice_generate_admin' ) ) {
+				return;
+			}
+			if ( ( isset( $_GET['orderid'] ) && isset( $_GET['action'] ) ) ) {
 				$action = sanitize_text_field( wp_unslash( $_GET['action'] ) );
 				if ( 'generateinvoice' === $action ) {
 					$order_id = sanitize_text_field( wp_unslash( $_GET['orderid'] ) );
