@@ -275,13 +275,14 @@ function return_ob_value( $order_id, $type, $invoice_id ) {
 							</tr>';
 			}
 			$html               .= '<tr>
-									<td colspan="3" style="padding: 2px 10px;font-weight: bold;">
-									</td>
-									<td style="padding: 2px 10px;font-weight: bold;">
-									' . __( 'Payment via', 'invoice-system-for-woocommerce' ) . '</td>
-									<td style="padding: 2px 10px;font-weight: bold;">
-										' . $billing_details['payment_method'] . '
-									</td>
+										<td colspan="3" style="padding: 2px 10px;font-weight: bold;">
+										</td>
+										<td style="padding: 2px 10px;font-weight: bold;">
+											' . __( 'Payment via', 'invoice-system-for-woocommerce' ) . '
+										</td>
+										<td style="padding: 2px 10px;font-weight: bold;">
+											' . $billing_details['payment_method'] . '
+										</td>
 								</tr>
 								<tr>
 									<td colspan="3" style="padding: 2px 10px;font-weight: bold;">
@@ -351,5 +352,5 @@ function return_ob_value( $order_id, $type, $invoice_id ) {
 		</html>';
 		return $html;
 	}
-	return '<div>' . esc_html_e( 'Looks like order is not found', 'invoice-system-for-woocommerce' ) . '</div>';
+	return '<div>' . esc_html__( 'Looks like order is not found', 'invoice-system-for-woocommerce' ) . '</div>';
 }
