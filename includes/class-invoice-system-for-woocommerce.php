@@ -540,7 +540,7 @@ class Invoice_System_For_Woocommerce {
 								>
 							</label>
 							<div class="mdc-text-field-helper-line">
-								<div class="mdc-text-field-helper-text--persistent mwb-helper-text" id="" aria-hidden="true"><?php echo esc_attr( array_key_exists( 'description', $isfw_component ) ? $isfw_component['description'] : '' ); ?></div>
+								<div class="mdc-text-field-helper-text--persistent mwb-helper-text" id="" aria-hidden="true"><?php echo wp_kses_post( array_key_exists( 'description', $isfw_component ) ? $isfw_component['description'] : '' ); ?></div>
 							</div>
 						</div>
 					</div>
@@ -571,7 +571,7 @@ class Invoice_System_For_Woocommerce {
 								<i class="material-icons mdc-text-field__icon mdc-text-field__icon--trailing mwb-password-hidden" tabindex="0" role="button">visibility</i>
 							</label>
 							<div class="mdc-text-field-helper-line">
-								<div class="mdc-text-field-helper-text--persistent mwb-helper-text" id="" aria-hidden="true"><?php echo esc_attr( array_key_exists( 'description', $isfw_component ) ? $isfw_component['description'] : '' ); ?></div>
+								<div class="mdc-text-field-helper-text--persistent mwb-helper-text" id="" aria-hidden="true"><?php echo wp_kses_post( array_key_exists( 'description', $isfw_component ) ? $isfw_component['description'] : '' ); ?></div>
 							</div>
 						</div>
 					</div>
@@ -629,7 +629,7 @@ class Invoice_System_For_Woocommerce {
 									}
 									?>
 								</select>
-								<label class="mdl-textfield__label" for="octane"><?php echo esc_html( array_key_exists( 'description', $isfw_component ) ? $isfw_component['description'] : '' ); ?></label>
+								<label class="mdl-textfield__label" for="octane"><?php echo wp_kses_post( array_key_exists( 'description', $isfw_component ) ? $isfw_component['description'] : '' ); ?></label>
 							</div>
 						</div>
 					</div>
@@ -660,7 +660,7 @@ class Invoice_System_For_Woocommerce {
 									</div>
 									<div class="mdc-checkbox__ripple"></div>
 								</div>
-								<label for="checkbox-1"><?php echo esc_html( array_key_exists( 'description', $isfw_component ) ? $isfw_component['description'] : '' ); ?></label>
+								<label for="checkbox-1"><?php echo wp_kses_post( array_key_exists( 'description', $isfw_component ) ? $isfw_component['description'] : '' ); ?></label>
 							</div>
 						</div>
 					</div>
@@ -789,7 +789,7 @@ class Invoice_System_For_Woocommerce {
 										</label>
 							<?php } ?>
 								<div class="mdc-text-field-helper-line">
-									<div class="mdc-text-field-helper-text--persistent mwb-helper-text" id="" aria-hidden="true"><?php echo esc_html( array_key_exists( 'description', $isfw_component ) ? $isfw_component['description'] : '' ); ?></div>
+									<div class="mdc-text-field-helper-text--persistent mwb-helper-text" id="" aria-hidden="true"><?php echo wp_kses_post( array_key_exists( 'description', $isfw_component ) ? $isfw_component['description'] : '' ); ?></div>
 								</div>
 							</div>
 						</div>
@@ -832,7 +832,7 @@ class Invoice_System_For_Woocommerce {
 										<?php } ?>
 							<?php } ?>
 								<div class="mdc-text-field-helper-line">
-									<div class="mdc-text-field-helper-text--persistent mwb-helper-text" id="" aria-hidden="true"><?php echo ( isset( $isfw_component['description'] ) ? esc_attr( $isfw_component['description'] ) : '' ); ?></div>
+									<div class="mdc-text-field-helper-text--persistent mwb-helper-text" id="" aria-hidden="true"><?php echo ( isset( $isfw_component['description'] ) ? wp_kses_post( $isfw_component['description'] ) : '' ); ?></div>
 								</div>
 							</div>
 						</div>
@@ -859,7 +859,7 @@ class Invoice_System_For_Woocommerce {
 									>
 								<?php } ?>
 								<div class="mdc-text-field-helper-line">
-									<div class="mdc-text-field-helper-text--persistent mwb-helper-text" id="" aria-hidden="true"><?php echo esc_html( array_key_exists( 'description', $isfw_component ) ? $isfw_component['description'] : '' ); ?></div>
+									<div class="mdc-text-field-helper-text--persistent mwb-helper-text" id="" aria-hidden="true"><?php echo wp_kses_post( array_key_exists( 'description', $isfw_component ) ? $isfw_component['description'] : '' ); ?></div>
 								</div>
 							</div>
 						</div>
@@ -882,7 +882,7 @@ class Invoice_System_For_Woocommerce {
 									value="<?php echo esc_attr( array_key_exists( 'value', $isfw_component ) ? $isfw_component['value'] : '' ); ?>"
 									>
 									<div class="mdc-text-field-helper-line">
-										<div class="mdc-text-field-helper-text--persistent mwb-helper-text" id="" aria-hidden="true"><?php echo esc_attr( $isfw_component['description'] ); ?></div>
+										<div class="mdc-text-field-helper-text--persistent mwb-helper-text" id="" aria-hidden="true"><?php echo wp_kses_post( $isfw_component['description'] ); ?></div>
 									</div>
 								</div>
 							</div>
@@ -926,7 +926,7 @@ class Invoice_System_For_Woocommerce {
 								name="<?php echo ( isset( $isfw_component['img-hidden'] ) ) ? esc_attr( $isfw_component['img-hidden']['name'] ) : ''; ?>"
 								>
 								<div class="mdc-text-field-helper-line">
-									<div class="mdc-text-field-helper-text--persistent mwb-helper-text" id="" aria-hidden="true"><?php echo ( isset( $isfw_component['description'] ) ? esc_attr( $isfw_component['description'] ) : '' ); ?></div>
+									<div class="mdc-text-field-helper-text--persistent mwb-helper-text" id="" aria-hidden="true"><?php echo ( isset( $isfw_component['description'] ) ? wp_kses_post( $isfw_component['description'] ) : '' ); ?></div>
 								</div>
 							</div>
 						</div>

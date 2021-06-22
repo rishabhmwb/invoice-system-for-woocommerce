@@ -254,7 +254,7 @@ function return_ob_value( $order_id, $type, $invoice_id ) {
 								' . __( 'Qty', 'invoice-system-for-woocommerce' ) . '
 							</th>
 							<th style="text-align: left;padding: 10px;" class="isfw-invoice-color">
-								' . __( 'Unit Price', 'invoice-system-for-woocommerce' ) . ' ( ' . $billing_details['order_currency'] . ' )
+								' . __( 'Price', 'invoice-system-for-woocommerce' ) . ' ( ' . $billing_details['order_currency'] . ' )
 							</th>
 							<th style="text-align: left;padding: 10px;" class="isfw-invoice-color">
 								' . __( 'Tax', 'invoice-system-for-woocommerce' ) . '( % )

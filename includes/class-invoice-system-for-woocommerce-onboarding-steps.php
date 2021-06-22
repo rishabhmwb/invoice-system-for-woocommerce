@@ -251,7 +251,7 @@ class Invoice_System_For_Woocommerce_Onboarding_Steps {
 	 */
 	public function mwb_isfw_skip_onboarding_popup() {
 		$get_skipped_timstamp = update_option( 'mwb_isfw_onboarding_data_skipped', time() );
-		echo wp_json_encode( 'true' );
+		echo esc_html( wp_json_encode( 'true' ) );
 		wp_die();
 	}
 
@@ -550,8 +550,8 @@ class Invoice_System_For_Woocommerce_Onboarding_Steps {
 
 		check_ajax_referer( 'mwb_isfw_onboarding_nonce', 'nonce' );
 
-		$form_data = ! empty( $_POST['form_data'] ) ? json_decode( sanitize_text_field( wp_unslash( $_POST['form_data'] ) ) ) : '';
-
+		$form_data      = ! empty( $_POST['form_data'] ) ? json_decode( sanitize_text_field( wp_unslash( $_POST['form_data'] ) ) ) : '';
+		$form_data      = is_array( $form_data ) ? map_deep( wp_unslash( $form_data ), 'sanitize_text_field' ) : sanitize_text_field( wp_unslash( $form_data ) );
 		$formatted_data = array();
 
 		if ( ! empty( $form_data ) && is_array( $form_data ) ) {
@@ -615,14 +615,14 @@ class Invoice_System_For_Woocommerce_Onboarding_Steps {
 			}
 		} catch ( Exception $e ) {
 
-			echo wp_json_encode( $e->getMessage() );
+			echo wp_kses_post( wp_json_encode( $e->getMessage() ) );
 			wp_die();
 		}
 
 		if ( ! empty( $action_type ) && 'onboarding' === $action_type ) {
 			$get_skipped_timstamp = update_option( 'mwb_isfw_onboarding_data_sent', 'sent' );
 		}
-		echo wp_json_encode( $formatted_data );
+		echo wp_kses_post( wp_json_encode( $formatted_data ) );
 		wp_die();
 	}
 	/**
