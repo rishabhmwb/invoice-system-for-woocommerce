@@ -111,9 +111,9 @@ if ( $tmp ) {
 	 */
 	function invoice_system_for_woocommerce_custom_settings_at_plugin_tab( $links_array, $plugin_file_name ) {
 		if ( strpos( $plugin_file_name, basename( __FILE__ ) ) ) {
-			$links_array[] = '<a href="https://demo.makewebbetter.com/invoice-system-for-woocommerce" target="_blank"><img src="' . INVOICE_SYSTEM_FOR_WOOCOMMERCE_DIR_URL . 'admin/image/Demo.svg" class="mwb_isfw_plugin_extra_custom_tab"></i>' . __( 'Demo', 'invoice-system-for-woocommerce' ) . '</a>';
-			$links_array[] = '<a href="https://docs.makewebbetter.com/invoice-system-for-woocommerce/" target="_blank"><img src="' . INVOICE_SYSTEM_FOR_WOOCOMMERCE_DIR_URL . 'admin/image/Documentation.svg" class="mwb_isfw_plugin_extra_custom_tab"></i>' . __( 'Documentation', 'invoice-system-for-woocommerce' ) . '</a>';
-			$links_array[] = '<a href="https://makewebbetter.com/submit-query/" target="_blank"><img src="' . INVOICE_SYSTEM_FOR_WOOCOMMERCE_DIR_URL . 'admin/image/Support.svg" class="mwb_isfw_plugin_extra_custom_tab"></i>' . __( 'Support', 'invoice-system-for-woocommerce' ) . '</a>';
+			$links_array[] = '<a href="https://demo.makewebbetter.com/invoice-system-for-woocommerce/?utm_source=MWB-invoice-backend&utm_medium=MWB-ORG-Page&utm_campaign=MWB-demo" target="_blank"><img src="' . INVOICE_SYSTEM_FOR_WOOCOMMERCE_DIR_URL . 'admin/image/Demo.svg" class="mwb_isfw_plugin_extra_custom_tab"></i>' . __( 'Demo', 'invoice-system-for-woocommerce' ) . '</a>';
+			$links_array[] = '<a href="https://docs.makewebbetter.com/invoice-system-for-woocommerce/?utm_source=MWB-invoice-backend&utm_medium=MWB-ORG-Page&utm_campaign=MWB-doc" target="_blank"><img src="' . INVOICE_SYSTEM_FOR_WOOCOMMERCE_DIR_URL . 'admin/image/Documentation.svg" class="mwb_isfw_plugin_extra_custom_tab"></i>' . __( 'Documentation', 'invoice-system-for-woocommerce' ) . '</a>';
+			$links_array[] = '<a href="https://support.makewebbetter.com/wordpress-plugins-knowledge-base/?utm_source=MWB-invoice-backend&utm_medium=MWB-ORG-Page&utm_campaign=MWB-kb" target="_blank"><img src="' . INVOICE_SYSTEM_FOR_WOOCOMMERCE_DIR_URL . 'admin/image/Support.svg" class="mwb_isfw_plugin_extra_custom_tab"></i>' . __( 'Support', 'invoice-system-for-woocommerce' ) . '</a>';
 			$links_array[] = '<a href="#" target="_blank">' . __( 'Go Pro', 'invoice-system-for-woocommerce' ) . '</a>';
 		}
 		return $links_array;

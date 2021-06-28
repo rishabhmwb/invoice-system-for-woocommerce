@@ -566,18 +566,24 @@ a.ui-state-default.ui-state-active {
 }
 
 .isfw-overview__features li::before {
-    color: #1a3365;
-    content: "⚬";
-    font-size: 20px;
-    font-weight: 400;
-    vertical-align: middle;
+        content: '';
+    position: absolute;
+    height: 5px;
+    width: 5px;
+    background: #2196f3;
+    left: 0;
+    border-radius: 50%;
+    top: 12px;
+    transform: translate(-50%,-50%);
 }
 
 .isfw-overview__features li {
     color: #565857;
     font-size: 16px;
-    letter-spacing: 0.5px;
+    letter-spacing: .5px;
     line-height: 24px;
+    position: relative;
+    padding: 0 10px;
 }
 
 .isfw-overview__keywords {
@@ -815,3 +821,19 @@ background-color: #d9534f;
 .mwb-isfw-date-picker-group select.isfw_invoice_number_renew_month {
     margin-right: 20px;
 } 
+@media only screen and (max-width: 500px){
+    .mwb-header-container {
+        justify-content: flex-start!important;
+    }
+    .mwb-header-container .mwb-header-title {
+        max-width: 100%;
+    }
+    .mwb-header-container .mwb-link {
+        display: inline-block;
+    }
+    .mwb-header-container span {
+        display: inline-block;
+        margin: 0 10px;
+    }
+
+}
