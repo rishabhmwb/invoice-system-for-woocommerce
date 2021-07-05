@@ -573,6 +573,7 @@ class Invoice_System_For_Woocommerce {
 							<div class="mdc-text-field-helper-line">
 								<div class="mdc-text-field-helper-text--persistent mwb-helper-text" id="" aria-hidden="true"><?php echo wp_kses_post( array_key_exists( 'description', $isfw_component ) ? $isfw_component['description'] : '' ); ?></div>
 							</div>
+							<div id="mbw-isfw-dropbox-folder-actions"><button id="isfw-check-folders-dropbox"><?php esc_html_e( 'Check Folders' ); ?></button></div>
 						</div>
 					</div>
 						<?php
