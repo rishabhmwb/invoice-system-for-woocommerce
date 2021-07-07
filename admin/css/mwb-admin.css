@@ -776,6 +776,17 @@ a.ui-state-default.ui-state-active {
   margin-right: 20px;
 }
 
+.isfw-check-folders-dropbox {
+  background: #2196f3;
+  border-radius: 4px;
+  border: none;
+  color: #ffffff;
+  cursor: pointer;
+  margin: 10px 0;
+  padding: 8px 15px;
+  text-align: center;
+}
+
 @media only screen and (max-width: 1150px){
   .isfw-section-wrap label.mdc-text-field.mdc-text-field--outlined {
     margin-bottom: 10px;

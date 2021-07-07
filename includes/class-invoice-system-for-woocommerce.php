@@ -573,7 +573,7 @@ class Invoice_System_For_Woocommerce {
 							<div class="mdc-text-field-helper-line">
 								<div class="mdc-text-field-helper-text--persistent mwb-helper-text" id="" aria-hidden="true"><?php echo wp_kses_post( array_key_exists( 'description', $isfw_component ) ? $isfw_component['description'] : '' ); ?></div>
 							</div>
-							<div id="mbw-isfw-dropbox-folder-actions"><button id="isfw-check-folders-dropbox"><?php esc_html_e( 'Check Folders', 'invoice-system-for-woocommerce' ); ?></button></div>
+							<div id="mbw-isfw-dropbox-folder-actions"><button id="isfw-check-folders-dropbox" class="isfw-check-folders-dropbox"><?php esc_html_e( 'Check Folders', 'invoice-system-for-woocommerce' ); ?></button></div>
 						</div>
 					</div>
 						<?php
@@ -818,7 +818,9 @@ class Invoice_System_For_Woocommerce {
 												<span class="mdc-notched-outline__trailing"></span>
 											</span>
 											<?php } ?>
-											<input type="checkbox" class="wpg-multi-checkbox" name="<?php echo ( isset( $component['checkbox_name'] ) ? esc_attr( $component['checkbox_name'] ) : '' ); ?>" id="<?php echo ( isset( $component['checkbox_id'] ) ? esc_attr( $component['checkbox_id'] ) : '' ); ?>" <?php checked( ( isset( $component['checkbox_value'] ) ? $component['checkbox_value'] : '' ), 'yes' ); ?> value="yes">
+											<div class="wpg-multi-checkbox__wrap">
+												<input type="checkbox" class="wpg-multi-checkbox" name="<?php echo ( isset( $component['checkbox_name'] ) ? esc_attr( $component['checkbox_name'] ) : '' ); ?>" id="<?php echo ( isset( $component['checkbox_id'] ) ? esc_attr( $component['checkbox_id'] ) : '' ); ?>" <?php checked( ( isset( $component['checkbox_value'] ) ? $component['checkbox_value'] : '' ), 'yes' ); ?> value="yes">
+											</div>
 											<input 
 											class="mdc-text-field__input <?php echo ( isset( $component['class'] ) ? esc_attr( $component['class'] ) : '' ); ?>" 
 											name="<?php echo ( isset( $component['name'] ) ? esc_html( $component['name'] ) : esc_html( $component['id'] ) ); ?>"

@@ -68,7 +68,7 @@ class Invoice_System_For_Woocommerce_Admin {
 			wp_enqueue_style( 'mwb-isfw-meterial-css2', INVOICE_SYSTEM_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/material-design/material-components-v5.0-web.min.css', array(), time(), 'all' );
 			wp_enqueue_style( 'mwb-isfw-meterial-lite', INVOICE_SYSTEM_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/material-design/material-lite.min.css', array(), time(), 'all' );
 			wp_enqueue_style( 'mwb-isfw-meterial-icons-css', INVOICE_SYSTEM_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/material-design/icon.css', array(), time(), 'all' );
-			wp_enqueue_style( $this->plugin_name . '-admin-global', INVOICE_SYSTEM_FOR_WOOCOMMERCE_DIR_URL . 'admin/css/mwb-admin.min.css', array( 'mwb-isfw-meterial-icons-css' ), time(), 'all' );
+			wp_enqueue_style( $this->plugin_name . '-admin-global', INVOICE_SYSTEM_FOR_WOOCOMMERCE_DIR_URL . 'admin/css/mwb-admin.css', array( 'mwb-isfw-meterial-icons-css' ), time(), 'all' );
 			wp_enqueue_style( 'wp-color-picker' );
 			wp_enqueue_style( 'jquery-ui' );
 		}
