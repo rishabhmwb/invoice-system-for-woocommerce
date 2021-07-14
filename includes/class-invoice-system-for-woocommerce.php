@@ -33,7 +33,6 @@ class Invoice_System_For_Woocommerce {
 	 * the plugin.
 	 *
 	 * @since  1.0.0
-	 * @access protected
 	 * @var    Invoice_system_for_woocommerce_Loader    $loader    Maintains and registers all hooks for the plugin.
 	 */
 	protected $loader;
@@ -42,7 +41,6 @@ class Invoice_System_For_Woocommerce {
 	 * The unique identifier of this plugin.
 	 *
 	 * @since    1.0.0
-	 * @access   protected
 	 * @var      string    $plugin_name    The string used to uniquely identify this plugin.
 	 */
 	protected $plugin_name;
@@ -51,7 +49,6 @@ class Invoice_System_For_Woocommerce {
 	 * The current version of the plugin.
 	 *
 	 * @since    1.0.0
-	 * @access   protected
 	 * @var      string    $version    The current version of the plugin.
 	 */
 	protected $version;
@@ -60,7 +57,6 @@ class Invoice_System_For_Woocommerce {
 	 * The current version of the plugin.
 	 *
 	 * @since    1.0.0
-	 * @access   protected
 	 * @var      string    $isfw_onboard    To initializsed the object of class onboard.
 	 */
 	protected $isfw_onboard;
@@ -111,8 +107,7 @@ class Invoice_System_For_Woocommerce {
 	 * Create an instance of the loader which will be used to register the hooks
 	 * with WordPress.
 	 *
-	 * @since    1.0.0
-	 * @access   private
+	 * @since 1.0.0
 	 */
 	private function invoice_system_for_woocommerce_dependencies() {
 
@@ -160,8 +155,7 @@ class Invoice_System_For_Woocommerce {
 	 * Uses the Invoice_system_for_woocommerce_I18n class in order to set the domain and to register the hook
 	 * with WordPress.
 	 *
-	 * @since    1.0.0
-	 * @access   private
+	 * @since 1.0.0
 	 */
 	private function invoice_system_for_woocommerce_locale() {
 
@@ -175,8 +169,7 @@ class Invoice_System_For_Woocommerce {
 	 * Register all of the hooks related to the admin area functionality
 	 * of the plugin.
 	 *
-	 * @since    1.0.0
-	 * @access   private
+	 * @since 1.0.0
 	 */
 	private function invoice_system_for_woocommerce_admin_hooks() {
 
@@ -216,8 +209,7 @@ class Invoice_System_For_Woocommerce {
 	 * Register all of the hooks related to the public-facing functionality
 	 * of the plugin.
 	 *
-	 * @since    1.0.0
-	 * @access   private
+	 * @since 1.0.0
 	 */
 	private function invoice_system_for_woocommerce_public_hooks() {
 
@@ -239,8 +231,7 @@ class Invoice_System_For_Woocommerce {
 	 * Register all of the hooks related to the common-facing functionality
 	 * of the plugin.
 	 *
-	 * @since    1.0.0
-	 * @access   private
+	 * @since 1.0.0
 	 */
 	private function invoice_system_for_woocommerce_common_hooks() {
 		$isfw_plugin_common = new Invoice_System_For_Woocommerce_Common( $this->isfw_get_plugin_name(), $this->isfw_get_version() );
@@ -256,7 +247,6 @@ class Invoice_System_For_Woocommerce {
 	 * of the plugin.
 	 *
 	 * @since    1.0.0
-	 * @access   private
 	 */
 	private function invoice_system_for_woocommerce_api_hooks() {
 
@@ -573,7 +563,7 @@ class Invoice_System_For_Woocommerce {
 							<div class="mdc-text-field-helper-line">
 								<div class="mdc-text-field-helper-text--persistent mwb-helper-text" id="" aria-hidden="true"><?php echo wp_kses_post( array_key_exists( 'description', $isfw_component ) ? $isfw_component['description'] : '' ); ?></div>
 							</div>
-							<div id="mbw-isfw-dropbox-folder-actions"><button id="isfw-check-folders-dropbox"><?php esc_html_e( 'Check Folders', 'invoice-system-for-woocommerce' ); ?></button></div>
+							<div id="mbw-isfw-dropbox-folder-actions"><button id="isfw-check-folders-dropbox" class="isfw-check-folders-dropbox"><?php esc_html_e( 'Check Folders', 'invoice-system-for-woocommerce' ); ?></button></div>
 						</div>
 					</div>
 						<?php
@@ -818,7 +808,9 @@ class Invoice_System_For_Woocommerce {
 												<span class="mdc-notched-outline__trailing"></span>
 											</span>
 											<?php } ?>
-											<input type="checkbox" class="wpg-multi-checkbox" name="<?php echo ( isset( $component['checkbox_name'] ) ? esc_attr( $component['checkbox_name'] ) : '' ); ?>" id="<?php echo ( isset( $component['checkbox_id'] ) ? esc_attr( $component['checkbox_id'] ) : '' ); ?>" <?php checked( ( isset( $component['checkbox_value'] ) ? $component['checkbox_value'] : '' ), 'yes' ); ?> value="yes">
+											<div class="wpg-multi-checkbox__wrap">
+												<input type="checkbox" class="wpg-multi-checkbox" name="<?php echo ( isset( $component['checkbox_name'] ) ? esc_attr( $component['checkbox_name'] ) : '' ); ?>" id="<?php echo ( isset( $component['checkbox_id'] ) ? esc_attr( $component['checkbox_id'] ) : '' ); ?>" <?php checked( ( isset( $component['checkbox_value'] ) ? $component['checkbox_value'] : '' ), 'yes' ); ?> value="yes">
+											</div>
 											<input 
 											class="mdc-text-field__input <?php echo ( isset( $component['class'] ) ? esc_attr( $component['class'] ) : '' ); ?>" 
 											name="<?php echo ( isset( $component['name'] ) ? esc_html( $component['name'] ) : esc_html( $component['id'] ) ); ?>"

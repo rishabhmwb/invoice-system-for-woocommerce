@@ -18,6 +18,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 global $isfw_mwb_isfw_obj,$isfw_save_check_flag, $wpiwps_save_check_flag;
 $isfw_active_tab   = isset( $_GET['isfw_tab'] ) ? sanitize_key( $_GET['isfw_tab'] ) : 'invoice-system-for-woocommerce-general'; // phpcs:ignore
+do_action( 'mwb_isfw_license_notification' );
 $isfw_default_tabs = $isfw_mwb_isfw_obj->mwb_isfw_plug_default_tabs();
 ?>
 <header>
