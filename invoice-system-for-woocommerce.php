@@ -114,7 +114,6 @@ if ( $tmp ) {
 			$links_array[] = '<a href="https://demo.makewebbetter.com/invoice-system-for-woocommerce/?utm_source=MWB-invoice-backend&utm_medium=MWB-ORG-Page&utm_campaign=MWB-demo" target="_blank"><img src="' . INVOICE_SYSTEM_FOR_WOOCOMMERCE_DIR_URL . 'admin/image/Demo.svg" class="mwb_isfw_plugin_extra_custom_tab"></i>' . __( 'Demo', 'invoice-system-for-woocommerce' ) . '</a>';
 			$links_array[] = '<a href="https://docs.makewebbetter.com/invoice-system-for-woocommerce/?utm_source=MWB-invoice-backend&utm_medium=MWB-ORG-Page&utm_campaign=MWB-doc" target="_blank"><img src="' . INVOICE_SYSTEM_FOR_WOOCOMMERCE_DIR_URL . 'admin/image/Documentation.svg" class="mwb_isfw_plugin_extra_custom_tab"></i>' . __( 'Documentation', 'invoice-system-for-woocommerce' ) . '</a>';
 			$links_array[] = '<a href="https://support.makewebbetter.com/wordpress-plugins-knowledge-base/?utm_source=MWB-invoice-backend&utm_medium=MWB-ORG-Page&utm_campaign=MWB-kb" target="_blank"><img src="' . INVOICE_SYSTEM_FOR_WOOCOMMERCE_DIR_URL . 'admin/image/Support.svg" class="mwb_isfw_plugin_extra_custom_tab"></i>' . __( 'Support', 'invoice-system-for-woocommerce' ) . '</a>';
-			$links_array[] = '<a href="https://makewebbetter.com/product/woocommerce-pdf-invoice-packing-slip/?utm_source=MWB-invoice-backend&utm_medium=MWB-ORG-Page&utm_campaign=MWB-invoice-pro" target="_blank">' . __( 'Go Pro', 'invoice-system-for-woocommerce' ) . '</a>';
 		}
 		return $links_array;
 	}
@@ -192,6 +191,7 @@ if ( $tmp ) {
 	function invoice_system_for_woocommerce_settings_link( $links ) {
 		$my_link = array(
 			'<a href="' . admin_url( 'admin.php?page=invoice_system_for_woocommerce_menu' ) . '">' . __( 'Settings', 'invoice-system-for-woocommerce' ) . '</a>',
+			'<a href="https://makewebbetter.com/product/woocommerce-pdf-invoice-packing-slip/?utm_source=MWB-invoice-backend&utm_medium=MWB-ORG-Page&utm_campaign=MWB-invoice-pro" target="_blank" id="isfw-go-pro-link">' . __( 'Go Pro', 'invoice-system-for-woocommerce' ) . '</a>'
 		);
 		return array_merge( $my_link, $links );
 	}

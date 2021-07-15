@@ -23,8 +23,8 @@ $isfw_default_tabs = $isfw_mwb_isfw_obj->mwb_isfw_plug_default_tabs();
 ?>
 <header>
 	<div class="mwb-header-container mwb-bg-white mwb-r-8">
-		<h1 class="mwb-header-title"><?php echo esc_attr( strtoupper( str_replace( '-', ' ', $isfw_mwb_isfw_obj->isfw_get_plugin_name() ) ) ); ?></h1>
-		<a href="https://docs.makewebbetter.com/" target="_blank" class="mwb-link"><?php esc_html_e( 'Documentation', 'invoice-system-for-woocommerce' ); ?></a>
+		<h1 class="mwb-header-title"><?php echo esc_attr( strtoupper( str_replace( '-', ' ', apply_filters( 'isfw_plugin_name_show_dashboard', $isfw_mwb_isfw_obj->isfw_get_plugin_name() ) ) ) ); ?></h1>
+		<a href="<?php echo esc_attr( apply_filters( 'isfw_plugin_doc_link_dashboard', ' https://docs.makewebbetter.com/invoice-system-for-woocommerce/?utm_source=MWB-invoice-backend&utm_medium=MWB-ORG-Page&utm_campaign=MWB-doc' ) ); ?>" target="_blank" class="mwb-link"><?php esc_html_e( 'Documentation', 'invoice-system-for-woocommerce' ); ?></a>
 		<span>|</span>
 		<a href="https://makewebbetter.com/contact-us/" target="_blank" class="mwb-link"><?php esc_html_e( 'Support', 'invoice-system-for-woocommerce' ); ?></a>
 	</div>
