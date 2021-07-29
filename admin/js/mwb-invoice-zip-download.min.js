@@ -1,0 +1,1 @@
+!function(t){"use strict";t(document).ready((function(){if(t("#isfw_download_zip_pdf_hidden_button").length>0){var d=document.location.href;d=d.split("write_downloads"),t("a#isfw_download_zip_pdf")[0].click(),window.history.pushState("",document.title,d[0]),t("#isfw_download_zip_pdf_hidden_button").html("")}}))}(jQuery);

@@ -15,7 +15,7 @@
  * Plugin Name:       Invoice System for WooCommerce
  * Plugin URI:        https://wordpress.org/plugins/invoice-system-for-woocommerce/
  * Description:       Generate Invoices and packing slips automatically and sent them to your customers via email with Invoice System for WooCommerce.
- * Version:           1.0.0
+ * Version:           1.0.1
  * Author:            MakeWebBetter
  * Author URI:        https://makewebbetter.com/
  * Text Domain:       invoice-system-for-woocommerce
@@ -24,8 +24,8 @@
  * Requires at least:    4.6
  * Tested up to:         5.7
  * WC requires at least: 4.0.0
- * WC tested up to:      5.1
- * Stable tag:           1.0.0
+ * WC tested up to:      5.5.1
+ * Stable tag:           1.0.1
  * Requires PHP:         7.2
  *
  * License:           GNU General Public License v3.0
@@ -81,10 +81,10 @@ if ( $tmp ) {
 	/**
 	 * Define plugin constants.
 	 *
-	 * @since             1.0.0
+	 * @since 1.0.0
 	 */
 	function define_invoice_system_for_woocommerce_constants() {
-		invoice_system_for_woocommerce_constants( 'INVOICE_SYSTEM_FOR_WOOCOMMERCE_VERSION', '1.0.0' );
+		invoice_system_for_woocommerce_constants( 'INVOICE_SYSTEM_FOR_WOOCOMMERCE_VERSION', '1.0.1' );
 		invoice_system_for_woocommerce_constants( 'INVOICE_SYSTEM_FOR_WOOCOMMERCE_DIR_PATH', plugin_dir_path( __FILE__ ) );
 		invoice_system_for_woocommerce_constants( 'INVOICE_SYSTEM_FOR_WOOCOMMERCE_DIR_URL', plugin_dir_url( __FILE__ ) );
 		invoice_system_for_woocommerce_constants( 'INVOICE_SYSTEM_FOR_WOOCOMMERCE_SERVER_URL', 'https://makewebbetter.com' );
@@ -93,9 +93,9 @@ if ( $tmp ) {
 	/**
 	 * Callable function for defining plugin constants.
 	 *
-	 * @param   String $key    Key for contant.
-	 * @param   String $value   value for contant.
-	 * @since             1.0.0
+	 * @param string $key    Key for contant.
+	 * @param string $value   value for contant.
+	 * @since 1.0.0
 	 */
 	function invoice_system_for_woocommerce_constants( $key, $value ) {
 		if ( ! defined( $key ) ) {
@@ -111,9 +111,9 @@ if ( $tmp ) {
 	 */
 	function invoice_system_for_woocommerce_custom_settings_at_plugin_tab( $links_array, $plugin_file_name ) {
 		if ( strpos( $plugin_file_name, basename( __FILE__ ) ) ) {
-			$links_array[] = '<a href="https://demo.makewebbetter.com/invoice-system-for-woocommerce" target="_blank"><img src="' . INVOICE_SYSTEM_FOR_WOOCOMMERCE_DIR_URL . 'admin/src/images/Demo.svg" class="mwb_isfw_plugin_extra_custom_tab"></i>Demo</a>';
-			$links_array[] = '<a href="https://docs.makewebbetter.com/invoice-system-for-woocommerce/" target="_blank"><img src="' . INVOICE_SYSTEM_FOR_WOOCOMMERCE_DIR_URL . 'admin/src/images/Documentation.svg" class="mwb_isfw_plugin_extra_custom_tab"></i>Documentation</a>';
-			$links_array[] = '<a href="https://makewebbetter.com/submit-query/" target="_blank"><img src="' . INVOICE_SYSTEM_FOR_WOOCOMMERCE_DIR_URL . 'admin/src/images/Support.svg" class="mwb_isfw_plugin_extra_custom_tab"></i>Support</a>';
+			$links_array[] = '<a href="https://demo.makewebbetter.com/invoice-system-for-woocommerce/?utm_source=MWB-invoice-backend&utm_medium=MWB-ORG-Page&utm_campaign=MWB-demo" target="_blank"><img src="' . INVOICE_SYSTEM_FOR_WOOCOMMERCE_DIR_URL . 'admin/image/Demo.svg" class="mwb_isfw_plugin_extra_custom_tab"></i>' . __( 'Demo', 'invoice-system-for-woocommerce' ) . '</a>';
+			$links_array[] = '<a href="https://docs.makewebbetter.com/invoice-system-for-woocommerce/?utm_source=MWB-invoice-backend&utm_medium=MWB-ORG-Page&utm_campaign=MWB-doc" target="_blank"><img src="' . INVOICE_SYSTEM_FOR_WOOCOMMERCE_DIR_URL . 'admin/image/Documentation.svg" class="mwb_isfw_plugin_extra_custom_tab"></i>' . __( 'Documentation', 'invoice-system-for-woocommerce' ) . '</a>';
+			$links_array[] = '<a href="https://support.makewebbetter.com/wordpress-plugins-knowledge-base/?utm_source=MWB-invoice-backend&utm_medium=MWB-ORG-Page&utm_campaign=MWB-kb" target="_blank"><img src="' . INVOICE_SYSTEM_FOR_WOOCOMMERCE_DIR_URL . 'admin/image/Support.svg" class="mwb_isfw_plugin_extra_custom_tab"></i>' . __( 'Support', 'invoice-system-for-woocommerce' ) . '</a>';
 		}
 		return $links_array;
 	}
@@ -132,7 +132,7 @@ if ( $tmp ) {
 				'active'      => '1',
 			);
 		} else {
-			$mwb_isfw_active_plugin = array();
+			$mwb_isfw_active_plugin                                   = array();
 			$mwb_isfw_active_plugin['invoice-system-for-woocommerce'] = array(
 				'plugin_name' => __( 'invoice-system-for-woocommerce', 'invoice-system-for-woocommerce' ),
 				'active'      => '1',
@@ -191,6 +191,7 @@ if ( $tmp ) {
 	function invoice_system_for_woocommerce_settings_link( $links ) {
 		$my_link = array(
 			'<a href="' . admin_url( 'admin.php?page=invoice_system_for_woocommerce_menu' ) . '">' . __( 'Settings', 'invoice-system-for-woocommerce' ) . '</a>',
+			'<a href="https://makewebbetter.com/product/woocommerce-pdf-invoice-packing-slip/?utm_source=MWB-invoice-backend&utm_medium=MWB-ORG-Page&utm_campaign=MWB-invoice-pro" target="_blank" id="isfw-go-pro-link">' . __( 'Go Pro', 'invoice-system-for-woocommerce' ) . '</a>'
 		);
 		return array_merge( $my_link, $links );
 	}

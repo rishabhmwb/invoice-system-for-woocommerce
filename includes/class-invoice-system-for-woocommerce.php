@@ -32,9 +32,8 @@ class Invoice_System_For_Woocommerce {
 	 * The loader that's responsible for maintaining and registering all hooks that power
 	 * the plugin.
 	 *
-	 * @since    1.0.0
-	 * @access   protected
-	 * @var      Invoice_system_for_woocommerce_Loader    $loader    Maintains and registers all hooks for the plugin.
+	 * @since  1.0.0
+	 * @var    Invoice_system_for_woocommerce_Loader    $loader    Maintains and registers all hooks for the plugin.
 	 */
 	protected $loader;
 
@@ -42,7 +41,6 @@ class Invoice_System_For_Woocommerce {
 	 * The unique identifier of this plugin.
 	 *
 	 * @since    1.0.0
-	 * @access   protected
 	 * @var      string    $plugin_name    The string used to uniquely identify this plugin.
 	 */
 	protected $plugin_name;
@@ -51,7 +49,6 @@ class Invoice_System_For_Woocommerce {
 	 * The current version of the plugin.
 	 *
 	 * @since    1.0.0
-	 * @access   protected
 	 * @var      string    $version    The current version of the plugin.
 	 */
 	protected $version;
@@ -60,7 +57,6 @@ class Invoice_System_For_Woocommerce {
 	 * The current version of the plugin.
 	 *
 	 * @since    1.0.0
-	 * @access   protected
 	 * @var      string    $isfw_onboard    To initializsed the object of class onboard.
 	 */
 	protected $isfw_onboard;
@@ -111,8 +107,7 @@ class Invoice_System_For_Woocommerce {
 	 * Create an instance of the loader which will be used to register the hooks
 	 * with WordPress.
 	 *
-	 * @since    1.0.0
-	 * @access   private
+	 * @since 1.0.0
 	 */
 	private function invoice_system_for_woocommerce_dependencies() {
 
@@ -160,8 +155,7 @@ class Invoice_System_For_Woocommerce {
 	 * Uses the Invoice_system_for_woocommerce_I18n class in order to set the domain and to register the hook
 	 * with WordPress.
 	 *
-	 * @since    1.0.0
-	 * @access   private
+	 * @since 1.0.0
 	 */
 	private function invoice_system_for_woocommerce_locale() {
 
@@ -175,8 +169,7 @@ class Invoice_System_For_Woocommerce {
 	 * Register all of the hooks related to the admin area functionality
 	 * of the plugin.
 	 *
-	 * @since    1.0.0
-	 * @access   private
+	 * @since 1.0.0
 	 */
 	private function invoice_system_for_woocommerce_admin_hooks() {
 
@@ -194,30 +187,29 @@ class Invoice_System_For_Woocommerce {
 
 		// generating custom setting page for pdf settings.
 		$this->loader->add_filter( 'isfw_template_pdf_settings_array', $isfw_plugin_admin, 'isfw_template_pdf_settings_page', 10 );
-		// handling ajax requests for saving settings of isfw pdf.
-		$this->loader->add_action( 'wp_ajax_isfw_save_general_pdf_settings', $isfw_plugin_admin, 'isfw_save_general_pdf_settings' );
 		// adding custom link to the order listing page.
-		$this->loader->add_action( 'manage_shop_order_posts_custom_column', $isfw_plugin_admin, 'isfw_populating_field_for_custom_tab', 15 );
-		$this->loader->add_action( 'init', $isfw_plugin_admin, 'isfw_create_pdf' );
-		$isfw_enable_plugin = get_option( 'isfw_mwb_plugin_enable' );
-		if ( 'on' === $isfw_enable_plugin ) {
+		$isfw_enable_plugin = get_option( 'isfw_enable_plugin' );
+		if ( 'yes' === $isfw_enable_plugin ) {
+			$this->loader->add_action( 'init', $isfw_plugin_admin, 'isfw_create_pdf' );
+			$this->loader->add_action( 'manage_shop_order_posts_custom_column', $isfw_plugin_admin, 'isfw_populating_field_for_custom_tab', 15 );
 			// adding attachment to the email.
 			$this->loader->add_filter( 'woocommerce_email_attachments', $isfw_plugin_admin, 'isfw_send_attachment_with_email', 10, 4 );
+			// adding bulk action to order listing page for bulk pdf download.
+			$this->loader->add_filter( 'bulk_actions-edit-shop_order', $isfw_plugin_admin, 'isfw_bulk_pdf_download_order_listing_page', 15, 1 );
+			// handling bulk action for generating invoice and packing slip pdf.
+			$this->loader->add_filter( 'handle_bulk_actions-edit-shop_order', $isfw_plugin_admin, 'isfw_handling_bulk_action_for_pdf_generation', 10, 3 );
+			// showing notification for the processed downloads.
+			$this->loader->add_action( 'admin_notices', $isfw_plugin_admin, 'isfw_pdf_downloads_bulk_action_admin_notice' );
 		}
-		// adding bulk action to order listing page for bulk pdf download.
-		$this->loader->add_filter( 'bulk_actions-edit-shop_order', $isfw_plugin_admin, 'isfw_bulk_pdf_download_order_listing_page', 15, 1 );
-		// handling bulk action for generating invoice and packing slip pdf.
-		$this->loader->add_filter( 'handle_bulk_actions-edit-shop_order', $isfw_plugin_admin, 'isfw_handling_bulk_action_for_pdf_generation', 10, 3 );
-		// showing notification for the processed downloads.
-		$this->loader->add_action( 'admin_notices', $isfw_plugin_admin, 'isfw_pdf_downloads_bulk_action_admin_notice' );
+		$this->loader->add_action( 'isfw_template_invoice_settings_array', $isfw_plugin_admin, 'isfw_template_invoice_setting_html_fields' );
+		$this->loader->add_action( 'admin_init', $isfw_plugin_admin, 'isfw_admin_save_tab_settings' );
 	}
 
 	/**
 	 * Register all of the hooks related to the public-facing functionality
 	 * of the plugin.
 	 *
-	 * @since    1.0.0
-	 * @access   private
+	 * @since 1.0.0
 	 */
 	private function invoice_system_for_woocommerce_public_hooks() {
 
@@ -225,8 +217,8 @@ class Invoice_System_For_Woocommerce {
 
 		$this->loader->add_action( 'wp_enqueue_scripts', $isfw_plugin_public, 'isfw_public_enqueue_styles' );
 		$this->loader->add_action( 'wp_enqueue_scripts', $isfw_plugin_public, 'isfw_public_enqueue_scripts' );
-		$isfw_enable_plugin = get_option( 'isfw_mwb_plugin_enable' );
-		if ( 'on' === $isfw_enable_plugin ) {
+		$isfw_enable_plugin = get_option( 'isfw_enable_plugin' );
+		if ( 'yes' === $isfw_enable_plugin ) {
 			$this->loader->add_filter( 'woocommerce_my_account_my_orders_columns', $isfw_plugin_public, 'isfw_add_content_to_orders_listing_page', 20, 1 );
 			$this->loader->add_action( 'woocommerce_my_account_my_orders_column_isfw_invoice_download', $isfw_plugin_public, 'isfw_add_data_to_custom_column', 10, 1 );
 			$this->loader->add_action( 'init', $isfw_plugin_public, 'isfw_generate_pdf_for_user' );
@@ -239,13 +231,14 @@ class Invoice_System_For_Woocommerce {
 	 * Register all of the hooks related to the common-facing functionality
 	 * of the plugin.
 	 *
-	 * @since    1.0.0
-	 * @access   private
+	 * @since 1.0.0
 	 */
 	private function invoice_system_for_woocommerce_common_hooks() {
 		$isfw_plugin_common = new Invoice_System_For_Woocommerce_Common( $this->isfw_get_plugin_name(), $this->isfw_get_version() );
-		// adding shortcodes to fetch all order detials [isfw_fetch_order].
+		// adding shortcodes to fetch all order detials [ISFW_FETCH_ORDER].
 		$this->loader->add_action( 'plugins_loaded', $isfw_plugin_common, 'isfw_fetch_order_details_shortcode' );
+		$this->loader->add_action( 'init', $isfw_plugin_common, 'isfw_reset_invoice_number_schedular' );
+		$this->loader->add_action( 'isfw_reset_invoice_number_hook', $isfw_plugin_common, 'isfw_reset_invoice_number' );
 	}
 
 
@@ -254,7 +247,6 @@ class Invoice_System_For_Woocommerce {
 	 * of the plugin.
 	 *
 	 * @since    1.0.0
-	 * @access   private
 	 */
 	private function invoice_system_for_woocommerce_api_hooks() {
 
@@ -326,9 +318,15 @@ class Invoice_System_For_Woocommerce {
 		$isfw_default_tabs = array();
 
 		$isfw_default_tabs['invoice-system-for-woocommerce-general'] = array(
-			'title' => esc_html__( 'General Setting', 'invoice-system-for-woocommerce' ),
+			'title' => esc_html__( 'General Settings', 'invoice-system-for-woocommerce' ),
 			'name'  => 'invoice-system-for-woocommerce-general',
 		);
+
+		$isfw_default_tabs['invoice-system-for-woocommerce-invoice-setting'] = array(
+			'title' => esc_html__( 'Invoice Settings', 'invoice-system-for-woocommerce' ),
+			'name'  => 'invoice-system-for-woocommerce-invoice-setting',
+		);
+
 		$isfw_default_tabs = apply_filters( 'mwb_isfw_plugin_standard_admin_settings_tabs', $isfw_default_tabs );
 
 		$isfw_default_tabs['invoice-system-for-woocommerce-system-status'] = array(
@@ -352,12 +350,11 @@ class Invoice_System_For_Woocommerce {
 	public function mwb_isfw_plug_load_template( $path, $params = array() ) {
 
 		$isfw_file_path = INVOICE_SYSTEM_FOR_WOOCOMMERCE_DIR_PATH . $path;
-
+		$isfw_file_path = apply_filters( 'isfw_load_template_path_filter', $isfw_file_path, $path );
 		if ( file_exists( $isfw_file_path ) ) {
 
 			include $isfw_file_path;
 		} else {
-
 			/* translators: %s: file path */
 			$isfw_notice = sprintf( esc_html__( 'Unable to locate file at location "%s". Some features may not work properly in this plugin. Please contact us!', 'invoice-system-for-woocommerce' ), $isfw_file_path );
 			$this->mwb_isfw_plug_admin_notice( $isfw_notice, 'error' );
@@ -394,7 +391,7 @@ class Invoice_System_For_Woocommerce {
 				break;
 		}
 
-		$isfw_notice  = '<div class="' . esc_attr( $isfw_classes ) . ' mwb-errorr-8">';
+		$isfw_notice  = '<div class="' . esc_attr( $isfw_classes ) . ' mwb-errorr-3">';
 		$isfw_notice .= '<p>' . esc_html( $isfw_message ) . '</p>';
 		$isfw_notice .= '</div>';
 
@@ -508,9 +505,9 @@ class Invoice_System_For_Woocommerce {
 					case 'email':
 					case 'text':
 						?>
-					<div class="mwb-form-group mwb-isfw-<?php echo esc_attr( $isfw_component['type'] ); ?>">
+					<div class="mwb-form-group mwb-isfw-<?php echo esc_attr( $isfw_component['type'] ); ?> <?php echo esc_attr( isset( $isfw_component['hidden-class'] ) ? $isfw_component['hidden-class'] : '' ); ?>" <?php echo esc_attr( isset( $isfw_component['style'] ) ? 'style=' . $isfw_component['style'] : '' ); ?>>
 						<div class="mwb-form-group__label">
-							<label for="<?php echo esc_attr( $isfw_component['id'] ); ?>" class="mwb-form-label"><?php echo esc_html( array_key_exists( 'title', $isfw_component ) ? $isfw_component['title'] : '' ); // WPCS: XSS ok. ?></label>
+							<label for="<?php echo esc_attr( $isfw_component['id'] ); ?>" class="mwb-form-label"><?php echo esc_html( array_key_exists( 'title', $isfw_component ) ? $isfw_component['title'] : '' ); ?></label>
 						</div>
 						<div class="mwb-form-group__control">
 							<label class="mdc-text-field mdc-text-field--outlined <?php echo esc_attr( $isfw_component['id'] ); ?>">
@@ -533,7 +530,7 @@ class Invoice_System_For_Woocommerce {
 								>
 							</label>
 							<div class="mdc-text-field-helper-line">
-								<div class="mdc-text-field-helper-text--persistent mwb-helper-text" id="" aria-hidden="true"><?php echo esc_attr( array_key_exists( 'description', $isfw_component ) ? $isfw_component['description'] : '' ); ?></div>
+								<div class="mdc-text-field-helper-text--persistent mwb-helper-text" id="" aria-hidden="true"><?php echo wp_kses_post( array_key_exists( 'description', $isfw_component ) ? $isfw_component['description'] : '' ); ?></div>
 							</div>
 						</div>
 					</div>
@@ -541,9 +538,9 @@ class Invoice_System_For_Woocommerce {
 						break;
 					case 'password':
 						?>
-					<div class="mwb-form-group">
+					<div class="mwb-form-group <?php echo esc_attr( isset( $isfw_component['hidden-class'] ) ? $isfw_component['hidden-class'] : '' ); ?>" <?php echo esc_attr( isset( $isfw_component['style'] ) ? 'style=' . $isfw_component['style'] : '' ); ?>>
 						<div class="mwb-form-group__label">
-							<label for="<?php echo esc_attr( array_key_exists( 'id', $isfw_component ) ? $isfw_component['id'] : '' ); ?>" class="mwb-form-label"><?php echo esc_html( array_key_exists( 'title', $isfw_component ) ? $isfw_component['title'] : '' ); // WPCS: XSS ok. ?></label>
+							<label for="<?php echo esc_attr( array_key_exists( 'id', $isfw_component ) ? $isfw_component['id'] : '' ); ?>" class="mwb-form-label"><?php echo esc_html( array_key_exists( 'title', $isfw_component ) ? $isfw_component['title'] : '' ); ?></label>
 						</div>
 						<div class="mwb-form-group__control">
 							<label class="mdc-text-field mdc-text-field--outlined mdc-text-field--with-trailing-icon">
@@ -564,8 +561,9 @@ class Invoice_System_For_Woocommerce {
 								<i class="material-icons mdc-text-field__icon mdc-text-field__icon--trailing mwb-password-hidden" tabindex="0" role="button">visibility</i>
 							</label>
 							<div class="mdc-text-field-helper-line">
-								<div class="mdc-text-field-helper-text--persistent mwb-helper-text" id="" aria-hidden="true"><?php echo esc_attr( array_key_exists( 'description', $isfw_component ) ? $isfw_component['description'] : '' ); ?></div>
+								<div class="mdc-text-field-helper-text--persistent mwb-helper-text" id="" aria-hidden="true"><?php echo wp_kses_post( array_key_exists( 'description', $isfw_component ) ? $isfw_component['description'] : '' ); ?></div>
 							</div>
+							<div id="mbw-isfw-dropbox-folder-actions"><button id="isfw-check-folders-dropbox" class="isfw-check-folders-dropbox"><?php esc_html_e( 'Check Folders', 'invoice-system-for-woocommerce' ); ?></button></div>
 						</div>
 					</div>
 						<?php
@@ -586,7 +584,7 @@ class Invoice_System_For_Woocommerce {
 									<span class="mdc-notched-outline__trailing"></span>
 								</span>
 								<span class="mdc-text-field__resizer">
-									<textarea class="mdc-text-field__input <?php echo esc_attr( array_key_exists( 'class', $isfw_component ) ? $isfw_component['class'] : '' ); ?>" rows="5" cols="40" aria-label="Label" name="<?php echo esc_attr( array_key_exists( 'name', $isfw_component ) ? $isfw_component['name'] : '' ); ?>" id="<?php echo esc_attr( array_key_exists( 'id', $isfw_component ) ? $isfw_component['id'] : '' ); ?>" placeholder="<?php echo esc_attr( array_key_exists( 'placeholder', $isfw_component ) ? $isfw_component['placeholder'] : '' ); ?>"><?php echo esc_textarea( array_key_exists( 'value', $isfw_component ) ? $isfw_component['value'] : '' ); // WPCS: XSS ok. ?></textarea>
+									<textarea class="mdc-text-field__input <?php echo esc_attr( array_key_exists( 'class', $isfw_component ) ? $isfw_component['class'] : '' ); ?>" rows="5" cols="40" aria-label="Label" name="<?php echo esc_attr( array_key_exists( 'name', $isfw_component ) ? $isfw_component['name'] : '' ); ?>" id="<?php echo esc_attr( array_key_exists( 'id', $isfw_component ) ? $isfw_component['id'] : '' ); ?>" placeholder="<?php echo esc_attr( array_key_exists( 'placeholder', $isfw_component ) ? $isfw_component['placeholder'] : '' ); ?>"><?php echo esc_textarea( array_key_exists( 'value', $isfw_component ) ? $isfw_component['value'] : '' ); ?></textarea>
 								</span>
 							</label>
 
@@ -622,7 +620,7 @@ class Invoice_System_For_Woocommerce {
 									}
 									?>
 								</select>
-								<label class="mdl-textfield__label" for="octane"><?php echo esc_html( array_key_exists( 'description', $isfw_component ) ? $isfw_component['description'] : '' ); ?></label>
+								<label class="mdl-textfield__label" for="octane"><?php echo wp_kses_post( array_key_exists( 'description', $isfw_component ) ? $isfw_component['description'] : '' ); ?></label>
 							</div>
 						</div>
 					</div>
@@ -642,8 +640,8 @@ class Invoice_System_For_Woocommerce {
 									id="<?php echo esc_attr( array_key_exists( 'id', $isfw_component ) ? $isfw_component['id'] : '' ); ?>"
 									type="checkbox"
 									class="mdc-checkbox__native-control <?php echo esc_attr( isset( $isfw_component['class'] ) ? $isfw_component['class'] : '' ); ?>"
-									value="<?php echo esc_attr( array_key_exists( 'value', $isfw_component ) ? $isfw_component['value'] : '' ); ?>"
-									<?php checked( $isfw_component['value'], '1' ); ?>
+									value="yes"
+									<?php checked( $isfw_component['value'], 'yes' ); ?>
 									/>
 									<div class="mdc-checkbox__background">
 										<svg class="mdc-checkbox__checkmark" viewBox="0 0 24 24">
@@ -653,7 +651,7 @@ class Invoice_System_For_Woocommerce {
 									</div>
 									<div class="mdc-checkbox__ripple"></div>
 								</div>
-								<label for="checkbox-1"><?php echo esc_html( array_key_exists( 'description', $isfw_component ) ? $isfw_component['description'] : '' ); // WPCS: XSS ok. ?></label>
+								<label for="checkbox-1"><?php echo wp_kses_post( array_key_exists( 'description', $isfw_component ) ? $isfw_component['description'] : '' ); ?></label>
 							</div>
 						</div>
 					</div>
@@ -707,15 +705,15 @@ class Invoice_System_For_Woocommerce {
 									<div class="mdc-switch__track"></div>
 									<div class="mdc-switch__thumb-underlay">
 										<div class="mdc-switch__thumb"></div>
-										<input name="<?php echo ( isset( $isfw_component['name'] ) ? esc_html( $isfw_component['name'] ) : esc_html( $isfw_component['id'] ) ); ?>" type="checkbox" id="<?php echo esc_html( $isfw_component['id'] ); ?>" value="on" class="mdc-switch__native-control" role="switch" 
-										aria-checked="<?php if ( 'on' == $isfw_component['value'] ) { echo 'true'; } else { echo 'false'; } ?>"
-										<?php checked( $isfw_component['value'], 'on' ); ?>
+										<input name="<?php echo ( isset( $isfw_component['name'] ) ? esc_html( $isfw_component['name'] ) : esc_html( $isfw_component['id'] ) ); ?>" type="checkbox" id="<?php echo esc_html( $isfw_component['id'] ); ?>" value="yes" class="mdc-switch__native-control" role="switch" 
+										aria-checked="<?php echo ( ( 'yes' === $isfw_component['value'] ) ? esc_attr( 'true' ) : esc_attr( 'false' ) ); ?>"
+										<?php checked( $isfw_component['value'], 'yes' ); ?>
 										>
 									</div>
 								</div>
 							</div>
 							<div class="mdc-text-field-helper-line">
-								<div class="mdc-text-field-helper-text--persistent mwb-helper-text" id="" aria-hidden="true"><?php echo esc_html( array_key_exists( 'description', $isfw_component ) ? $isfw_component['description'] : '' ); ?></div>
+								<div class="mdc-text-field-helper-text--persistent mwb-helper-text" id="" aria-hidden="true"><?php echo wp_kses_post( array_key_exists( 'description', $isfw_component ) ? $isfw_component['description'] : '' ); ?></div>
 							</div>
 						</div>
 					</div>
@@ -754,26 +752,22 @@ class Invoice_System_For_Woocommerce {
 						?>
 						<div class="mwb-form-group mwb-isfw-<?php echo esc_attr( array_key_exists( 'type', $isfw_component ) ? $isfw_component['type'] : '' ); ?>">
 							<div class="mwb-form-group__label">
-								<label for="<?php echo esc_attr( array_key_exists( 'id', $isfw_component ) ? $isfw_component['id'] : '' ); ?>" class="mwb-form-label"><?php echo esc_html( array_key_exists( 'title', $isfw_component ) ? $isfw_component['title'] : '' ); // WPCS: XSS ok. ?></label>
+								<label for="<?php echo esc_attr( array_key_exists( 'id', $isfw_component ) ? $isfw_component['id'] : '' ); ?>" class="mwb-form-label"><?php echo esc_html( array_key_exists( 'title', $isfw_component ) ? $isfw_component['title'] : '' ); ?></label>
 								</div>
 								<div class="mwb-form-group__control">
 								<?php
 								foreach ( $isfw_component['value'] as $isfw_subcomponent ) {
 									?>
 										<label class="mdc-text-field mdc-text-field--outlined">
-											<?php if ( ! array_key_exists( 'src', $isfw_subcomponent ) ) { ?>
 											<span class="mdc-notched-outline">
 												<span class="mdc-notched-outline__leading"></span>
-												<?php } ?>
 												<span class="mdc-notched-outline__notch">
-													<?php if ( 'number' != $isfw_subcomponent['type'] ) { ?>
+													<?php if ( 'number' !== $isfw_subcomponent['type'] ) { ?>
 														<span class="mdc-floating-label" id="my-label-id" style=""><?php echo esc_attr( array_key_exists( 'placeholder', $isfw_subcomponent ) ? $isfw_subcomponent['placeholder'] : '' ); ?></span>
 													<?php } ?>
 												</span>
-												<?php if ( ! array_key_exists( 'src', $isfw_subcomponent ) ) { ?>
 												<span class="mdc-notched-outline__trailing"></span>
 											</span>
-											<?php } ?>
 											<input 
 											class="mdc-text-field__input <?php echo esc_attr( array_key_exists( 'class', $isfw_subcomponent ) ? $isfw_subcomponent['class'] : '' ); ?>" 
 											name="<?php echo esc_attr( array_key_exists( 'name', $isfw_subcomponent ) ? $isfw_subcomponent['name'] : '' ); ?>"
@@ -782,15 +776,83 @@ class Invoice_System_For_Woocommerce {
 											value="<?php echo esc_attr( array_key_exists( 'value', $isfw_subcomponent ) ? $isfw_subcomponent['value'] : '' ); ?>"
 											placeholder="<?php echo esc_attr( array_key_exists( 'placeholder', $isfw_subcomponent ) ? $isfw_subcomponent['placeholder'] : '' ); ?>"
 											<?php echo esc_attr( ( 'number' === $isfw_subcomponent['type'] ) ? 'max=10 min=0' : '' ); ?>
-											<?php if ( array_key_exists( 'src', $isfw_subcomponent ) ) { ?>
-												style="background-image:url( <?php echo esc_html( $isfw_subcomponent['src'] ); ?> );"
-												<?php checked( $isfw_subcomponent['id'], $isfw_subcomponent['value'] ); ?>isfw_invoice_template1
-											<?php } ?>
 											>
 										</label>
 							<?php } ?>
 								<div class="mdc-text-field-helper-line">
-									<div class="mdc-text-field-helper-text--persistent mwb-helper-text" id="" aria-hidden="true"><?php echo esc_html( array_key_exists( 'description', $isfw_component ) ? $isfw_component['description'] : '' ); ?></div>
+									<div class="mdc-text-field-helper-text--persistent mwb-helper-text" id="" aria-hidden="true"><?php echo wp_kses_post( array_key_exists( 'description', $isfw_component ) ? $isfw_component['description'] : '' ); ?></div>
+								</div>
+							</div>
+						</div>
+							<?php
+						break;
+					case 'multiwithcheck':
+						?>
+						<div class="mwb-form-group mwb-isfw-<?php echo esc_attr( $isfw_component['type'] ); ?>">
+							<div class="mwb-form-group__label">
+								<label for="<?php echo esc_attr( $isfw_component['id'] ); ?>" class="mwb-form-label"><?php echo ( isset( $isfw_component['title'] ) ? esc_html( $isfw_component['title'] ) : '' ); ?></label>
+								</div>
+								<div class="mwb-form-group__control">
+								<?php
+								foreach ( $isfw_component['value'] as $component ) {
+									if ( 'color' !== $component['type'] ) {
+										?>
+										<label class="mdc-text-field mdc-text-field--outlined">
+											<span class="mdc-notched-outline">
+												<span class="mdc-notched-outline__leading"></span>
+												<span class="mdc-notched-outline__notch">
+													<?php if ( 'number' !== $component['type'] ) { ?>
+														<span class="mdc-floating-label" id="my-label-id" style=""><?php echo ( isset( $component['placeholder'] ) ? esc_attr( $component['placeholder'] ) : '' ); ?></span>
+													<?php } ?>
+												</span>
+												<span class="mdc-notched-outline__trailing"></span>
+											</span>
+											<?php } ?>
+											<div class="wpg-multi-checkbox__wrap">
+												<input type="checkbox" class="wpg-multi-checkbox" name="<?php echo ( isset( $component['checkbox_name'] ) ? esc_attr( $component['checkbox_name'] ) : '' ); ?>" id="<?php echo ( isset( $component['checkbox_id'] ) ? esc_attr( $component['checkbox_id'] ) : '' ); ?>" <?php checked( ( isset( $component['checkbox_value'] ) ? $component['checkbox_value'] : '' ), 'yes' ); ?> value="yes">
+											</div>
+											<input 
+											class="mdc-text-field__input <?php echo ( isset( $component['class'] ) ? esc_attr( $component['class'] ) : '' ); ?>" 
+											name="<?php echo ( isset( $component['name'] ) ? esc_html( $component['name'] ) : esc_html( $component['id'] ) ); ?>"
+											id="<?php echo esc_attr( $component['id'] ); ?>"
+											type="<?php echo esc_attr( 'color' === $component['type'] ) ? 'text' : esc_html( $component['type'] ); ?>"
+											value="<?php echo ( isset( $component['value'] ) ? esc_attr( $component['value'] ) : '' ); ?>"
+											placeholder="<?php echo ( isset( $component['placeholder'] ) ? esc_attr( $component['placeholder'] ) : '' ); ?>"
+											<?php echo esc_attr( ( 'number' === $component['type'] ) ? 'min=' . $component['min'] . ' max=' . $component['max'] : '' ); ?>
+											>
+											<?php if ( 'color' !== $component['type'] ) { ?>
+										</label>
+										<?php } ?>
+							<?php } ?>
+								<div class="mdc-text-field-helper-line">
+									<div class="mdc-text-field-helper-text--persistent mwb-helper-text" id="" aria-hidden="true"><?php echo ( isset( $isfw_component['description'] ) ? wp_kses_post( $isfw_component['description'] ) : '' ); ?></div>
+								</div>
+							</div>
+						</div>
+							<?php
+						break;
+					case 'temp-select':
+						?>
+						<div class="mwb-form-group mwb-isfw-<?php echo esc_attr( array_key_exists( 'type', $isfw_component ) ? $isfw_component['type'] : '' ); ?>">
+							<div class="mwb-form-group__label">
+								<label for="<?php echo esc_attr( array_key_exists( 'id', $isfw_component ) ? $isfw_component['id'] : '' ); ?>" class="mwb-form-label"><?php echo esc_html( array_key_exists( 'title', $isfw_component ) ? $isfw_component['title'] : '' ); ?></label>
+							</div>
+							<div class="mwb-form-group__control">
+								<?php
+								foreach ( $isfw_component['value'] as $isfw_subcomponent ) {
+									?>
+									<img src="<?php echo ( isset( $isfw_subcomponent['src'] ) ? esc_attr( $isfw_subcomponent['src'] ) : '' ); ?>" width="100" height="100" alt="">
+									<input 
+									class="<?php echo esc_attr( array_key_exists( 'class', $isfw_subcomponent ) ? $isfw_subcomponent['class'] : '' ); ?>" 
+									name="<?php echo esc_attr( array_key_exists( 'name', $isfw_subcomponent ) ? $isfw_subcomponent['name'] : '' ); ?>"
+									id="<?php echo esc_attr( array_key_exists( 'id', $isfw_subcomponent ) ? $isfw_subcomponent['id'] : '' ); ?>"
+									type="<?php echo esc_attr( array_key_exists( 'type', $isfw_subcomponent ) ? $isfw_subcomponent['type'] : '' ); ?>"
+									value="<?php echo esc_attr( array_key_exists( 'value', $isfw_subcomponent ) ? $isfw_subcomponent['value'] : '' ); ?>"
+									<?php checked( $isfw_component['selected'], $isfw_subcomponent['value'] ); ?>
+									>
+								<?php } ?>
+								<div class="mdc-text-field-helper-line">
+									<div class="mdc-text-field-helper-text--persistent mwb-helper-text" id="" aria-hidden="true"><?php echo wp_kses_post( array_key_exists( 'description', $isfw_component ) ? $isfw_component['description'] : '' ); ?></div>
 								</div>
 							</div>
 						</div>
@@ -802,19 +864,18 @@ class Invoice_System_For_Woocommerce {
 						?>
 							<div class="mwb-form-group mwb-isfw-<?php echo esc_attr( array_key_exists( 'type', $isfw_component ) ? $isfw_component['type'] : '' ); ?>">
 								<div class="mwb-form-group__label">
-									<label for="<?php echo esc_attr( array_key_exists( 'id', $isfw_component ) ? $isfw_component['id'] : '' ); ?>" class="mwb-form-label"><?php echo esc_html( array_key_exists( 'title', $isfw_component ) ? $isfw_component['title'] : '' ); // WPCS: XSS ok. ?></label>
+									<label for="<?php echo esc_attr( array_key_exists( 'id', $isfw_component ) ? $isfw_component['id'] : '' ); ?>" class="mwb-form-label"><?php echo esc_html( array_key_exists( 'title', $isfw_component ) ? $isfw_component['title'] : '' ); ?></label>
 								</div>
 								<div class="mwb-form-group__control">
 									<input 
 									class="<?php echo esc_attr( array_key_exists( 'class', $isfw_component ) ? $isfw_component['class'] : '' ); ?>" 
-									name="<?php echo esc_attr( array_key_exists( 'namre', $isfw_component ) ? $isfw_component['name'] : '' ); ?>"
+									name="<?php echo esc_attr( array_key_exists( 'name', $isfw_component ) ? $isfw_component['name'] : '' ); ?>"
 									id="<?php echo esc_attr( array_key_exists( 'id', $isfw_component ) ? $isfw_component['id'] : '' ); ?>"
-									type="<?php echo esc_attr( array_key_exists( 'type', $isfw_component ) ? $isfw_component['type'] : '' ); ?>"
+									type="<?php echo esc_attr( ( 'color' === $isfw_component['type'] ) ? 'text' : $isfw_component['type'] ); ?>"
 									value="<?php echo esc_attr( array_key_exists( 'value', $isfw_component ) ? $isfw_component['value'] : '' ); ?>"
-									<?php echo esc_html( ( 'date' === $isfw_component['type'] ) ? 'max='. date( 'Y-m-d', strtotime( date( "Y-m-d", time() ) . " + 365 day" ) ) .' ' . 'min=' . date( "Y-m-d" ) . '' : '' ); ?>
 									>
 									<div class="mdc-text-field-helper-line">
-										<div class="mdc-text-field-helper-text--persistent mwb-helper-text" id="" aria-hidden="true"><?php echo esc_attr( $isfw_component['description'] ); ?></div>
+										<div class="mdc-text-field-helper-text--persistent mwb-helper-text" id="" aria-hidden="true"><?php echo wp_kses_post( $isfw_component['description'] ); ?></div>
 									</div>
 								</div>
 							</div>
@@ -822,31 +883,47 @@ class Invoice_System_For_Woocommerce {
 						break;
 					case 'upload-button':
 						?>
-						<div class="mwb-form-group">
-						<div class="mwb-form-group__label">
-							<label for="<?php echo esc_attr( array_key_exists( 'id', $isfw_component ) ? $isfw_component['id'] : '' ); ?>" class="mwb-form-label"><?php echo esc_html( array_key_exists( 'title', $isfw_component ) ? $isfw_component['title'] : '' ); ?></label>
+							<div class="mwb-form-group <?php echo esc_attr( isset( $isfw_component['parent-class'] ) ? $isfw_component['parent-class'] : '' ); ?>">
+							<div class="mwb-form-group__label">
+								<label for="<?php echo esc_attr( array_key_exists( 'id', $isfw_component ) ? $isfw_component['id'] : '' ); ?>" class="mwb-form-label"><?php echo esc_html( array_key_exists( 'title', $isfw_component ) ? $isfw_component['title'] : '' ); ?></label>
+							</div>
+							<div class="mwb-form-group__control">
+								<input
+								type="hidden"
+								id="<?php echo esc_attr( array_key_exists( 'id', $isfw_component ) ? $isfw_component['id'] : '' ); ?>"
+								class="<?php echo esc_attr( array_key_exists( 'class', $isfw_component ) ? $isfw_component['class'] : '' ); ?>"
+								name="<?php echo esc_attr( array_key_exists( 'name', $isfw_component ) ? $isfw_component['name'] : '' ); ?>"
+								value="<?php echo esc_html( array_key_exists( 'value', $isfw_component ) ? $isfw_component['value'] : '' ); ?>"
+								>
+								<img
+									src="<?php echo esc_attr( $isfw_component['img-tag']['img-src'] ); ?>"
+									class="<?php echo esc_attr( $isfw_component['img-tag']['img-class'] ); ?>"
+									id="<?php echo esc_attr( $isfw_component['img-tag']['img-id'] ); ?>"
+									style="<?php echo esc_attr( $isfw_component['img-tag']['img-style'] ); ?>"
+								>
+								<button class="mdc-button--raised" name="<?php echo esc_attr( array_key_exists( 'sub_name', $isfw_component ) ? $isfw_component['sub_name'] : '' ); ?>"
+									id="<?php echo esc_attr( array_key_exists( 'sub_id', $isfw_component ) ? $isfw_component['sub_id'] : '' ); ?>"> <span class="mdc-button__ripple"></span>
+									<span class="mdc-button__label"><?php echo esc_attr( array_key_exists( 'button_text', $isfw_component ) ? $isfw_component['button_text'] : '' ); ?></span>
+								</button>
+								<button class="mdc-button--raised" name="<?php echo esc_attr( $isfw_component['img-remove']['btn-name'] ); ?>"
+									id="<?php echo esc_attr( $isfw_component['img-remove']['btn-id'] ); ?>"
+									style="<?php echo esc_attr( $isfw_component['img-remove']['btn-style'] ); ?>"
+									> <span class="mdc-button__ripple"
+									></span>
+									<span class="mdc-button__label"><?php echo esc_attr( $isfw_component['img-remove']['btn-title'] ); ?></span>
+								</button>
+								<input
+								type="hidden"
+								id="<?php echo ( isset( $isfw_component['img-hidden'] ) ) ? esc_attr( $isfw_component['img-hidden']['id'] ) : ''; ?>"
+								class="<?php echo ( isset( $isfw_component['img-hidden'] ) ) ? esc_attr( $isfw_component['img-hidden']['class'] ) : ''; ?>"
+								name="<?php echo ( isset( $isfw_component['img-hidden'] ) ) ? esc_attr( $isfw_component['img-hidden']['name'] ) : ''; ?>"
+								>
+								<div class="mdc-text-field-helper-line">
+									<div class="mdc-text-field-helper-text--persistent mwb-helper-text" id="" aria-hidden="true"><?php echo ( isset( $isfw_component['description'] ) ? wp_kses_post( $isfw_component['description'] ) : '' ); ?></div>
+								</div>
+							</div>
 						</div>
-						<div class="mwb-form-group__control">
-							<img
-								src="<?php echo esc_attr( $isfw_component['img-tag']["img-src"] ); ?>"
-								class="<?php echo esc_attr( $isfw_component['img-tag']['img-class'] ); ?>"
-								id="<?php echo esc_attr( $isfw_component['img-tag']['img-id'] ); ?>"
-								style="<?php echo esc_attr( $isfw_component['img-tag']['img-style'] ); ?>"
-							>
-							<button class="mdc-button--raised" name="<?php echo esc_attr( array_key_exists( 'name', $isfw_component ) ? $isfw_component['name'] : '' ); ?>"
-								id="<?php echo esc_attr( array_key_exists( 'id', $isfw_component ) ? $isfw_component['id'] : '' ); ?>"> <span class="mdc-button__ripple"></span>
-								<span class="mdc-button__label"><?php echo esc_attr( array_key_exists( 'button_text', $isfw_component ) ? $isfw_component['button_text'] : '' ); ?></span>
-							</button>
-							<button class="mdc-button--raised" name="<?php echo esc_attr( $isfw_component['img-remove']['btn-name'] ); ?>"
-								id="<?php echo esc_attr( $isfw_component['img-remove']['btn-id'] ); ?>"
-								style="<?php echo esc_attr( $isfw_component['img-remove']['btn-style'] ); ?>"
-								> <span class="mdc-button__ripple"
-								></span>
-								<span class="mdc-button__label"><?php echo esc_attr( $isfw_component['img-remove']['btn-title'] ); ?></span>
-							</button>
-						</div>
-					</div>
-						<?php
+							<?php
 						break;
 					case 'hidden':
 						?>
@@ -858,6 +935,44 @@ class Invoice_System_For_Woocommerce {
 						name="<?php echo esc_attr( array_key_exists( 'name', $isfw_component ) ? $isfw_component['name'] : '' ); ?>"
 						>
 							<?php
+						break;
+					case 'date-picker':
+						?>
+						<div class="mwb-form-group">
+							<div class="mwb-form-group__label">
+								<label class="mwb-form-label" for="<?php echo esc_attr( array_key_exists( 'id', $isfw_component ) ? $isfw_component['id'] : '' ); ?>"><?php echo esc_attr( array_key_exists( 'title', $isfw_component ) ? $isfw_component['title'] : '' ); ?></label>
+							</div>
+							<div class="mwb-form-group__control">
+								<?php
+								$sub_isfw_component_value = $isfw_component['value'];
+								?>
+								<div class="mwb-isfw-date-picker-group">
+									<span class="mwb-isfw-month-selector"><?php echo esc_attr( $sub_isfw_component_value['month']['title'] ); ?></span>
+									<select name="<?php echo esc_attr( $sub_isfw_component_value['month']['name'] ); ?>" id="<?php echo esc_attr( $sub_isfw_component_value['month']['id'] ); ?>" class="<?php echo esc_attr( $sub_isfw_component_value['month']['class'] ); ?>">
+										<?php
+										$month_options = $sub_isfw_component_value['month']['options'];
+										foreach ( $month_options as $key => $value ) {
+											?>
+											<option value="<?php echo esc_attr( $key ); ?>" <?php selected( $sub_isfw_component_value['month']['value'], $key ); ?>><?php echo esc_attr( $value ); ?></option>
+											<?php
+										}
+										?>
+									</select>
+									<span class="mwb-isfw-date-selector"><?php echo esc_attr( $sub_isfw_component_value['date']['title'] ); ?></span>
+									<select name="<?php echo esc_attr( $sub_isfw_component_value['date']['name'] ); ?>" id="<?php echo esc_attr( $sub_isfw_component_value['date']['id'] ); ?>" class="<?php echo esc_attr( $sub_isfw_component_value['date']['class'] ); ?>">
+										<?php
+										$date_options = $sub_isfw_component_value['date']['options'];
+										foreach ( $date_options as $key => $value ) {
+											?>
+											<option value="<?php echo esc_attr( $key ); ?>" <?php selected( $sub_isfw_component_value['date']['value'], $key ); ?>><?php echo esc_attr( $value ); ?></option>
+											<?php
+										}
+										?>
+									</select>
+								</div>
+							</div>
+						</div>
+						<?php
 						break;
 					default:
 						break;

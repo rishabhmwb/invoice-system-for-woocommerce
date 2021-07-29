@@ -16,19 +16,25 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit(); // Exit if accessed directly.
 }
 
-global $isfw_mwb_isfw_obj;
+global $isfw_mwb_isfw_obj,$isfw_save_check_flag, $wpiwps_save_check_flag;
 $isfw_active_tab   = isset( $_GET['isfw_tab'] ) ? sanitize_key( $_GET['isfw_tab'] ) : 'invoice-system-for-woocommerce-general'; // phpcs:ignore
+do_action( 'mwb_isfw_license_notification' );
 $isfw_default_tabs = $isfw_mwb_isfw_obj->mwb_isfw_plug_default_tabs();
 ?>
 <header>
 	<div class="mwb-header-container mwb-bg-white mwb-r-8">
-		<h1 class="mwb-header-title"><?php echo esc_attr( strtoupper( str_replace( '-', ' ', $isfw_mwb_isfw_obj->isfw_get_plugin_name() ) ) ); ?></h1>
-		<a href="https://docs.makewebbetter.com/" target="_blank" class="mwb-link"><?php esc_html_e( 'Documentation', 'invoice-system-for-woocommerce' ); ?></a>
+		<h1 class="mwb-header-title"><?php echo esc_attr( strtoupper( str_replace( '-', ' ', apply_filters( 'isfw_plugin_name_show_dashboard', $isfw_mwb_isfw_obj->isfw_get_plugin_name() ) ) ) ); ?></h1>
+		<a href="<?php echo esc_attr( apply_filters( 'isfw_plugin_doc_link_dashboard', ' https://docs.makewebbetter.com/invoice-system-for-woocommerce/?utm_source=MWB-invoice-backend&utm_medium=MWB-ORG-Page&utm_campaign=MWB-doc' ) ); ?>" target="_blank" class="mwb-link"><?php esc_html_e( 'Documentation', 'invoice-system-for-woocommerce' ); ?></a>
 		<span>|</span>
 		<a href="https://makewebbetter.com/contact-us/" target="_blank" class="mwb-link"><?php esc_html_e( 'Support', 'invoice-system-for-woocommerce' ); ?></a>
 	</div>
 </header>
-
+<?php
+if ( $isfw_save_check_flag || $wpiwps_save_check_flag ) {
+	$mwb_isfw_error_text = esc_html__( 'Settings saved Successfully!', 'invoice-system-for-woocommerce' );
+	$isfw_mwb_isfw_obj->mwb_isfw_plug_admin_notice( $mwb_isfw_error_text, 'success' );
+}
+?>
 <main class="mwb-main mwb-bg-white mwb-r-8">
 	<nav class="mwb-navbar">
 		<ul class="mwb-navbar__items">
