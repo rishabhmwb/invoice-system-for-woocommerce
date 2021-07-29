@@ -204,7 +204,7 @@ Yes, Admin can customize the invoice according to their need for this Go to the 
 
 * First version
 
-== Upgrade Notice ==
+== Upgrade Notice
 
 = 1.0.1 - Released on 16 July 2021 =
 * New: Compatibility with WooCommerce 5.4.1 and WordPress 5.7.2
