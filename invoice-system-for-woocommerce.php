@@ -178,6 +178,7 @@ if ( $tmp ) {
 		$isfw_plugin_standard = new Invoice_System_For_Woocommerce();
 		$isfw_plugin_standard->isfw_run();
 		$GLOBALS['isfw_mwb_isfw_obj'] = $isfw_plugin_standard;
+		require_once INVOICE_SYSTEM_FOR_WOOCOMMERCE_DIR_PATH . 'includes/invoice-system-for-woocommerce-global-functions.php';
 	}
 	run_invoice_system_for_woocommerce();
 	// Add settings link on plugin page.
