@@ -6,7 +6,7 @@
  * public-facing side of the site and the admin area.
  *
  * @link       https://makewebbetter.com/
- * @since      1.0.0
+ * @since      1.0.2
  *
  * @package    Invoice_system_for_woocommerce
  * @subpackage Invoice_system_for_woocommerce/includes
@@ -26,6 +26,7 @@ use Dompdf\FontMetrics;
  * i.e, no echo, print_r, var_dump, _e or similar function should execute before calling this function.
  * best hook to use this function is init calling before this hook may give blank PDF.
  *
+ * @since 1.0.2
  * @param int    $order_id current order id to generate invoice for.
  * @param string $type type of pdf to generate , values can be 'invoice', 'packing_slip'.
  * @param string $action action after generating invoice , values can be 'download_locally', 'open_window', 'download_on_server'.

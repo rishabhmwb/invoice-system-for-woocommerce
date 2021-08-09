@@ -1,12 +1,12 @@
 === Invoice System for WooCommerce ===
 Contributors: MakeWebBetter
 Donate link:  https://makewebbetter.com/
-Tags: invoice,invoice system,packing slips,invoicing,invoices,woo invoices
+Tags: invoice, invoice system, packing slips, invoicing, invoices, woo invoices, Print Invoice
 Requires at least: 4.6
-Tested up to: 5.7.2
+Tested up to: 5.8
 WC requires at least: 4.0.0
-WC tested up to: 5.4.1
-Stable tag: 1.0.0
+WC tested up to: 5.5.2
+Stable tag: 1.0.2
 Requires PHP: 7.2
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
@@ -16,7 +16,7 @@ Create, download, save & email the invoices & packing slips to your customers fo
 
 == Description ==
 
-***THE INVOICE SYSTEM FOR WOOCOMMERCE OUGHTS TO SOLVE THE PROBLEM OF CURATING TIME - TAKING & BORING INVOICES MANUALLY, FOREVER!***
+***THE INVOICE SYSTEM FOR WOOCOMMERCE PLUGIN OUGHTS TO SOLVE ALL YOUR INVOICING PROBLEMS LIKE CREATING WOO INVOICES . IT ALSO HELPS YOU TO PRINT INVOICES AND PACKING SLIPS***
 
 Invoice System for WooCommerce plugin is a simple but features-oriented extension for your WooCommerce stores. This plugin automatically generates WooCommerce PDF invoices and attaches them to the relative WooCommerce emails. The problem of time-taking & boring Invoices is solved FOREVER!
 
@@ -31,9 +31,12 @@ The Invoice System for WooCommerce plugin is also useful for the business houses
 * Eliminate manual errors while creating invoices for products
 * Increase brand awareness with custom invoice designs and templates
 * Reduce-costs with automated PDF invoices
+* It’s compatible with our [**Return Refund and Exchange For WooCommerce**](https://wordpress.org/plugins/woo-refund-and-exchange-lite/)
+* It’s compatible with our [**Wallet System For WooCommerce**](https://wordpress.org/plugins/wallet-system-for-woocommerce/)
+* It’s compatible with our [**WooCommerce Order Tracker**](https://codecanyon.net/item/woocommerce-order-tracker/19814717)
 
 == PLUGIN MEETS YOUR REQUIREMENT, SO ==
-[**Download Now !!**](https://downloads.wordpress.org/plugin/invoice-system-for-woocommerce.1.0.0.zip)
+[**Download Now !!**](https://downloads.wordpress.org/plugin/invoice-system-for-woocommerce.zip)
 
 Visit [**Invoice System for WooCommerce Documentation**](https://docs.makewebbetter.com/invoice-system-for-woocommerce/?utm_source=MWB-invoice-org&utm_medium=MWB-ORG-Page&utm_campaign=MWB-doc) and learn more about the features and working of the plugin.
 
@@ -90,7 +93,7 @@ The admin can now allow their users to download multiple invoices with the “mu
 
 **LIVE DEMO OF FREE VERSION**
 
-[**Invoice System for WooCommerce Free demo**](https://demo.makewebbetter.com/invoice-system-for-woocommerce/?utm_source=MWB-invoice-org&utm_medium=MWB-ORG-Page&utm_campaign=MWB-free_demo)
+[**Invoice System for WooCommerce Free demo**](https://demo.makewebbetter.com/invoice-system-for-woocommerce/checkout/order-received/130/?key=wc_order_44cagMaZXjKYp&utm_source=MWB-invoice-org&utm_medium=MWB-ORG-Page&utm_campaign=MWB-free_demo)
 
 
 == THERE'S MORE YOU CAN DO WITH INVOICE SYSTEM FOR WOOCOMMERCE [PREMIUM UPGRADE] ==
@@ -114,14 +117,16 @@ The admin can now allow their users to download multiple invoices with the “mu
 
 == LIVE DEMO OF PREMIUM VERSION ==
 
-* [**WooCommerce PDF Invoice with Packing Slip Frontend Demo**](https://demo.makewebbetter.com/woocommerce-pdf-invoice-with-packing-slip/?utm_source=MWB-invoice-org&utm_medium=MWB-ORG-Page&utm_campaign=frontend)
-* [**WooCommerce PDF Invoice with Packing Slip Backend Demo**](https://demo.makewebbetter.com/woocommerce-pdf-invoice-with-packing-slip/get-personal-demo/?utm_source=MWB-invoice-org&utm_medium=MWB-ORG-Page&utm_campaign=backend)
+* [**WooCommerce PDF Invoice with Packing Slip Frontend Demo**](https://demo.makewebbetter.com/woocommerce-pdf-invoice-packing-slip/?utm_source=MWB-invoice-org&utm_medium=MWB-ORG-Page&utm_campaign=pdf-invoice-frontend)
+* [**WooCommerce PDF Invoice with Packing Slip Backend Demo**](https://demo.makewebbetter.com/woocommerce-pdf-invoice-packing-slip/get-personal-demo/?utm_source=MWB-invoice-org&utm_medium=MWB-ORG-Page&utm_campaign=pdf-invoice-backend)
 
 
 
 == SUPPORT ==
 
-If you need support or have any question then kindly use our online chat window   [here](https://makewebbetter.com/?utm_source=MWB-invoice-org&utm_medium=MWB-ORG-Page&utm_campaign=MWB-support) or  connect with us then [**Generate a Ticket**](https://makewebbetter.com/submit-query/)
+If you need support or have any question then kindly use our online chat window   [here](https://makewebbetter.com/?utm_source=MWB-invoice-org&utm_medium=MWB-ORG-Page&utm_campaign=MWB-support) or  connect with us then [**Generate a Ticket**](https://makewebbetter.com/submit-query/?utm_source=MWB-invoice-org&utm_medium=MWB-org-page&utm_campaign=MWB-invoice-org)
+If our documentation doesn’t contain the solution to your problem, you can visit the [*MakeWebBetter Forums*](https://forums.makewebbetter.com/?utm_source=MWB-invoice-org&utm_medium=MWB-org-page&utm_campaign=MWB-invoice-org) with your question.
+
 
 
 == INSTALLATION ==
@@ -191,6 +196,16 @@ Yes, Admin can customize the invoice according to their need for this Go to the 
 
 == Changelog ==
 
+= 1.0.2 - RELEASED ON 9 AUGUST 2021 =
+
+* NEW: Compatibility with WooCommerce 5.5.2 and WordPress 5.8
+* NEW: Compatible with  [**Return Refund and Exchange For WooCommerce**](https://wordpress.org/plugins/woo-refund-and-exchange-lite/)
+* NEW: Compatible with  [**Wallet System For WooCommerce**](https://wordpress.org/plugins/wallet-system-for-woocommerce/)
+* NEW: Compatible with [**WooCommerce Order Tracker**](https://codecanyon.net/item/woocommerce-order-tracker/19814717)
+* FIX: Minor bug fixes
+
+
+
 = 1.0.1 - RELEASED ON 16 JULY 2021 =
 
 * New: Compatibility with WooCommerce 5.4.1 and WordPress 5.7.2
@@ -206,9 +221,12 @@ Yes, Admin can customize the invoice according to their need for this Go to the 
 
 == Upgrade Notice ==
 
-= 1.0.1 - Released on 16 July 2021 =
-* New: Compatibility with WooCommerce 5.4.1 and WordPress 5.7.2
-* Minor issues fixes 
-* Added multiple select option for users to give access to download invoice
-* Separate tab for general and invoice settings
-* Added company name on invoice for customer
+= 1.0.2 - RELEASED ON 9 AUGUST 2021 =
+
+* NEW: Compatibility with WooCommerce 5.5.2 and WordPress 5.8
+* NEW: Compatible with  [**Return Refund and Exchange For WooCommerce**](https://wordpress.org/plugins/woo-refund-and-exchange-lite/)
+* NEW: Compatible with  [**Wallet System For WooCommerce**](https://wordpress.org/plugins/wallet-system-for-woocommerce/)
+* NEW: Compatible with [**WooCommerce Order Tracker**](https://codecanyon.net/item/woocommerce-order-tracker/19814717)
+* FIX: Minor bug fixes
+
+
