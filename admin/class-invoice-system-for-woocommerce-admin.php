@@ -406,7 +406,7 @@ class Invoice_System_For_Woocommerce_Admin {
 			$dates          = range( 1, $number_of_days );
 			$isfw_date      = array_combine( $dates, $dates );
 		} else {
-			$isfw_date = '';
+			$isfw_date = array();
 		}
 
 		$invoice_settings_arr = array(
