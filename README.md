@@ -1,13 +1,13 @@
-[![Build Status](https://img.shields.io/travis/twbs/bootstrap/v4-dev.svg)](https://travis-ci.org/twbs/bootstrap) ![Active installs](https://img.shields.io/badge/Active-20%2B-brightgreen) ![License](https://img.shields.io/badge/License-GPLv3%20or%20later-yellowgreen) ![WP tested](https://img.shields.io/badge/WP%20tested-4.6-brightgreen) ![WC tested](https://img.shields.io/badge/WC%20tested-5.7.2-brightgreen) ![Requires PHP](https://img.shields.io/badge/Requires%20PHP-7.2-blue)
+[![Build Status](https://img.shields.io/travis/twbs/bootstrap/v4-dev.svg)](https://travis-ci.org/twbs/bootstrap) ![Active installs](https://img.shields.io/badge/Active-20%2B-brightgreen) ![License](https://img.shields.io/badge/License-GPLv3%20or%20later-yellowgreen) ![WP tested](https://img.shields.io/badge/WP%20tested-4.6-brightgreen) ![WC tested](https://img.shields.io/badge/WC%20tested-5.8-brightgreen) ![Requires PHP](https://img.shields.io/badge/Requires%20PHP-7.2-blue)
 # Invoice System for WooCommerce
 ![Invoice System for WooCommerce](https://ps.w.org/invoice-system-for-woocommerce/assets/banner-772x250.png?rev=2504009)
-* Contributor: MakeWebBetter
-* Author URI: [https://makewebbetter.com/](https://makewebbetter.com/?utm_source=github&utm_medium=github&utm_campaign=invoice)
+* Contributor:MakeWebBetter
+* Author URI:[https://makewebbetter.com/](https://makewebbetter.com/?utm_source=github&utm_medium=github&utm_campaign=invoice)
 * Tags: invoice,invoice system,packing slips,invoice and packing slips,WooCommerce invoicing, invoicing
-* License URI: http://www.gnu.org/licenses/gpl-3.0.html
+*  License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
 # Description
-**THE INVOICE SYSTEM FOR WOOCOMMERCE OUGHTS TO SOLVE THE PROBLEM OF CURATING TIME-TAKING & BORING INVOICES MANUALLY, FOREVER!!**
+**THE INVOICE SYSTEM FOR WOOCOMMERCE PLUGIN OUGHTS TO SOLVE ALL YOUR INVOICING PROBLEMS LIKE CREATING WOO INVOICES . IT ALSO HELPS YOU TO PRINT INVOICES AND PACKING SLIPS**
 
 [**Invoice System for WooCommerce plugin**](https://wordpress.org/plugins/invoice-system-for-woocommerce/?utm_source=MWB-invoice-git&utm_medium=MWB-git-Page&utm_campaign=invoice) is a simple but features-oriented extension for your WooCommerce stores. This plugin automatically generates WooCommerce PDF invoices and attaches them to the relative WooCommerce emails. The problem of time-taking & boring Invoices is solved FOREVER!
 
@@ -22,9 +22,13 @@ The Invoice System for WooCommerce plugin is also useful for the business houses
 * Eliminate manual errors while creating invoices for products
 * Increase brand awareness with custom invoice designs and templates
 * Reduce-costs with automated PDF invoices
+* It’s compatible with our [**Return Refund and Exchange for WooCommerce**](https://wordpress.org/plugins/woo-refund-and-exchange-lite/)
+* It’s compatible with our [**Wallet System for WooCommerce**](https://wordpress.org/plugins/wallet-system-for-woocommerce/)
+* It’s compatible with our [**WooCommerce Order Tracker**](https://codecanyon.net/item/woocommerce-order-tracker/19814717)
 
 
-[**Download Now**](https://downloads.wordpress.org/plugin/invoice-system-for-woocommerce.1.0.1.zip)
+
+[**Download Now**](https://downloads.wordpress.org/plugin/invoice-system-for-woocommerce.zip)
 
 
 ## WHAT'S INCLUDED IN OUR FREE INVOICE SYSTEM FOR WOOCOMMERCE PLUGIN : 
@@ -77,7 +81,7 @@ The admin can now allow their users to download multiple invoices with the “mu
 
 [**Invoice system for WooCommerce Documentation**](https://docs.makewebbetter.com/invoice-system-for-woocommerce//?utm_source=MWB-invoice-git&utm_medium=MWB-git-Page&utm_campaign=MWB-doc) and learn more about the features and working of the plugin
 
-[**Invoice system for WooCommerce Free demo**](https://demo.makewebbetter.com/invoice-system-for-woocommerce/?utm_source=MWB-invoice-git&utm_medium=MWB-git-Page&utm_campaign=MWB-free_demo)
+[**Invoice system for WooCommerce Free demo**](https://demo.makewebbetter.com/invoice-system-for-woocommerce/checkout/order-received/130/?key=wc_order_44cagMaZXjKYp&utm_source=MWB-invoice-git&utm_medium=MWB-git-Page&utm_campaign=MWB-free_demo)
 
 
 ## THERE'S MORE YOU CAN DO WITH INVOICE SYSTEM FOR WOOCOMMERCE [PREMIUM UPGRADE] : 
@@ -92,11 +96,9 @@ The admin can now allow their users to download multiple invoices with the “mu
 * The inbuilt- reporting feature will give an upper hand to merchants by showing each data over a Separate page like all invoices and forms Admin can also filter invoices by date range. 
 * Merchant can download (single or bulk) filtered invoices And more…
 
-
 == TAKE ADVANTAGE OF EXCLUSIVE FEATURES OF INVOICE PRO PLUGIN ==
 
 > Note:  Get [**WooCommerce PDF Invoice With Packing Slip**](https://makewebbetter.com/product/woocommerce-pdf-invoice-packing-slip/?utm_source=MWB-invoice-git&utm_medium=MWB-git-Page&utm_campaign=MWB-invoice-pro)
-
 
 == LIVE DEMO OF PREMIUM VERSION ==
 
@@ -104,10 +106,10 @@ The admin can now allow their users to download multiple invoices with the “mu
 * [**WooCommerce PDF Invoice with Packing Slip Backend Demo**](https://demo.makewebbetter.com/woocommerce-pdf-invoice-packing-slip/?utm_source=MWB-invoice-git&utm_medium=MWB-git-Page&utm_campaign=backend)
 
 
-
-
 ## SUPPORT
 If you need support or have any question then kindly use our online chat window [here](https://makewebbetter.com/?utm_source=MWB-invoice-git&utm_medium=MWB-git-Page&utm_campaign=MWB-support) or  connect with us then [**Generate a Ticket**](https://makewebbetter.com/submit-query/?utm_source=MWB-invoice-git&utm_medium=MWB-git-Page&utm_campaign=invoice)
+If our documentation doesn’t contain the solution to your problem, you can visit the [*MakeWebBetter Forums*](https://forums.makewebbetter.com/?utm_source=MWB-invoice-git&utm_medium=MWB-git-page&utm_campaign=MWB-invoice-git) with your question.
+
 
 ### **MORE ABOUT MAKEWEBBETTER**
 
