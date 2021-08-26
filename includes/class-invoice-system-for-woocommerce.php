@@ -557,6 +557,7 @@ class Invoice_System_For_Woocommerce {
 								type="<?php echo esc_attr( array_key_exists( 'type', $isfw_component ) ? $isfw_component['type'] : '' ); ?>"
 								value="<?php echo esc_attr( array_key_exists( 'value', $isfw_component ) ? $isfw_component['value'] : '' ); ?>"
 								placeholder="<?php echo esc_attr( array_key_exists( 'placeholder', $isfw_component ) ? $isfw_component['placeholder'] : '' ); ?>"
+								autocomplete="new-password"
 								>
 								<i class="material-icons mdc-text-field__icon mdc-text-field__icon--trailing mwb-password-hidden" tabindex="0" role="button">visibility</i>
 							</label>

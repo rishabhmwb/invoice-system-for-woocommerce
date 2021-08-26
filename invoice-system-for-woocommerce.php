@@ -22,11 +22,10 @@
  * Domain Path:       /languages
  *
  * Requires at least:    4.6
- * Tested up to:         5.7
- * Requires at least:    4.6
  * Tested up to:         5.8
  * WC requires at least: 4.0.0
- * WC tested up to:      5.5.2
+ * WC tested up to:      5.6.0
+ * Stable tag:           1.0.3
  *
  * License:           GNU General Public License v3.0
  * License URI:       http://www.gnu.org/licenses/gpl-3.0.html
@@ -192,8 +191,10 @@ if ( $tmp ) {
 	function invoice_system_for_woocommerce_settings_link( $links ) {
 		$my_link = array(
 			'<a href="' . admin_url( 'admin.php?page=invoice_system_for_woocommerce_menu' ) . '">' . __( 'Settings', 'invoice-system-for-woocommerce' ) . '</a>',
-			'<a href="https://makewebbetter.com/product/woocommerce-pdf-invoice-packing-slip/?utm_source=MWB-invoice-backend&utm_medium=MWB-ORG-Page&utm_campaign=MWB-invoice-pro" target="_blank" id="isfw-go-pro-link">' . __( 'Go Pro', 'invoice-system-for-woocommerce' ) . '</a>'
 		);
+		if ( ! in_array( 'woocommerce-pdf-invoice-with-packing-slip/woocommerce-pdf-invoice-with-packing-slip.php', get_option( 'active_plugins' ), true ) ) {
+			$my_link[] = '<a href="https://makewebbetter.com/product/woocommerce-pdf-invoice-packing-slip/?utm_source=MWB-invoice-backend&utm_medium=MWB-ORG-Page&utm_campaign=MWB-invoice-pro" target="_blank" id="isfw-go-pro-link">' . __( 'Go Pro', 'invoice-system-for-woocommerce' ) . '</a>';
+		}
 		return array_merge( $my_link, $links );
 	}
 }
