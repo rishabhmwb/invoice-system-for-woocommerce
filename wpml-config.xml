@@ -1,2 +1,14 @@
 <wpml-config>
+    <admin-texts>
+        <key name="isfw_company_name" />
+        <key name="isfw_company_address" />
+        <key name="isfw_company_city" />
+        <key name="isfw_company_state" />
+        <key name="isfw_company_pin" />
+        <key name="isfw_company_phone" />
+        <key name="isfw_company_email" />
+        <key name="isfw_invoice_number_prefix" />
+        <key name="isfw_invoice_number_suffix" />
+        <key name="isfw_invoice_disclaimer" />
+    </admin-texts>
 </wpml-config>

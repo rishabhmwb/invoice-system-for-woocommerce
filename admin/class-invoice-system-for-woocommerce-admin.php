@@ -288,12 +288,8 @@ class Invoice_System_For_Woocommerce_Admin {
 	 * @return array
 	 */
 	public function isfw_template_pdf_settings_page( $isfw_template_pdf_settings ) {
-		$isfw_send_invoice_automatically          = get_option( 'isfw_send_invoice_automatically' );
-		$isfw_send_invoice_for                    = get_option( 'isfw_send_invoice_for' );
-		$isfw_allow_invoice_generation_for_orders = get_option( 'isfw_allow_invoice_generation_for_orders', array() );
-		$isfw_generate_invoice_from_cache         = get_option( 'isfw_generate_invoice_from_cache' );
-		$order_stat                               = wc_get_order_statuses();
-		$temp                                     = array(
+		$order_stat = wc_get_order_statuses();
+		$temp       = array(
 			'wc-never' => __( 'Never', 'invoice-system-for-woocommerce' ),
 		);
 		// appending the default value.
@@ -314,7 +310,7 @@ class Invoice_System_For_Woocommerce_Admin {
 				'type'        => 'radio-switch',
 				'description' => __( 'Enable this to attach invoices with woocommerce mails.', 'invoice-system-for-woocommerce' ),
 				'id'          => 'isfw_send_invoice_automatically',
-				'value'       => $isfw_send_invoice_automatically,
+				'value'       => get_option( 'isfw_send_invoice_automatically' ),
 				'class'       => 'isfw_send_invoice_automatically',
 				'name'        => 'isfw_send_invoice_automatically',
 			),
@@ -323,7 +319,7 @@ class Invoice_System_For_Woocommerce_Admin {
 				'type'        => 'select',
 				'description' => __( 'Please choose the status of orders to send invoice for. If you do not want to send invoice please choose never.', 'invoice-system-for-woocommere' ),
 				'id'          => 'isfw_send_invoice_for',
-				'value'       => $isfw_send_invoice_for,
+				'value'       => get_option( 'isfw_send_invoice_for' ),
 				'name'        => 'isfw_send_invoice_for',
 				'class'       => 'isfw_send_invoice_for',
 				'placeholder' => '',
@@ -334,7 +330,7 @@ class Invoice_System_For_Woocommerce_Admin {
 				'type'        => 'multiselect',
 				'description' => __( 'Please choose the status of orders to allow invoice download for users.', 'invoice-system-for-woocommere' ),
 				'id'          => 'isfw_allow_invoice_generation_for_orders',
-				'value'       => $isfw_allow_invoice_generation_for_orders,
+				'value'       => get_option( 'isfw_allow_invoice_generation_for_orders', array() ),
 				'name'        => 'isfw_allow_invoice_generation_for_orders',
 				'class'       => 'isfw_allow_invoice_generation_for_orders isfw-multiselect-class mwb-defaut-multiselect',
 				'placeholder' => '',
@@ -345,7 +341,7 @@ class Invoice_System_For_Woocommerce_Admin {
 				'type'        => 'radio-switch',
 				'description' => __( 'Enable this to generate invoices from cache( invoices once downloaded will be stored in the preferred location and will be used later ), please note that once this is enabled changes after invoice generation will not reflect for earlier invoices, however changes will work for new order invoice downloads.', 'invoice-system-for-woocommerce' ),
 				'id'          => 'isfw_generate_invoice_from_cache',
-				'value'       => $isfw_generate_invoice_from_cache,
+				'value'       => get_option( 'isfw_generate_invoice_from_cache' ),
 				'class'       => 'isfw_generate_invoice_from_cache',
 				'name'        => 'isfw_generate_invoice_from_cache',
 			),
@@ -368,23 +364,8 @@ class Invoice_System_For_Woocommerce_Admin {
 	 * @return array
 	 */
 	public function isfw_template_invoice_setting_html_fields( $invoice_settings_arr ) {
-		$isfw_company_name                    = get_option( 'isfw_company_name' );
-		$isfw_company_address                 = get_option( 'isfw_company_address' );
-		$isfw_company_city                    = get_option( 'isfw_company_city' );
-		$isfw_company_state                   = get_option( 'isfw_company_state' );
-		$isfw_company_pin                     = get_option( 'isfw_company_pin' );
-		$isfw_company_phone                   = get_option( 'isfw_company_phone' );
-		$isfw_company_email                   = get_option( 'isfw_company_email' );
-		$isfw_invoice_number_digit            = get_option( 'isfw_invoice_number_digit' );
-		$isfw_invoice_number_prefix           = get_option( 'isfw_invoice_number_prefix' );
-		$isfw_invoice_number_suffix           = get_option( 'isfw_invoice_number_suffix' );
-		$isfw_invoice_disclaimer              = get_option( 'isfw_invoice_disclaimer' );
-		$isfw_invoice_color                   = get_option( 'isfw_invoice_color' );
-		$isfw_is_add_logo_invoice             = get_option( 'isfw_is_add_logo_invoice' );
 		$sub_isfw_upload_invoice_company_logo = get_option( 'sub_isfw_upload_invoice_company_logo' );
-		$isfw_invoice_template                = get_option( 'isfw_invoice_template' );
 		$isfw_invoice_number_renew_month      = get_option( 'isfw_invoice_number_renew_month' );
-		$isfw_invoice_number_renew_date       = get_option( 'isfw_invoice_number_renew_date' );
 		$isfw_months                          = array(
 			'never' => __( 'Never', 'invoice-system-for-woocommerce' ),
 			1       => __( 'January', 'invoice-system-for-woocommerce' ),
@@ -420,7 +401,7 @@ class Invoice_System_For_Woocommerce_Admin {
 						'type'        => 'text',
 						'id'          => 'isfw_company_name',
 						'class'       => 'isfw_company_name',
-						'value'       => $isfw_company_name,
+						'value'       => get_option( 'isfw_company_name' ),
 						'name'        => 'isfw_company_name',
 						'placeholder' => __( 'name', 'invoice-system-for-woocommerce' ),
 					),
@@ -429,7 +410,7 @@ class Invoice_System_For_Woocommerce_Admin {
 						'type'        => 'text',
 						'id'          => 'isfw_company_address',
 						'class'       => 'isfw_company_address',
-						'value'       => $isfw_company_address,
+						'value'       => get_option( 'isfw_company_address' ),
 						'name'        => 'isfw_company_address',
 						'placeholder' => __( 'address', 'invoice-system-for-woocommerce' ),
 					),
@@ -438,7 +419,7 @@ class Invoice_System_For_Woocommerce_Admin {
 						'type'        => 'text',
 						'id'          => 'isfw_company_city',
 						'class'       => 'isfw_company_city',
-						'value'       => $isfw_company_city,
+						'value'       => get_option( 'isfw_company_city' ),
 						'name'        => 'isfw_company_city',
 						'placeholder' => __( 'city', 'invoice-system-for-woocommerce' ),
 					),
@@ -447,7 +428,7 @@ class Invoice_System_For_Woocommerce_Admin {
 						'type'        => 'text',
 						'id'          => 'isfw_company_state',
 						'class'       => 'isfw_company_state',
-						'value'       => $isfw_company_state,
+						'value'       => get_option( 'isfw_company_state' ),
 						'name'        => 'isfw_company_state',
 						'placeholder' => __( 'state', 'invoice-system-for-woocommerce' ),
 					),
@@ -456,7 +437,7 @@ class Invoice_System_For_Woocommerce_Admin {
 						'type'        => 'text',
 						'id'          => 'isfw_company_pin',
 						'class'       => 'isfw_company_pin',
-						'value'       => $isfw_company_pin,
+						'value'       => get_option( 'isfw_company_pin' ),
 						'name'        => 'isfw_company_pin',
 						'placeholder' => __( 'pin', 'invoice-system-for-woocommerce' ),
 					),
@@ -465,7 +446,7 @@ class Invoice_System_For_Woocommerce_Admin {
 						'type'        => 'text',
 						'id'          => 'isfw_company_phone',
 						'class'       => 'isfw_company_phone',
-						'value'       => $isfw_company_phone,
+						'value'       => get_option( 'isfw_company_phone' ),
 						'name'        => 'isfw_company_phone',
 						'placeholder' => __( 'phone', 'invoice-system-for-woocommerce' ),
 					),
@@ -474,7 +455,7 @@ class Invoice_System_For_Woocommerce_Admin {
 						'type'        => 'text',
 						'id'          => 'isfw_company_email',
 						'class'       => 'isfw_company_email',
-						'value'       => $isfw_company_email,
+						'value'       => get_option( 'isfw_company_email' ),
 						'name'        => 'isfw_company_email',
 						'placeholder' => __( 'email', 'invoice-system-for-woocommerce' ),
 					),
@@ -491,7 +472,7 @@ class Invoice_System_For_Woocommerce_Admin {
 						'type'        => 'text',
 						'id'          => 'isfw_invoice_number_prefix',
 						'class'       => 'isfw_invoice_number_prefix',
-						'value'       => $isfw_invoice_number_prefix,
+						'value'       => get_option( 'isfw_invoice_number_prefix' ),
 						'name'        => 'isfw_invoice_number_prefix',
 						'placeholder' => __( 'Prefix', 'invoice-system-for-woocommerce' ),
 					),
@@ -500,7 +481,7 @@ class Invoice_System_For_Woocommerce_Admin {
 						'type'        => 'number',
 						'id'          => 'isfw_invoice_number_digit',
 						'class'       => 'isfw_invoice_number_digit',
-						'value'       => $isfw_invoice_number_digit,
+						'value'       => get_option( 'isfw_invoice_number_digit' ),
 						'name'        => 'isfw_invoice_number_digit',
 						'placeholder' => __( 'digit', 'invoice-system-for-woocommerce' ),
 					),
@@ -509,7 +490,7 @@ class Invoice_System_For_Woocommerce_Admin {
 						'type'        => 'text',
 						'id'          => 'isfw_invoice_number_suffix',
 						'class'       => 'isfw_invoice_number_suffix',
-						'value'       => $isfw_invoice_number_suffix,
+						'value'       => get_option( 'isfw_invoice_number_suffix' ),
 						'name'        => 'isfw_invoice_number_suffix',
 						'placeholder' => __( 'suffix', 'invoice-system-for-woocommerce' ),
 					),
@@ -538,7 +519,7 @@ class Invoice_System_For_Woocommerce_Admin {
 						'type'    => 'select',
 						'class'   => 'isfw_invoice_number_renew_date',
 						'name'    => 'isfw_invoice_number_renew_date',
-						'value'   => $isfw_invoice_number_renew_date,
+						'value'   => get_option( 'isfw_invoice_number_renew_date' ),
 						'options' => $isfw_date,
 					),
 				),
@@ -549,7 +530,7 @@ class Invoice_System_For_Woocommerce_Admin {
 				'description' => __( 'Please enter desclaimer of you choice', 'invoice-system-for-woocommere' ),
 				'id'          => 'isfw_invoice_disclaimer',
 				'class'       => 'isfw_invoice_disclaimer',
-				'value'       => $isfw_invoice_disclaimer,
+				'value'       => get_option( 'isfw_invoice_disclaimer' ),
 				'placeholder' => __( 'disclaimer', 'invoice-system-for-woocommerce' ),
 				'name'        => 'isfw_invoice_disclaimer',
 
@@ -560,7 +541,7 @@ class Invoice_System_For_Woocommerce_Admin {
 				'class'       => 'isfw_color_picker isfw_invoice_color',
 				'id'          => 'isfw_invoice_color',
 				'description' => __( 'Choose color of your choice for invoices', 'invoice-system-for-woocommere' ),
-				'value'       => $isfw_invoice_color,
+				'value'       => get_option( 'isfw_invoice_color' ),
 				'name'        => 'isfw_invoice_color',
 			),
 			array(
@@ -596,7 +577,7 @@ class Invoice_System_For_Woocommerce_Admin {
 				'type'        => 'checkbox',
 				'description' => __( 'Please select if you want the above selected image to be used on invoice.', 'invoice-system-for-woocommere' ),
 				'id'          => 'isfw_is_add_logo_invoice',
-				'value'       => $isfw_is_add_logo_invoice,
+				'value'       => get_option( 'isfw_is_add_logo_invoice' ),
 				'class'       => 'isfw_is_add_logo_invoice',
 				'name'        => 'isfw_is_add_logo_invoice',
 			),
@@ -605,7 +586,7 @@ class Invoice_System_For_Woocommerce_Admin {
 				'type'        => 'temp-select',
 				'id'          => 'isfw_invoice_template',
 				'description' => __( 'This template will be used as the invoice and packing slip', 'invoice-system-for-woocommere' ),
-				'selected'    => $isfw_invoice_template,
+				'selected'    => get_option( 'isfw_invoice_template' ),
 				'value'       => array(
 					array(
 						'title' => __( 'Template1', 'invoice-system-for-woocommerce' ),
@@ -638,6 +619,7 @@ class Invoice_System_For_Woocommerce_Admin {
 		);
 		return $invoice_settings_arr;
 	}
+
 	/**
 	 * Populating field for custom column on order listing page admin.
 	 *
