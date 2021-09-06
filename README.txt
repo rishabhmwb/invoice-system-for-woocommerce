@@ -1,4 +1,4 @@
-=== Invoice System for WooCommerce - A Woo-invoices plugin with PDF invoices ===
+=== Invoice System for WooCommerce- Automate & Manage PDF Invoices, Packing Slips, Shipping Labels and Delivery Notes ===
 Contributors: MakeWebBetter
 Donate link:  https://makewebbetter.com/
 Tags: invoice, invoice system, packing slips, invoicing, invoices, woo invoices, print Invoice
@@ -258,5 +258,3 @@ Yes, Admin can customize the invoice according to their need for this Go to the 
 * NEW: Compatibility with WooCommerce 5.6.0 and WordPress 5.8
 * NEW: Compatible with WPML
 * Minor bug fixes
-
-
