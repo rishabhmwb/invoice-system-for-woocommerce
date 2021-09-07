@@ -1,12 +1,12 @@
-=== Invoice System for WooCommerce ===
+=== Invoice System for WooCommerce- Automate & Manage PDF Invoices, Packing Slips, Shipping Labels and Delivery Notes ===
 Contributors: MakeWebBetter
 Donate link:  https://makewebbetter.com/
-Tags: invoice, invoice system, packing slips, invoicing, invoices, woo invoices, Print Invoice
+Tags: invoice, invoice system, packing slips, invoicing, invoices, woo invoices, print Invoice
 Requires at least: 4.6
 Tested up to: 5.8
 WC requires at least: 4.0.0
-WC tested up to: 5.5.2
-Stable tag: 1.0.2
+WC tested up to: 5.6.0
+Stable tag: 1.0.3
 Requires PHP: 7.2
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
@@ -16,7 +16,7 @@ Create, download, save & email the invoices & packing slips to your customers fo
 
 == Description ==
 
-***THE INVOICE SYSTEM FOR WOOCOMMERCE PLUGIN OUGHTS TO SOLVE ALL YOUR INVOICING PROBLEMS LIKE CREATING WOO INVOICES . IT ALSO HELPS YOU TO PRINT INVOICES AND PACKING SLIPS***
+***THE INVOICE SYSTEM FOR WOOCOMMERCE PLUGIN OUGHTS TO SOLVE ALL YOUR INVOICING PROBLEMS LIKE CREATING WOO INVOICES . THIS INVOICE PLUGIN ALSO HELPS YOU TO PRINT INVOICES AND PACKING SLIPS***
 
 Invoice System for WooCommerce plugin is a simple but features-oriented extension for your WooCommerce stores. This plugin automatically generates WooCommerce PDF invoices and attaches them to the relative WooCommerce emails. The problem of time-taking & boring Invoices is solved FOREVER!
 
@@ -31,9 +31,35 @@ The Invoice System for WooCommerce plugin is also useful for the business houses
 * Eliminate manual errors while creating invoices for products
 * Increase brand awareness with custom invoice designs and templates
 * Reduce-costs with automated PDF invoices
-* It’s compatible with our [**Return Refund and Exchange For WooCommerce**](https://wordpress.org/plugins/woo-refund-and-exchange-lite/)
-* It’s compatible with our [**Wallet System For WooCommerce**](https://wordpress.org/plugins/wallet-system-for-woocommerce/)
-* It’s compatible with our [**WooCommerce Order Tracker**](https://codecanyon.net/item/woocommerce-order-tracker/19814717)
+
+== PLUGIN COMPATIBILITIES ==
+
+ **1)** [**Wallet System For WooCommerce**](https://wordpress.org/plugins/wallet-system-for-woocommerce/)
+
+Wallet System for WooCommerce is a digital wallet plugin. It helps the merchant implement a digital wallet system on their WooCommerce store. And allows customers to perform eCommerce transactions using the wallet system.
+
+
+
+
+**2)**  [**WooCommerce Order Tracker**](https://codecanyon.net/item/woocommerce-order-tracker/19814717)
+
+WooCommerce Order Tracker displays order status with interactive graphics and allows customers to track their estimated delivery.
+The whole process of the tracking system is simple and streamlined which keeps the customer aware of their WooCommerce order status. Customers can track their orders with the order numbers and tracking URLs.
+
+
+**3)**  [**Return Refund and Exchange For WooCommerce**](https://wordpress.org/plugins/woo-refund-and-exchange-lite/)
+
+Return Refund and Exchange for WooCommerce lets you create a simple refund management system stuffed with the organized refund, exchange, wallet, and cancel order features. 
+
+**4)** **WPML Compatibility** 
+
+Invoice plugin lets authors write content in different languages and translate content. It also includes advanced features for translation management and an interface for professional content translation.
+
+
+== THEMES COMPATIBILITY== 
+
+**Invoice System for WooCommerce** plugin works perfectly with all the themes. 
+
 
 == PLUGIN MEETS YOUR REQUIREMENT, SO ==
 [**Download Now !!**](https://downloads.wordpress.org/plugin/invoice-system-for-woocommerce.zip)
@@ -143,7 +169,7 @@ The manual installation method involves downloading our Invoice System For WooCo
 
 = Updating =
 
-Automatic updates should work like a charm; as always though, ensure you backup your site just in case.
+Automatic updates should work like a charm; as always though, ensure you backup your site just in case. 
 
 
 == FAQ ==
@@ -196,6 +222,12 @@ Yes, Admin can customize the invoice according to their need for this Go to the 
 
 == Changelog ==
 
+= 1.0.3 - RELEASED ON 6 SEPTEMBER 2021 =
+
+* NEW: Compatibility with WooCommerce 5.6.0 and WordPress 5.8
+* NEW: Compatible with WPML
+* Minor bug fixes
+
 = 1.0.2 - RELEASED ON 10  AUGUST 2021 =
 
 * NEW: Compatibility with WooCommerce 5.5.2 and WordPress 5.8
@@ -221,10 +253,8 @@ Yes, Admin can customize the invoice according to their need for this Go to the 
 
 == Upgrade Notice ==
 
-= 1.0.2 - RELEASED ON 10 AUGUST 2021 =
+= 1.0.3 - RELEASED ON 6 SEPTEMBER 2021 =
 
-* NEW: Compatibility with WooCommerce 5.5.2 and WordPress 5.8
-* NEW: Compatible with  [**Return Refund and Exchange For WooCommerce**](https://wordpress.org/plugins/woo-refund-and-exchange-lite/)
-* NEW: Compatible with  [**Wallet System For WooCommerce**](https://wordpress.org/plugins/wallet-system-for-woocommerce/)
-* NEW: Compatible with [**WooCommerce Order Tracker**](https://codecanyon.net/item/woocommerce-order-tracker/19814717)
-* FIX: Minor bug fixes
+* NEW: Compatibility with WooCommerce 5.6.0 and WordPress 5.8
+* NEW: Compatible with WPML
+* Minor bug fixes
