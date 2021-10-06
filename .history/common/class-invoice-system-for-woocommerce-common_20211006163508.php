@@ -274,14 +274,13 @@ class Invoice_System_For_Woocommerce_Common {
 				$product_tax             = is_array( $product_tax ) ? array_shift( $product_tax ) : $product_tax;
 				$product_tax             = is_array( $product_tax ) ? array_shift( $product_tax ) : $product_tax;
 				$product_tax             = ( $product_tax ) ? $product_tax : 0;
-				$product_description = get_post( $item_data['product_id'])->post_content;
-				$description = substr( $product_description, 0, 25  );
+				$product_description = get_post($item_data['product_id'])->post_excerpt;
 				$order_product_details[] = array(
 					'product_id'       => get_post_meta( $item_data['product_id'], '_sku', true ),
 					'id'               => $item_data['product_id'],
 					'product_name'     => $item_data['name'],
 					'product_quantity' => $item_data['quantity'],
-					'product_description' => $description,
+					'product_description' => $product_description,
 					'product_price'    => ( 0 !== (int) $item_data['quantity'] ) ? number_format( ( preg_replace( '/,/', '.', $item_data['total'] ) / $item_data['quantity'] ), $decimals, $decimal_separator, $thousand_separator ) : 0,
 					'product_tax'      => number_format( preg_replace( '/,/', '.', $item_data['total_tax'] ), $decimals, $decimal_separator, $thousand_separator ),
 					'product_total'    => number_format( ( preg_replace( '/,/', '.', $item_data['total'] ) + preg_replace( '/,/', '.', $item_data['total_tax'] ) ), $decimals, $decimal_separator, $thousand_separator ),

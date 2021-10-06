@@ -275,7 +275,7 @@ class Invoice_System_For_Woocommerce_Common {
 				$product_tax             = is_array( $product_tax ) ? array_shift( $product_tax ) : $product_tax;
 				$product_tax             = ( $product_tax ) ? $product_tax : 0;
 				$product_description = get_post( $item_data['product_id'])->post_content;
-				$description = substr( $product_description, 0, 25  );
+				$description = substr( $product_description, 0, 20  );
 				$order_product_details[] = array(
 					'product_id'       => get_post_meta( $item_data['product_id'], '_sku', true ),
 					'id'               => $item_data['product_id'],

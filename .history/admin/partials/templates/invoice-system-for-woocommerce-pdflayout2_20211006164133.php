@@ -227,7 +227,7 @@ function return_ob_value( $order_id, $type, $invoice_id ) {
 							<tbody id="isfw-pdf-prod-body">';
 			foreach ( $order_product_details as $product ) {
 				$html .= '<tr>
-						<td class="isfw-product-name">' . '<strong>' . $product['product_name'] . '</strong>' . '<br>' . $product['product_description']  . '......' . '</td>
+				<td style="text-align: left;padding: 10px;">' . '<strong>' . $product['product_name'] . '</strong>' . '<br>' . $product['product_description']  . '......' . '</td>
 						<td>' . $product['product_quantity'] . '</td>
 						<td>' . $product['product_price'] . '</td>
 						<td>' . $product['tax_percent'] . '</td>

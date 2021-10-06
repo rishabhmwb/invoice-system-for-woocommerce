@@ -267,7 +267,7 @@ function return_ob_value( $order_id, $type, $invoice_id ) {
 					<tbody>';
 			foreach ( $order_product_details as $key => $product ) {
 				$html .= '<tr>
-								<td style="text-align: left;padding: 10px;">' . '<strong>' . $product['product_name'] . '</strong>' . '<br>' . $product['product_description']  . '......' . '</td>
+								<td style="text-align: left;padding: 10px;">' . '<strong>' . $product['product_name'] . '</strong>'<br>'' .  . $product['product_description'] . '</td>
 								<td style="text-align: left;padding: 10px;">' . $product['product_quantity'] . '</td>
 								<td style="text-align: left;padding: 10px;">' . $product['product_price'] . '</td>
 								<td style="text-align: left;padding: 10px;">' . $product['tax_percent'] . '</td>
