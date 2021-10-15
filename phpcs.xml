@@ -27,12 +27,12 @@
         <exclude name="WordPress.WhiteSpace" />
     </rule>
 
-    <rule ref="WooCommerce-Core">
+    <!-- <rule ref="WooCommerce-Core">
         <exclude name="Core.Commenting.CommentTags.AuthorTag" />
         <exclude name="WordPress.PHP.DontExtract" />
         <exclude name="Generic.Arrays.DisallowShortArraySyntax" />
         <exclude name="Generic.WhiteSpace.ScopeIndent.Incorrect" />
-    </rule>
+    </rule> -->
 
     <rule ref="PHPCompatibility">
         <exclude-pattern>tests/</exclude-pattern>

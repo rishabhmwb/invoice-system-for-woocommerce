@@ -15,17 +15,17 @@
  * Plugin Name:       Invoice System for WooCommerce
  * Plugin URI:        https://wordpress.org/plugins/invoice-system-for-woocommerce/
  * Description:       Generate Invoices and packing slips automatically and sent them to your customers via email with Invoice System for WooCommerce.
- * Version:           1.0.3
+ * Version:           1.0.4
  * Author:            MakeWebBetter
  * Author URI:        https://makewebbetter.com/
  * Text Domain:       invoice-system-for-woocommerce
  * Domain Path:       /languages
  *
  * Requires at least:    4.6
- * Tested up to:         5.8
+ * Tested up to:         5.8.1
  * WC requires at least: 4.0.0
- * WC tested up to:      5.6.0
- * Stable tag:           1.0.3
+ * WC tested up to:      5.8.0
+ * Stable tag:           1.0.4
  * Requires PHP:         7.2
  *
  * License:           GNU General Public License v3.0
@@ -36,23 +36,25 @@
 if ( ! defined( 'ABSPATH' ) ) {
 	die;
 }
-$tmp = false;
-if ( in_array( 'woocommerce/woocommerce.php', get_option( 'active_plugins' ), true ) ) {
+
+$tmp            = false;
+$active_plugins = array_merge( get_option( 'active_plugins', array() ), get_site_option( 'active_sitewide_plugins', array() ) );
+if ( in_array( 'woocommerce/woocommerce.php', $active_plugins, true ) || array_key_exists( 'woocommerce/woocommerce.php', $active_plugins ) ) {
 	$tmp = true;
 } else {
 	isfw_dependency_checkup();
 }
+
 /**
  * Checking dependency for woocommerce plugin.
  *
  * @return void
  */
 function isfw_dependency_checkup() {
-	if ( ! in_array( 'woocommerce/woocommerce.php', get_option( 'active_plugins' ), true ) ) {
-		add_action( 'admin_init', 'isfw_deactivate_child_plugin' );
-		add_action( 'admin_notices', 'isfw_show_admin_notices' );
-	}
+	add_action( 'admin_init', 'isfw_deactivate_child_plugin' );
+	add_action( 'admin_notices', 'isfw_show_admin_notices' );
 }
+
 /**
  * Deactivating child plugin.
  *
@@ -61,6 +63,7 @@ function isfw_dependency_checkup() {
 function isfw_deactivate_child_plugin() {
 	deactivate_plugins( plugin_basename( __FILE__ ) );
 }
+
 /**
  * Showing admin notices.
  *
@@ -78,18 +81,20 @@ function isfw_show_admin_notices() {
 	}
 }
 if ( $tmp ) {
+
 	/**
 	 * Define plugin constants.
 	 *
 	 * @since 1.0.0
 	 */
 	function define_invoice_system_for_woocommerce_constants() {
-		invoice_system_for_woocommerce_constants( 'INVOICE_SYSTEM_FOR_WOOCOMMERCE_VERSION', '1.0.3' );
+		invoice_system_for_woocommerce_constants( 'INVOICE_SYSTEM_FOR_WOOCOMMERCE_VERSION', '1.0.4' );
 		invoice_system_for_woocommerce_constants( 'INVOICE_SYSTEM_FOR_WOOCOMMERCE_DIR_PATH', plugin_dir_path( __FILE__ ) );
 		invoice_system_for_woocommerce_constants( 'INVOICE_SYSTEM_FOR_WOOCOMMERCE_DIR_URL', plugin_dir_url( __FILE__ ) );
 		invoice_system_for_woocommerce_constants( 'INVOICE_SYSTEM_FOR_WOOCOMMERCE_SERVER_URL', 'https://makewebbetter.com' );
 		invoice_system_for_woocommerce_constants( 'INVOICE_SYSTEM_FOR_WOOCOMMERCE_ITEM_REFERENCE', 'invoice-system-for-woocommerce' );
 	}
+
 	/**
 	 * Callable function for defining plugin constants.
 	 *
@@ -102,6 +107,7 @@ if ( $tmp ) {
 			define( $key, $value );
 		}
 	}
+
 	/**
 	 * Adding custom setting links at the plugin activation list.
 	 *
@@ -118,13 +124,14 @@ if ( $tmp ) {
 		return $links_array;
 	}
 	add_filter( 'plugin_row_meta', 'invoice_system_for_woocommerce_custom_settings_at_plugin_tab', 10, 2 );
+
 	/**
 	 * The code that runs during plugin activation.
 	 * This action is documented in includes/class-invoice-system-for-woocommerce-activator.php
 	 */
-	function activate_invoice_system_for_woocommerce() {
+	function activate_invoice_system_for_woocommerce( $network_wide ) {
 		require_once plugin_dir_path( __FILE__ ) . 'includes/class-invoice-system-for-woocommerce-activator.php';
-		Invoice_System_For_Woocommerce_Activator::invoice_system_for_woocommerce_activate();
+		Invoice_System_For_Woocommerce_Activator::invoice_system_for_woocommerce_activate( $network_wide );
 		$mwb_isfw_active_plugin = get_option( 'mwb_all_plugins_active', false );
 		if ( is_array( $mwb_isfw_active_plugin ) && ! empty( $mwb_isfw_active_plugin ) ) {
 			$mwb_isfw_active_plugin['invoice-system-for-woocommerce'] = array(
@@ -159,11 +166,51 @@ if ( $tmp ) {
 	}
 	register_activation_hook( __FILE__, 'activate_invoice_system_for_woocommerce' );
 	register_deactivation_hook( __FILE__, 'deactivate_invoice_system_for_woocommerce' );
+
+	/**
+	 * Update default values on new site creation for multisite.
+	 *
+	 * @param object $new_site new created blog object.
+	 * @since 1.0.4
+	 * @return void
+	 */
+	function mwb_update_default_option_on_site_creation( $new_site ) {
+		if ( ! function_exists( 'is_plugin_active_for_network' ) ) {
+			require_once ABSPATH . '/wp-admin/includes/plugin.php';
+		}
+		if ( is_plugin_active_for_network( 'invoice-system-for-woocommerce/invoice-system-for-woocommerce.php' ) ) {
+			$blog_id = $new_site->blog_id;
+			switch_to_blog( $blog_id );
+
+			require_once plugin_dir_path( __FILE__ ) . 'includes/class-invoice-system-for-woocommerce-activator.php';
+			Invoice_System_For_Woocommerce_Activator::isfw_create_default_settings_on_plugin_activation();
+			$mwb_isfw_active_plugin = get_option( 'mwb_all_plugins_active', false );
+			if ( is_array( $mwb_isfw_active_plugin ) && ! empty( $mwb_isfw_active_plugin ) ) {
+				$mwb_isfw_active_plugin['invoice-system-for-woocommerce'] = array(
+					'plugin_name' => __( 'invoice-system-for-woocommerce', 'invoice-system-for-woocommerce' ),
+					'active'      => '1',
+				);
+			} else {
+				$mwb_isfw_active_plugin                                   = array();
+				$mwb_isfw_active_plugin['invoice-system-for-woocommerce'] = array(
+					'plugin_name' => __( 'invoice-system-for-woocommerce', 'invoice-system-for-woocommerce' ),
+					'active'      => '1',
+				);
+			}
+			update_option( 'mwb_all_plugins_active', $mwb_isfw_active_plugin );
+
+			restore_current_blog();
+		}
+ 
+	}
+	add_action( 'wp_initialize_site', 'mwb_update_default_option_on_site_creation', 900 );
+
 	/**
 	 * The core plugin class that is used to define internationalization,
 	 * admin-specific hooks, and public-facing site hooks.
 	 */
 	require plugin_dir_path( __FILE__ ) . 'includes/class-invoice-system-for-woocommerce.php';
+
 	/**
 	 * Begins execution of the plugin.
 	 *
@@ -183,6 +230,7 @@ if ( $tmp ) {
 	run_invoice_system_for_woocommerce();
 	// Add settings link on plugin page.
 	add_filter( 'plugin_action_links_' . plugin_basename( __FILE__ ), 'invoice_system_for_woocommerce_settings_link' );
+
 	/**
 	 * Settings link.
 	 *
