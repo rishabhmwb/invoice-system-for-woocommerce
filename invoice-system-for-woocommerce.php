@@ -147,6 +147,7 @@ if ( $tmp ) {
 		}
 		update_option( 'mwb_all_plugins_active', $mwb_isfw_active_plugin );
 	}
+
 	/**
 	 * The code that runs during plugin deactivation.
 	 * This action is documented in includes/class-invoice-system-for-woocommerce-deactivator.php
@@ -174,7 +175,7 @@ if ( $tmp ) {
 	 * @since 1.0.4
 	 * @return void
 	 */
-	function mwb_update_default_option_on_site_creation( $new_site ) {
+	function mwb_isfw_update_default_option_on_site_creation( $new_site ) {
 		if ( ! function_exists( 'is_plugin_active_for_network' ) ) {
 			require_once ABSPATH . '/wp-admin/includes/plugin.php';
 		}
@@ -203,7 +204,7 @@ if ( $tmp ) {
 		}
  
 	}
-	add_action( 'wp_initialize_site', 'mwb_update_default_option_on_site_creation', 900 );
+	add_action( 'wp_initialize_site', 'mwb_isfw_update_default_option_on_site_creation', 900 );
 
 	/**
 	 * The core plugin class that is used to define internationalization,

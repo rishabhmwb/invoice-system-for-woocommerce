@@ -25,4 +25,7 @@ $isfw_template_pdf_settings = apply_filters( 'isfw_template_invoice_settings_arr
 			$isfw_mwb_isfw_obj->mwb_isfw_plug_generate_html( $isfw_template_pdf_settings );
 		?>
 	</form>
+	<div>
+		<?php do_action( 'mwb_isfw_invoice_settings_after_form' ); ?>
+	</div>
 </div>
