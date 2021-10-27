@@ -160,6 +160,9 @@ class Invoice_System_For_Woocommerce_Public {
 	 */
 	public function isfw_pdf_generation_link_for_guest_user( $thanks_msg, $order ) {
 		global $wp;
+		if ( ! is_object( $order ) ) {
+			return;
+		}
 		$url_here                                 = home_url( $wp->request );
 		$download_url                             = add_query_arg(
 			array(
