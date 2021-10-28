@@ -23,7 +23,7 @@
  * @subpackage Invoice_system_for_woocommerce/includes
  * @author     makewebbetter <webmaster@makewebbetter.com>
  */
-class Invoice_system_for_woocommerce_I18n {
+class Invoice_System_For_Woocommerce_I18n {
 
 
 	/**

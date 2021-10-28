@@ -33,7 +33,7 @@ class Invoice_System_For_Woocommerce {
 	 * the plugin.
 	 *
 	 * @since  1.0.0
-	 * @var    Invoice_system_for_woocommerce_Loader    $loader    Maintains and registers all hooks for the plugin.
+	 * @var    Invoice_System_For_Woocommerce_Loader    $loader    Maintains and registers all hooks for the plugin.
 	 */
 	protected $loader;
 
@@ -99,7 +99,7 @@ class Invoice_System_For_Woocommerce {
 	 *
 	 * Include the following files that make up the plugin:
 	 *
-	 * - Invoice_system_for_woocommerce_Loader. Orchestrates the hooks of the plugin.
+	 * - Invoice_System_For_Woocommerce_Loader. Orchestrates the hooks of the plugin.
 	 * - Invoice_system_for_woocommerce_i18n. Defines internationalization functionality.
 	 * - Invoice_system_for_woocommerce_Admin. Defines all hooks for the admin area.
 	 * - Invoice_system_for_woocommerce_Public. Defines all hooks for the public side of the site.
@@ -145,21 +145,21 @@ class Invoice_System_For_Woocommerce {
 
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'package/rest-api/class-invoice-system-for-woocommerce-rest-api.php';
 
-		$this->loader = new Invoice_system_for_woocommerce_Loader();
+		$this->loader = new Invoice_System_For_Woocommerce_Loader();
 
 	}
 
 	/**
 	 * Define the locale for this plugin for internationalization.
 	 *
-	 * Uses the Invoice_system_for_woocommerce_I18n class in order to set the domain and to register the hook
+	 * Uses the Invoice_System_For_Woocommerce_I18n class in order to set the domain and to register the hook
 	 * with WordPress.
 	 *
 	 * @since 1.0.0
 	 */
 	private function invoice_system_for_woocommerce_locale() {
 
-		$plugin_i18n = new Invoice_system_for_woocommerce_I18n();
+		$plugin_i18n = new Invoice_System_For_Woocommerce_I18n();
 
 		$this->loader->add_action( 'plugins_loaded', $plugin_i18n, 'load_plugin_textdomain' );
 
@@ -281,7 +281,7 @@ class Invoice_System_For_Woocommerce {
 	 * The reference to the class that orchestrates the hooks with the plugin.
 	 *
 	 * @since     1.0.0
-	 * @return    Invoice_system_for_woocommerce_Loader    Orchestrates the hooks of the plugin.
+	 * @return    Invoice_System_For_Woocommerce_Loader Orchestrates the hooks of the plugin.
 	 */
 	public function isfw_get_loader() {
 		return $this->loader;
@@ -446,7 +446,6 @@ class Invoice_System_For_Woocommerce {
 
 		// See if WP Cache is enabled.
 		$isfw_wordpress_status['wp_cache_enabled'] = defined( 'WP_CACHE' ) ? __( 'Yes', 'invoice-system-for-woocommerce' ) : __( 'No', 'invoice-system-for-woocommerce' );
-
 
 		// Get PHP memory limit.
 		$isfw_system_status['php_memory_limit'] = function_exists( 'ini_get' ) ? (int) ini_get( 'memory_limit' ) : __( 'N/A (ini_get function does not exist)', 'invoice-system-for-woocommerce' );

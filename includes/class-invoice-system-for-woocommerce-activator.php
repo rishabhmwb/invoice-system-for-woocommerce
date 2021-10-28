@@ -24,6 +24,7 @@ class Invoice_System_For_Woocommerce_Activator {
 	/**
 	 * Activator file main method.
 	 *
+	 * @param boolean $network_wide either network activated or not.
 	 * @since 1.0.0
 	 * @return void
 	 */
@@ -36,7 +37,6 @@ class Invoice_System_For_Woocommerce_Activator {
 				self::isfw_create_default_settings_on_plugin_activation();
 				restore_current_blog();
 			}
-
 		} else {
 			self::isfw_create_default_settings_on_plugin_activation();
 		}

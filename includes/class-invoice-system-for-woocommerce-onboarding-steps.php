@@ -478,7 +478,11 @@ class Invoice_System_For_Woocommerce_Onboarding_Steps {
 
 			wp_rand() => array(
 				'id'          => 'mwb-isfw-deactivation-reason-text',
-				'title'       => esc_html__( 'Let us know why you are deactivating ' . self::$mwb_isfw_plugin_name_label . ' so we can improve the plugin', 'invoice-system-for-woocommerce' ),
+				'title'       => sprintf(
+					/* translators:%s plugin name label. */
+					esc_html__( 'Let us know why you are deactivating %s so we can improve the plugin', 'invoice-system-for-woocommerce' ),
+					self::$mwb_isfw_plugin_name_label
+				),
 				'type'        => 'textarea',
 				'description' => '',
 				'name'        => 'deactivation_reason_text',

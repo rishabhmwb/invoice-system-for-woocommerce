@@ -19,7 +19,7 @@
  * @subpackage Invoice_system_for_woocommerce/includes
  * @author     makewebbetter <webmaster@makewebbetter.com>
  */
-class Invoice_system_for_woocommerce_Deactivator {
+class Invoice_System_For_Woocommerce_Deactivator {
 
 	/**
 	 * Short Description. (use period)

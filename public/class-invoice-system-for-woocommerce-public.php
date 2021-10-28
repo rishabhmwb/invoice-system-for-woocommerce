@@ -73,7 +73,7 @@ class Invoice_System_For_Woocommerce_Public {
 			$this->plugin_name,
 			'isfw_public_param',
 			array(
-				'ajaxurl' => admin_url( 'admin-ajax.php' )
+				'ajaxurl' => admin_url( 'admin-ajax.php' ),
 			)
 		);
 		wp_enqueue_script( $this->plugin_name );
@@ -217,7 +217,7 @@ class Invoice_System_For_Woocommerce_Public {
 				if ( in_array( $order->get_status(), $order_status_show_invoice, true ) ) {
 					require_once INVOICE_SYSTEM_FOR_WOOCOMMERCE_DIR_PATH . 'public/templates/invice-system-for-woocommerce-public-add-invoice-download-link.php';
 					$download_button = return_invoice_download_button( $download_url );
-					echo $download_button; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+					echo wp_kses_post( $download_button );
 				}
 			}
 		}

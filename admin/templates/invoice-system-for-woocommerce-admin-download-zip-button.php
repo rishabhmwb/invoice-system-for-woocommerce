@@ -23,7 +23,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  */
 
 ?>
-<div id="isfw_download_zip_pdf_hidden_button" style="display:none;">
+<div id="isfw_download_zip_pdf_hidden_button">
 	<a href="<?php echo esc_attr( $file_url ); ?>" id="isfw_download_zip_pdf"></a>
 </div>
 

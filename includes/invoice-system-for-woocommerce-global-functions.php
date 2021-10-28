@@ -32,7 +32,7 @@ use Dompdf\FontMetrics;
  * @param string $action action after generating invoice , values can be 'download_locally', 'open_window', 'download_on_server'.
  * @return string|void will returns path to the file if $action = download_on_server.
  */
-function mwb_generate_invoice( $order_id, $type = 'invoice', $action = 'download_locally'  ) {
+function mwb_generate_invoice( $order_id, $type = 'invoice', $action = 'download_locally' ) {
 	if ( defined( 'INVOICE_SYSTEM_FOR_WOOCOMMERCE_DIR_PATH' ) ) {
 		require_once INVOICE_SYSTEM_FOR_WOOCOMMERCE_DIR_PATH . 'common/class-invoice-system-for-woocommerce-common.php';
 		$common_class = new Invoice_System_For_Woocommerce_Common( 'Invoice System For WooCommerce', '1.0.2' );

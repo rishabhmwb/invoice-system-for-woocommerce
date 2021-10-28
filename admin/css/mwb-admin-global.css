@@ -15,3 +15,7 @@
   color: white;
   border-radius: 8px;
 }
+
+div#isfw_download_zip_pdf_hidden_button a {
+  display: none;
+}

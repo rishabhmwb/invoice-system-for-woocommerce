@@ -128,6 +128,10 @@ if ( $tmp ) {
 	/**
 	 * The code that runs during plugin activation.
 	 * This action is documented in includes/class-invoice-system-for-woocommerce-activator.php
+	 *
+	 * @param boolean $network_wide either network activated or not.
+	 * @since 1.0.0
+	 * @return void
 	 */
 	function activate_invoice_system_for_woocommerce( $network_wide ) {
 		require_once plugin_dir_path( __FILE__ ) . 'includes/class-invoice-system-for-woocommerce-activator.php';
@@ -154,7 +158,7 @@ if ( $tmp ) {
 	 */
 	function deactivate_invoice_system_for_woocommerce() {
 		require_once plugin_dir_path( __FILE__ ) . 'includes/class-invoice-system-for-woocommerce-deactivator.php';
-		Invoice_system_for_woocommerce_Deactivator::invoice_system_for_woocommerce_deactivate();
+		Invoice_System_For_Woocommerce_Deactivator::invoice_system_for_woocommerce_deactivate();
 		$mwb_isfw_deactive_plugin = get_option( 'mwb_all_plugins_active', false );
 		if ( is_array( $mwb_isfw_deactive_plugin ) && ! empty( $mwb_isfw_deactive_plugin ) ) {
 			foreach ( $mwb_isfw_deactive_plugin as $mwb_isfw_deactive_key => $mwb_isfw_deactive ) {
@@ -202,7 +206,6 @@ if ( $tmp ) {
 
 			restore_current_blog();
 		}
- 
 	}
 	add_action( 'wp_initialize_site', 'mwb_isfw_update_default_option_on_site_creation', 900 );
 
