@@ -15,17 +15,17 @@
  * Plugin Name:       Invoice System for WooCommerce
  * Plugin URI:        https://wordpress.org/plugins/invoice-system-for-woocommerce/
  * Description:       Generate Invoices and packing slips automatically and sent them to your customers via email with Invoice System for WooCommerce.
- * Version:           1.0.4
+ * Version:           1.0.5
  * Author:            MakeWebBetter
  * Author URI:        https://makewebbetter.com/
  * Text Domain:       invoice-system-for-woocommerce
  * Domain Path:       /languages
  *
  * Requires at least:    4.6
- * Tested up to:         5.8.1
+ * Tested up to:         5.8.2
  * WC requires at least: 4.0.0
- * WC tested up to:      5.8.0
- * Stable tag:           1.0.4
+ * WC tested up to:      5.9.0
+ * Stable tag:           1.0.5
  * Requires PHP:         7.2
  *
  * License:           GNU General Public License v3.0
@@ -88,7 +88,7 @@ if ( $tmp ) {
 	 * @since 1.0.0
 	 */
 	function define_invoice_system_for_woocommerce_constants() {
-		invoice_system_for_woocommerce_constants( 'INVOICE_SYSTEM_FOR_WOOCOMMERCE_VERSION', '1.0.4' );
+		invoice_system_for_woocommerce_constants( 'INVOICE_SYSTEM_FOR_WOOCOMMERCE_VERSION', '1.0.5' );
 		invoice_system_for_woocommerce_constants( 'INVOICE_SYSTEM_FOR_WOOCOMMERCE_DIR_PATH', plugin_dir_path( __FILE__ ) );
 		invoice_system_for_woocommerce_constants( 'INVOICE_SYSTEM_FOR_WOOCOMMERCE_DIR_URL', plugin_dir_url( __FILE__ ) );
 		invoice_system_for_woocommerce_constants( 'INVOICE_SYSTEM_FOR_WOOCOMMERCE_SERVER_URL', 'https://makewebbetter.com' );

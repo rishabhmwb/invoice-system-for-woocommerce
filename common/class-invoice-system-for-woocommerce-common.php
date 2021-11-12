@@ -277,6 +277,7 @@ class Invoice_System_For_Woocommerce_Common {
 				$order_product_details[] = array(
 					'product_id'       => get_post_meta( $item_data['product_id'], '_sku', true ),
 					'id'               => $item_data['product_id'],
+					'item_meta'        => $item_values->get_formatted_meta_data(),
 					'product_name'     => $item_data['name'],
 					'product_quantity' => $item_data['quantity'],
 					'product_price'    => ( 0 !== (int) $item_data['quantity'] ) ? number_format( ( preg_replace( '/,/', '.', $item_data['total'] ) / $item_data['quantity'] ), $decimals, $decimal_separator, $thousand_separator ) : 0,

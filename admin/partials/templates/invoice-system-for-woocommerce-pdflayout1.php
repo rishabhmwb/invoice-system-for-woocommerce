@@ -265,9 +265,21 @@ function return_ob_value( $order_id, $type, $invoice_id ) {
 						</tr>
 					</thead>
 					<tbody>';
+			$meta_data = '';
 			foreach ( $order_product_details as $key => $product ) {
+				$item_data = ! empty( $product['item_meta'] ) ? $product['item_meta'] : array();
+				if ( ! empty( $item_data ) && is_array( $item_data ) ) {
+					foreach ( $item_data as $key => $item ) {
+						
+						if ( 'is_upsell_purchase' === $item['display_key'] ) {
+							continue;
+						}
+
+						$meta_data .= '<br>' . $item['display_key'] . ':' . $item['display_value'];
+					}
+				}
 				$html .= '<tr>
-								<td style="text-align: left;padding: 10px;">' . $product['product_name'] . '</td>
+								<td style="text-align: left;padding: 10px;">' . $product['product_name'] . $meta_data . '</td>
 								<td style="text-align: left;padding: 10px;">' . $product['product_quantity'] . '</td>
 								<td style="text-align: left;padding: 10px;">' . $product['product_price'] . '</td>
 								<td style="text-align: left;padding: 10px;">' . $product['tax_percent'] . '</td>

@@ -225,9 +225,21 @@ function return_ob_value( $order_id, $type, $invoice_id ) {
 								</tr>
 							</thead>
 							<tbody id="isfw-pdf-prod-body">';
+			$meta_data = '';
 			foreach ( $order_product_details as $product ) {
+				$item_data = ! empty( $product['item_meta'] ) ? $product['item_meta'] : array();
+				if ( ! empty( $item_data ) && is_array( $item_data ) ) {
+					foreach ( $item_data as $key => $item ) {
+						
+						if ( 'is_upsell_purchase' === $item['display_key'] ) {
+							continue;
+						}
+
+						$meta_data .= '<br/>' . $item['display_key'] . ':' . $item['display_value'];
+					}
+				}
 				$html .= '<tr>
-						<td class="isfw-product-name">' . $product['product_name'] . '</td>
+						<td class="isfw-product-name">' . $product['product_name'] . $meta_data . '</td>
 						<td>' . $product['product_quantity'] . '</td>
 						<td>' . $product['product_price'] . '</td>
 						<td>' . $product['tax_percent'] . '</td>
