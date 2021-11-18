@@ -19,3 +19,11 @@ div#isfw_guest_download_invoice a {
 div#isfw_guest_download_invoice > a:focus {
   outline: none;
 }
+
+a.woocommerce-button.button.view {
+  margin: 0 -12px;
+}
+
+td.woocommerce-orders-table__cell.woocommerce-orders-table__cell-order-actions a {
+  margin: 2px;
+}

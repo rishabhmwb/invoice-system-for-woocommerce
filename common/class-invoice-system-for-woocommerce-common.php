@@ -75,7 +75,7 @@ class Invoice_System_For_Woocommerce_Common {
 		$date  = get_option( 'isfw_invoice_number_renew_date' );
 		if ( '' !== $month && 'never' !== $month ) {
 			if ( ( (int) current_time( 'm' ) === (int) $month ) && ( (int) current_time( 'd' ) === (int) $date ) ) {
-				update_option( 'isfw_current_invoice_id', 1 );
+				update_option( 'isfw_current_invoice_id', 0 );
 			}
 		}
 	}
