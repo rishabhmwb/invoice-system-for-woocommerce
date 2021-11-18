@@ -7,8 +7,8 @@
  * @link       https://makewebbetter.com
  * @since      1.0.0
  *
- * @package    Makewebbetter_Onboarding
- * @subpackage Makewebbetter_Onboarding/admin/onboarding
+ * @package    Invoice_system_for_woocommere
+ * @subpackage Invoice_system_for_woocommere/admin/onboarding
  */
 
 global $isfw_mwb_isfw_obj;

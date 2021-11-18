@@ -5,15 +5,15 @@
  * @link       https://makewebbetter.com
  * @since      1.0.0
  *
- * @package     invoice_system_for_woocommerce
- * @subpackage  invoice_system_for_woocommerce/includes
+ * @package     Invoice_system_for_woocommere
+ * @subpackage  Invoice_system_for_woocommere/includes
  */
 
 /**
  * The Onboarding-specific functionality of the plugin admin side.
  *
- * @package     invoice_system_for_woocommerce
- * @subpackage  invoice_system_for_woocommerce/includes
+ * @package     Invoice_system_for_woocommere
+ * @subpackage  Invoice_system_for_woocommere/includes
  * @author      makewebbetter <webmaster@makewebbetter.com>
  */
 if ( ! defined( 'ABSPATH' ) ) {

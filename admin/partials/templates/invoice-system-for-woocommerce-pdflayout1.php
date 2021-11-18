@@ -2,7 +2,7 @@
 /**
  * This is template one for the pdf generation.
  *
- * @package invoice-system-forwoocommerce.
+ * @package Invoice_system_for_woocommere.
  *
  * @return void
  */

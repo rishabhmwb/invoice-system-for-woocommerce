@@ -20,8 +20,8 @@ if ( ! class_exists( 'Invoice_System_For_Woocommerce_Api_Process' ) ) {
 	 * This is used to define the functions and data manipulation for custom endpoints.
 	 *
 	 * @since      1.0.0
-	 * @package    Hydroshop_Api_Management
-	 * @subpackage Hydroshop_Api_Management/includes
+	 * @package    Invoice_system_for_woocommere
+	 * @subpackage Invoice_system_for_woocommere/includes
 	 * @author     MakeWebBetter <makewebbetter.com>
 	 */
 	class Invoice_System_For_Woocommerce_Api_Process {
