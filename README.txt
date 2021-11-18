@@ -3,10 +3,10 @@ Contributors: MakeWebBetter
 Donate link:  https://makewebbetter.com/
 Tags: invoice, invoice system, packing slips, invoicing, invoices, woo invoices, print Invoice, invoice plugin
 Requires at least: 4.6
-Tested up to: 5.8.1
+Tested up to: 5.8.2
 WC requires at least: 4.0.0
-WC tested up to: 5.8.0
-Stable tag: 1.0.4
+WC tested up to: 5.9.0
+Stable tag: 1.0.5
 Requires PHP: 7.2
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
@@ -53,11 +53,15 @@ Membership for WooCommerce plugin provides a restriction on access for any facil
 WooCommerce Order Tracker displays order status with interactive graphics and allows customers to track their estimated delivery.
 The whole process of the tracking system is simple and streamlined which keeps the customer aware of their WooCommerce order status. Customers can track their orders with the order numbers and tracking URLs.
 
-**5)** **WPML Compatibility** 
+**5)** [**WooCommerce One Click Upsell Funnel Pro**](https://makewebbetter.com/product/woocommerce-one-click-upsell-funnel-pro/?utm_source=invoice-org&utm_medium=invoice-plugin&utm_campaign=invoice-page) ([**Free Download**!!](https://wordpress.org/plugins/woo-one-click-upsell-funnel/))
+
+One Click Upsell Funnel for WooCommerce plugin offers post-purchase upsell offers, i.e. after the checkout is done.
+
+**6)** **WPML Compatibility** 
 
 Invoice plugin lets authors write content in different languages and translate content. It also includes advanced features for translation management and an interface for professional content translation.
 
-**6)** **Multisite**
+**7)** **Multisite**
 
 Multisite is a type of WordPress installation that allows you to create and manage a network of multiple websites from a single WordPress dashboard. This lets you easily make changes and keep all of your websites updated from one place.
 
@@ -228,6 +232,12 @@ Yes, Admin can customize the invoice according to their need for this Go to the 
 
 == Changelog ==
 
+= 1.0.5 - RELEASED ON 18 NOVEMBER 2021 =
+
+* NEW: Compatibility with WooCommerce 5.9.0 and WordPress 5.8.2 
+* NEW: Compatible with [**WooCommerce One Click Upsell Funnel Pro**](https://makewebbetter.com/product/woocommerce-one-click-upsell-funnel-pro/?utm_source=invoice-org&utm_medium=invoice-plugin&utm_campaign=invoice-page) ([**Free Download**!!](https://wordpress.org/plugins/woo-one-click-upsell-funnel/))
+* FIX: Minor bug fixes
+
 = 1.0.4 - RELEASED ON 28 OCTOBER 2021 =
 
 * NEW: Compatibility with WooCommerce 5.8.0 and WordPress 5.8.1
@@ -267,10 +277,8 @@ Yes, Admin can customize the invoice according to their need for this Go to the 
 
 == Upgrade Notice ==
 
-= 1.0.4 - RELEASED ON 28 OCTOBER 2021 =
+= 1.0.5 - RELEASED ON 18 NOVEMBER 2021 =
 
-* NEW: Compatibility with WooCommerce 5.8.0 and WordPress 5.8.1
-* NEW: Compatible with Multisite
-* NEW: In custom templates, shortcodes can be used to add meta fields to invoices at the desired location
-* NEW: Compatible with  [**Membership For WooCommerce Pro**](https://makewebbetter.com/product/membership-for-woocommerce-pro/?utm_source=invoice-org&utm_medium=invoice-plugin&utm_campaign=invoice-page) ([**Free Download**!!](https://wordpress.org/plugins/membership-for-woocommerce/))
-*FIX: Minor bug fixes
+* NEW: Compatibility with WooCommerce 5.9.0 and WordPress 5.8.2
+* NEW: Compatible with [**WooCommerce One Click Upsell Funnel Pro**](https://makewebbetter.com/product/woocommerce-one-click-upsell-funnel-pro/?utm_source=invoice-org&utm_medium=invoice-plugin&utm_campaign=invoice-page) ([**Free Download**!!](https://wordpress.org/plugins/woo-one-click-upsell-funnel/))
+* FIX: Minor bug fixes

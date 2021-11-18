@@ -1,11 +1,9 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: Invoice System for WooCommerce 1.0.4\n"
-"POT-Creation-Date: 2021-10-28 19:22+0530\n"
-"PO-Revision-Date: 2021-10-28 19:22+0530\n"
-"Last-Translator: \n"
+"Project-Id-Version: Invoice System for WooCommerce 1.0.5\n"
+"POT-Creation-Date: 2021-11-18 15:46+0530\n"
+"PO-Revision-Date: 2021-11-18 15:46+0530\n"
 "Language-Team: MakeWebBetter\n"
-"Language: en_US\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -16,6 +14,8 @@ msgstr ""
 "X-Poedit-KeywordsList: __;_e;_n;_x;_ex;_nx;esc_attr__;esc_attr_e;esc_attr_x;"
 "esc_html;esc_html__;esc_html_e;esc_html_x;_n_noop;_nx_noop;"
 "translate_nooped_plural\n"
+"Last-Translator: \n"
+"Language: en_US\n"
 "X-Poedit-SearchPath-0: .\n"
 
 #: admin/class-invoice-system-for-woocommerce-admin.php:98
@@ -545,32 +545,32 @@ msgid "Tax"
 msgstr ""
 
 #: admin/partials/templates/invoice-system-for-woocommerce-pdflayout1.php:263
-#: admin/partials/templates/invoice-system-for-woocommerce-pdflayout1.php:337
-#: admin/partials/templates/invoice-system-for-woocommerce-pdflayout2.php:261
+#: admin/partials/templates/invoice-system-for-woocommerce-pdflayout1.php:349
+#: admin/partials/templates/invoice-system-for-woocommerce-pdflayout2.php:273
 msgid "Total"
 msgstr ""
 
-#: admin/partials/templates/invoice-system-for-woocommerce-pdflayout1.php:281
-#: admin/partials/templates/invoice-system-for-woocommerce-pdflayout2.php:243
+#: admin/partials/templates/invoice-system-for-woocommerce-pdflayout1.php:293
+#: admin/partials/templates/invoice-system-for-woocommerce-pdflayout2.php:255
 msgid "Payment via"
 msgstr ""
 
-#: admin/partials/templates/invoice-system-for-woocommerce-pdflayout1.php:291
-#: admin/partials/templates/invoice-system-for-woocommerce-pdflayout2.php:246
+#: admin/partials/templates/invoice-system-for-woocommerce-pdflayout1.php:303
+#: admin/partials/templates/invoice-system-for-woocommerce-pdflayout2.php:258
 msgid "Subtotal"
 msgstr ""
 
-#: admin/partials/templates/invoice-system-for-woocommerce-pdflayout1.php:301
-#: admin/partials/templates/invoice-system-for-woocommerce-pdflayout2.php:249
+#: admin/partials/templates/invoice-system-for-woocommerce-pdflayout1.php:313
+#: admin/partials/templates/invoice-system-for-woocommerce-pdflayout2.php:261
 msgid "Shipping"
 msgstr ""
 
-#: admin/partials/templates/invoice-system-for-woocommerce-pdflayout1.php:312
+#: admin/partials/templates/invoice-system-for-woocommerce-pdflayout1.php:324
 msgid "Total Tax"
 msgstr ""
 
-#: admin/partials/templates/invoice-system-for-woocommerce-pdflayout1.php:355
-#: admin/partials/templates/invoice-system-for-woocommerce-pdflayout2.php:275
+#: admin/partials/templates/invoice-system-for-woocommerce-pdflayout1.php:367
+#: admin/partials/templates/invoice-system-for-woocommerce-pdflayout2.php:287
 msgid "Looks like order is not found"
 msgstr ""
 
@@ -594,7 +594,7 @@ msgstr ""
 msgid "Amount"
 msgstr ""
 
-#: admin/partials/templates/invoice-system-for-woocommerce-pdflayout2.php:252
+#: admin/partials/templates/invoice-system-for-woocommerce-pdflayout2.php:264
 msgid "Total tax"
 msgstr ""
 
