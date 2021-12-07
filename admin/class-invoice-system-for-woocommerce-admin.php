@@ -345,7 +345,23 @@ class Invoice_System_For_Woocommerce_Admin {
 				'class'       => 'isfw_generate_invoice_from_cache',
 				'name'        => 'isfw_generate_invoice_from_cache',
 			),
+			array(
+				'title' => __( 'How do you want to view PDF?', 'invoice-system-for-woocommerce' ),
+				'type'  => 'select',
+				'description'  => __( 'Choose if You want to  view in new tab or you want to download.', 'invoice-system-for-woocommerce' ),
+				'id'    => 'isfw_view_pdf',
+				'name' => 'isfw_view_pdf',
+				'value' => get_option( 'isfw_view_pdf' ),
+				'class' => 'isfw_send_invoice_for',
+				'placeholder' => __( 'Select', 'invoice-system-for-woocommerce' ),
+				'options' => array(
+					'' => __( 'Select option', 'invoice-system-for-woocommerce' ),
+					'view' => __( 'View in new tab', 'invoice-system-for-woocommerce' ),
+					'download' => __( 'Download', 'invoice-system-for-woocommerce' ),
+				),
+			)
 		);
+		
 		$isfw_template_pdf_settings   = apply_filters( 'isfw_template_pdf_settings_array_filter', $isfw_template_pdf_settings );
 		$isfw_template_pdf_settings[] = array(
 			'type'        => 'button',
@@ -354,6 +370,7 @@ class Invoice_System_For_Woocommerce_Admin {
 			'class'       => 'isfw_general_setting_save',
 			'name'        => 'isfw_general_setting_save',
 		);
+		
 		return $isfw_template_pdf_settings;
 	}
 	/**
@@ -666,6 +683,9 @@ class Invoice_System_For_Woocommerce_Admin {
 	 * @return string
 	 */
 	public function isfw_generating_pdf( $order_id, $type, $action ) {
+		echo$order_id;
+		echo $type;
+		echo $action;die();
 		require_once INVOICE_SYSTEM_FOR_WOOCOMMERCE_DIR_PATH . 'common/class-invoice-system-for-woocommerce-common.php';
 		$common_class = new Invoice_System_For_Woocommerce_Common( $this->plugin_name, $this->version );
 		$file_path    = $common_class->isfw_common_generate_pdf( $order_id, $type, $action );

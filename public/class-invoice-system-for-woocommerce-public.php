@@ -144,7 +144,15 @@ class Invoice_System_For_Woocommerce_Public {
 					$order                     = wc_get_order( $order_id );
 					if ( $order && ( in_array( $order->get_status(), $order_status_show_invoice, true ) ) ) {
 						if ( (int) $order->get_customer_id() === (int) $user_id ) {
-							$common_class->isfw_common_generate_pdf( $order_id, 'invoice', 'download_locally' );
+							$download_view = get_option( 'isfw_view_pdf' );
+							if ( 'view' == $download_view ) {
+
+								$common_class->isfw_common_generate_pdf( $order_id, 'invoice', 'open_window' );
+							} else if ( 'download' == $download_view ) {
+								$common_class->isfw_common_generate_pdf( $order_id, 'invoice', 'download_locally' );
+							} else {
+								$common_class->isfw_common_generate_pdf( $order_id, 'invoice', 'download_locally' );
+							}
 						}
 					}
 				}
