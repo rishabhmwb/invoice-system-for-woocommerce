@@ -334,7 +334,7 @@ class Invoice_System_For_Woocommerce_Common {
 				'shipping_details' => $shipping_details,
 				'billing_details'  => $billing_details,
 				'product_details'  => $order_product_details,
-				'payment_url' => $payment 
+				'payment_url' => $payment,
 			);
 			return wp_json_encode( $order_details_arr );
 		}
