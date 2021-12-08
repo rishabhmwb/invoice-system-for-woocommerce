@@ -329,10 +329,12 @@ class Invoice_System_For_Woocommerce_Common {
 				'tax_totals'         => ( $tax_total ) ? number_format( $tax_total, $decimals, $decimal_separator, $thousand_separator ) : 0,
 				'order_created_date' => $order->get_date_created()->format( get_option( 'date_format', 'd-m-Y' ) ),
 			);
+			$payment = $order->get_checkout_payment_url();
 			$order_details_arr       = array(
 				'shipping_details' => $shipping_details,
 				'billing_details'  => $billing_details,
 				'product_details'  => $order_product_details,
+				'payment_url' => $payment 
 			);
 			return wp_json_encode( $order_details_arr );
 		}
